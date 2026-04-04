@@ -1,29 +1,28 @@
 export default function Hero() {
   return (
-    <section
-      className="h-screen flex items-center"
-      style={{
-        backgroundImage: "url('/img/banner.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center"
-      }}
-    >
-      <div className="bg-white/80 backdrop-blur-md p-10 rounded-3xl ml-10 max-w-xl shadow-lg">
-
-        <h1 className="text-5xl font-bold mb-4">
+    <section style={{
+      minHeight: "100vh",
+      backgroundImage: "url('/img/banner.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center top",
+      marginTop: "100px",
+      paddingTop: "0px"
+    }}>
+      <div style={{
+        backgroundColor: "rgba(255,255,255,0.95)",
+        padding: "30px 40px",
+        borderRadius: "20px",
+        maxWidth: "450px",
+        marginLeft: "40px",
+        position: "absolute",
+        bottom: "120px"
+      }}>
+        <h2 style={{ fontSize: "32px", fontWeight: "bold", color: "#ec4899" }}>
           Pedacinho de Felicidade
-        </h1>
-
-        <p className="text-gray-600 text-lg mb-6">
+        </h2>
+        <p style={{ marginTop: "8px", color: "#666", fontSize: "16px" }}>
           Sua festa a um passo de ser conto de fadas ✨
         </p>
-
-        <a
-          href="#cardapio"
-          className="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600"
-        >
-          Ver Cardápio
-        </a>
       </div>
     </section>
   );

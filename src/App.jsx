@@ -1,8 +1,10 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import HomeProdutos from "./components/HomeProdutos";
+import MonteSeuKit from "./components/MonteSeuKit";
+import KitFesta from "./components/KitFesta";
 import Cardapio from "./components/Cardapio";
-import Eventos from "./components/Eventos";
-import Contato from "./components/Contato";
+import Carrinho from "./components/Carrinho";
 import Footer from "./components/Footer";
 
 export default function App() {
@@ -10,9 +12,11 @@ export default function App() {
     <>
       <Navbar />
       <Hero />
+      <HomeProdutos />
+      <MonteSeuKit />
+      <KitFesta />
       <Cardapio />
-      <Eventos />
-      <Contato />
+      <Carrinho />
       <Footer />
     </>
   );
