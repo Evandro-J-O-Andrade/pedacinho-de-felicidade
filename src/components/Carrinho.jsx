@@ -27,7 +27,8 @@ export default function Carrinho() {
   const ref = useRef();
   const [itemAberto, setItemAberto] = useState(null);
   const [navHeight, setNavHeight] = useState(80);
-  const numero = "5511999999999";
+  const numero = "5511971914833";
+  const nome = "Esmeralda";
 
   useEffect(() => {
     function handleClick(e) {

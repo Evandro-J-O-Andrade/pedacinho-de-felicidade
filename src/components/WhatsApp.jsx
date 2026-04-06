@@ -1,6 +1,6 @@
 import { FaWhatsapp } from "react-icons/fa";
 
-const numero = "5511999999999";
+const numero = "5511971914833";
 
 export default function WhatsApp() {
   return (

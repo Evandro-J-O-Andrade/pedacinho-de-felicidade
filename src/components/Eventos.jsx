@@ -1,7 +1,8 @@
 import Galeria from "./Galeria";
 
 export default function Eventos() {
-  const numero = "5511999999999";
+  const numero = "5511971914833";
+  const nome = "Esmeralda";
 
   return (
     <section
@@ -33,7 +34,7 @@ export default function Eventos() {
           boxShadow: "0 6px 16px rgba(236,72,153,0.25)"
         }}
       >
-        Solicitar orçamento
+        Falar com {nome} no WhatsApp
       </a>
 
       <Galeria embedded />

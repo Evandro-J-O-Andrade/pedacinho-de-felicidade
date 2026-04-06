@@ -1,5 +1,6 @@
 export default function Contato() {
-  const numero = "5511999999999";
+  const numero = "5511971914833";
+  const nome = "Esmeralda";
 
   return (
     <section
@@ -18,6 +19,10 @@ export default function Contato() {
         Fale conosco pelo WhatsApp
       </p>
 
+      <p style={{ color: "#888", marginBottom: "16px", fontSize: "14px" }}>
+        {nome} - (11) 97191-4833
+      </p>
+
       <a
         href={`https://wa.me/${numero}`}
         style={{
@@ -31,7 +36,7 @@ export default function Contato() {
           boxShadow: "0 6px 16px rgba(34,197,94,0.25)"
         }}
       >
-        Abrir WhatsApp
+        Falar com {nome} no WhatsApp
       </a>
     </section>
   );

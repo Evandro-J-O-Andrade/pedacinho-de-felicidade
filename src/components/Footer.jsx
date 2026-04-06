@@ -2,7 +2,8 @@ import { FaWhatsapp, FaInstagram, FaFacebook, FaYoutube, FaTiktok } from "react-
 import { FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
-  const numero = "5511999999999";
+  const numero = "5511971914833";
+  const nome = "Esmeralda";
 
   return (
     <footer
@@ -18,6 +19,10 @@ export default function Footer() {
         <h2 style={{ fontSize: "18px", fontWeight: 800, letterSpacing: "0.1px", display: "flex", alignItems: "center", gap: "6px", color: "#f5f5f5" }}>
           <span aria-hidden>🎂</span> Pedacinho de Felicidade
         </h2>
+
+        <p style={{ color: "#e8dcc8", fontWeight: 600, fontSize: "13px" }}>
+          {nome} - (11) 97191-4833
+        </p>
 
         <a
           href={`https://wa.me/${numero}`}
@@ -35,7 +40,7 @@ export default function Footer() {
             boxShadow: "0 1px 6px rgba(0,0,0,0.18)"
           }}
         >
-          <FaWhatsapp /> WhatsApp
+          <FaWhatsapp /> Fale com {nome} no WhatsApp
         </a>
 
         <p style={{ margin: "2px 0", color: "#e8dcc8", fontWeight: 700, fontSize: "13px" }}>
