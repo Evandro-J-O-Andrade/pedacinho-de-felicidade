@@ -1,11 +1,32 @@
 import { useCarrinho } from "../context/CarrinhoContext";
 
-export default function ProdutoCard({ item }) {
+export default function ProdutoCard({ item, onImageClick }) {
   const { adicionar } = useCarrinho();
 
+  const handleImageClick = (e) => {
+    if (onImageClick) {
+      e.stopPropagation();
+      onImageClick(item.imagem);
+    }
+  };
+
   return (
-    <div style={{ backgroundColor: "white", borderRadius: "16px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)", overflow: "hidden", transition: "all 0.3s" }}>
-      <img src={item.imagem} style={{ width: "100%", height: "160px", objectFit: "cover" }} />
+    <div style={{ backgroundColor: "white", borderRadius: "16px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)", overflow: "hidden", transition: "all 0.3s ease" }}>
+      <div style={{ width: "100%", height: "220px", overflow: "hidden", position: "relative" }}>
+        <img 
+          src={item.imagem} 
+          style={{ 
+            width: "100%", 
+            height: "100%", 
+            objectFit: "cover",
+            transition: "transform 0.3s ease",
+            cursor: onImageClick ? "pointer" : "default"
+          }} 
+          onClick={handleImageClick}
+          onMouseOver={(e) => e.target.style.transform = "scale(1.08)"}
+          onMouseOut={(e) => e.target.style.transform = "scale(1)"}
+        />
+      </div>
 
       <div style={{ padding: "16px" }}>
         <h3 style={{ fontWeight: "bold", fontSize: "16px" }}>{item.nome}</h3>
@@ -17,8 +38,11 @@ export default function ProdutoCard({ item }) {
           </span>
 
           <button
-            onClick={() => adicionar(item)}
-            style={{ backgroundColor: "#ec4899", color: "white", padding: "8px 16px", borderRadius: "9999px", border: "none", cursor: "pointer", fontWeight: "600" }}
+            onClick={(e) => {
+              e.stopPropagation();
+              adicionar(item);
+            }}
+            style={{ backgroundColor: "#ec4899", color: "white", padding: "8px 16px", borderRadius: "9999px", border: "none", cursor: "pointer", fontWeight: "600", transition: "all 0.3s ease" }}
           >
             + Adicionar
           </button>

@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, useMemo } from "react";
-import { fretes } from "../data/fretes";
+import { fretes, fretesUf } from "../data/fretes";
 
 const CarrinhoContext = createContext();
+const FRETE_GRATIS_MINIMO = 500;
 
 export function CarrinhoProvider({ children }) {
   const [carrinho, setCarrinho] = useState([]);
@@ -10,8 +11,16 @@ export function CarrinhoProvider({ children }) {
   const [cep, setCep] = useState("");
   const [bairro, setBairro] = useState("");
   const [cidade, setCidade] = useState("");
+  const [rua, setRua] = useState("");
   const [valorFrete, setValorFrete] = useState(0);
   const [enderecoValido, setEnderecoValido] = useState(false);
+
+  const normalize = (str) =>
+    (str || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
 
   async function buscarCep(cepDigitado) {
     const cepLimpo = cepDigitado.replace(/\D/g, "").slice(0, 8);
@@ -30,18 +39,53 @@ export function CarrinhoProvider({ children }) {
         return;
       }
 
-      const bairroApi = data.bairro?.toLowerCase() || "";
+      const bairroApi = normalize(data.bairro);
 
       setBairro(data.bairro || "");
+      setRua(data.logradouro || "");
       setCidade(data.localidade || "");
 
-      const encontrado = fretes.find((f) =>
-        bairroApi.includes(f.bairro.toLowerCase())
+      const fretesNormalizados = fretes.map((f) => ({
+        ...f,
+        chave: normalize(f.bairro)
+      }));
+
+      let encontrado = fretesNormalizados.find(
+        (f) => bairroApi.includes(f.chave) || f.chave.includes(bairroApi)
       );
 
-      setValorFrete(encontrado ? encontrado.valor : 0);
+      // fallback: detect palavras-chave de zona no nome do bairro
+      if (!encontrado) {
+        if (bairroApi.includes("leste")) {
+          encontrado = fretesNormalizados.find((f) => f.chave.includes("leste"));
+        } else if (bairroApi.includes("oeste")) {
+          encontrado = fretesNormalizados.find((f) => f.chave.includes("oeste"));
+        } else if (bairroApi.includes("norte")) {
+          encontrado = fretesNormalizados.find((f) => f.chave.includes("norte"));
+        } else if (bairroApi.includes("sul")) {
+          encontrado = fretesNormalizados.find((f) => f.chave.includes("sul"));
+        } else if (bairroApi.includes("centro")) {
+          encontrado = fretesNormalizados.find((f) => f.chave.includes("centro"));
+        }
+      }
+
+      let valor = 0;
+
+      if (encontrado) {
+        valor = encontrado.valor;
+      } else {
+        const uf = (data.uf || "").toUpperCase();
+        if (uf && fretesUf[uf] !== undefined) {
+          valor = fretesUf[uf];
+        } else if (fretesUf.default !== undefined) {
+          valor = fretesUf.default;
+        }
+      }
+
+      setValorFrete(valor);
     } catch {
       setValorFrete(0);
+      setRua("");
     }
   }
 
@@ -93,9 +137,17 @@ export function CarrinhoProvider({ children }) {
     [carrinho]
   );
 
-  const totalComFrete = useMemo(() => {
-    return Number(totalValor) + Number(valorFrete);
-  }, [totalValor, valorFrete]);
+  const freteAplicado = useMemo(
+    () => (totalValor >= FRETE_GRATIS_MINIMO ? 0 : Number(valorFrete)),
+    [totalValor, valorFrete]
+  );
+
+  const totalComFrete = useMemo(
+    () => Number(totalValor) + freteAplicado,
+    [totalValor, freteAplicado]
+  );
+
+  const freteGratis = totalValor >= FRETE_GRATIS_MINIMO;
 
   function gerarMensagemWhatsApp() {
     const itens = carrinho.map(
@@ -105,8 +157,16 @@ export function CarrinhoProvider({ children }) {
         }`
     );
 
+    const textoFrete = freteGratis
+      ? `Frete: R$ 0,00 (grátis a partir de R$ ${FRETE_GRATIS_MINIMO})`
+      : `Frete: R$ ${freteAplicado.toFixed(2)}`;
+
     return encodeURIComponent(
-      `Pedido:\n\n${itens.join("\n")}\n\nCEP: ${cep}\nBairro: ${bairro}\nCidade: ${cidade}\nFrete: R$ ${valorFrete}\nTotal: R$ ${totalComFrete}`
+      `Pedido:\n\n${itens.join(
+        "\n"
+      )}\n\nRua: ${rua}\nCEP: ${cep}\nBairro: ${bairro}\nCidade: ${cidade}\n${textoFrete}\nTotal: R$ ${totalComFrete.toFixed(
+        2
+      )}`
     );
   }
 
@@ -131,6 +191,10 @@ export function CarrinhoProvider({ children }) {
         valorFrete,
         buscarCep,
         fretes,
+        rua,
+        freteAplicado,
+        freteGratis,
+        FRETE_GRATIS_MINIMO,
 
         totalItens,
         totalValor,

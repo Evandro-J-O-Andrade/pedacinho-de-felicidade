@@ -1,47 +1,79 @@
 import { FaWhatsapp, FaInstagram, FaFacebook, FaYoutube, FaTiktok } from "react-icons/fa";
-import { FiX } from "react-icons/fi";
+import { FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
   const numero = "5511999999999";
 
   return (
-    <footer className="bg-primary text-white p-10">
-      <div className="flex flex-col items-center gap-6">
-        <h2 className="text-2xl font-bold">
-          Pedacinho de Felicidade
+    <footer
+      style={{
+        background: "linear-gradient(180deg, #6b5344 0%, #8b7355 30%, #6b5344 60%, #5c3d2e 80%, #4a3728 100%)",
+        color: "#f5f5f5",
+        padding: "16px 16px",
+        marginTop: "28px",
+        borderTop: "2px solid #8b7355"
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+        <h2 style={{ fontSize: "18px", fontWeight: 800, letterSpacing: "0.1px", display: "flex", alignItems: "center", gap: "6px", color: "#f5f5f5" }}>
+          <span aria-hidden>🎂</span> Pedacinho de Felicidade
         </h2>
 
         <a
           href={`https://wa.me/${numero}`}
-          className="flex items-center gap-2 text-green-400 hover:text-green-500"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            color: "#5c3d2e",
+            textDecoration: "none",
+            fontWeight: 700,
+            fontSize: "14px",
+            backgroundColor: "#e8dcc8",
+            padding: "6px 12px",
+            borderRadius: "8px",
+            boxShadow: "0 1px 6px rgba(0,0,0,0.18)"
+          }}
         >
           <FaWhatsapp /> WhatsApp
         </a>
 
-        <div className="flex gap-6 text-3xl">
-          <a href="#" className="hover:text-secondary">
-            <FaInstagram />
-          </a>
+        <p style={{ margin: "2px 0", color: "#e8dcc8", fontWeight: 700, fontSize: "13px" }}>
+          Me siga nas redes sociais
+        </p>
 
-          <a href="#" className="hover:text-secondary">
-            <FaFacebook />
-          </a>
-
-          <a href="#" className="hover:text-secondary">
-            <FaYoutube />
-          </a>
-
-          <a href="#" className="hover:text-secondary">
-            <FaTiktok />
-          </a>
-
-          <a href="#" className="hover:text-secondary">
-            <FiX />
-          </a>
+        <div style={{ display: "flex", gap: "10px", fontSize: "22px" }}>
+          {[
+            { Icon: FaInstagram, color: "#e8dcc8", hoverColor: "#ff69b4", glowColor: "rgba(255,105,180,0.8)" },
+            { Icon: FaFacebook, color: "#e8dcc8", hoverColor: "#4267B2", glowColor: "rgba(66,103,178,0.8)" },
+            { Icon: FaYoutube, color: "#e8dcc8", hoverColor: "#ff0000", glowColor: "rgba(255,0,0,0.8)" },
+            { Icon: FaTiktok, color: "#e8dcc8", hoverColor: "#ff69b4", glowColor: "rgba(255,105,180,0.8)" },
+            { Icon: FaXTwitter, color: "#e8dcc8", hoverColor: "#1DA1F2", glowColor: "rgba(29,161,242,0.8)" }
+          ].map(({ Icon, color, hoverColor, glowColor }, idx) => (
+            <a
+              key={idx}
+              href="#"
+              style={{
+                color: color,
+                textDecoration: "none",
+                transition: "all 0.3s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = hoverColor;
+                e.currentTarget.style.transform = "scale(1.3)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = color;
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            >
+              <Icon />
+            </a>
+          ))}
         </div>
       </div>
 
-      <div className="border-t border-white/20 mt-8 pt-4 text-center text-gray-200">
+      <div style={{ borderTop: "1px solid rgba(107,78,61,0.45)", marginTop: "12px", paddingTop: "8px", textAlign: "center", color: "#c4b5a5", fontSize: "12px", fontWeight: 600 }}>
         © {new Date().getFullYear()} Pedacinho de Felicidade - Todos os direitos reservados
       </div>
     </footer>

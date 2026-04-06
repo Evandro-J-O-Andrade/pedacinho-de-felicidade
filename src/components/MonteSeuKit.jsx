@@ -1,48 +1,44 @@
 import { useState } from "react";
 import { produtos } from "../data/produtos";
 import { useCarrinho } from "../context/CarrinhoContext";
+import Lightbox from "./Lightbox";
 
 export default function MonteSeuKit() {
   const { adicionar } = useCarrinho();
 
   const [selecionados, setSelecionados] = useState([]);
-  const [quantidade, setQuantidade] = useState(1);
+  const [busca, setBusca] = useState("");
+  const [categoria, setCategoria] = useState("todos");
+  const [imagemAmpliada, setImagemAmpliada] = useState(null);
 
-  const kitsProntos = [
-    {
-      id: 1001,
-      nome: "Kit Festa Básico",
-      descricao: "20 pessoas",
-      preco: 250,
-      itens: ["Bolo 2kg", "50 doces", "50 salgados"]
-    },
-    {
-      id: 1002,
-      nome: "Kit Festa Médio",
-      descricao: "50 pessoas",
-      preco: 450,
-      itens: ["Bolo 3kg", "100 doces", "100 salgados"]
-    },
-    {
-      id: 1003,
-      nome: "Kit Festa Premium",
-      descricao: "100 pessoas",
-      preco: 850,
-      itens: ["Bolo 5kg", "200 doces", "200 salgados", "Decoração"]
-    }
-  ];
+  const categorias = ["todos", ...produtos.map((c) => c.categoria)];
 
   function toggleItem(item) {
     setSelecionados((prev) => {
-      if (prev.find((i) => i.id === item.id)) {
+      const existente = prev.find((i) => i.id === item.id);
+      if (existente) {
         return prev.filter((i) => i.id !== item.id);
       }
-      return [...prev, item];
+      return [...prev, { ...item, quantidade: 1 }];
     });
   }
 
+  function alterarQuantidade(id, delta) {
+    setSelecionados((prev) =>
+      prev
+        .map((i) =>
+          i.id === id ? { ...i, quantidade: Math.max(0, i.quantidade + delta) } : i
+        )
+        .filter((i) => i.quantidade > 0)
+    );
+  }
+
+  function removerItem(id) {
+    setSelecionados((prev) => prev.filter((i) => i.id !== id));
+  }
+
   function getTotal() {
-    return selecionados.reduce((acc, item) => acc + item.preco, 0) * quantidade;
+    return selecionados.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
   }
 
   function formatar(valor) {
@@ -58,140 +54,203 @@ export default function MonteSeuKit() {
     adicionar({
       id: Date.now(),
       nome: nomeKit,
-      descricao: `${quantidade}x kit personalizado`,
+      descricao: selecionados
+        .map((i) => `${i.quantidade}x ${i.nome}`)
+        .join(", "),
       preco: getTotal(),
       tipo: "un"
     });
 
     setSelecionados([]);
-    setQuantidade(1);
-  }
-
-  function adicionarKitPronto(kit) {
-    adicionar({
-      id: kit.id,
-      nome: kit.nome,
-      descricao: kit.descricao,
-      preco: kit.preco,
-      tipo: "un"
-    });
   }
 
   const todasOpcoes = produtos.flatMap((c) => c.itens);
+  const itensFiltrados = produtos
+    .filter((c) => categoria === "todos" || c.categoria === categoria)
+    .flatMap((c) => c.itens)
+    .filter((item) => item.nome.toLowerCase().includes(busca.toLowerCase()));
 
   return (
-    <section id="monte-seu-kit" style={{ padding: "80px 20px", backgroundColor: "#fff7f9", minHeight: "100vh" }}>
+    <section id="monte-seu-kit" style={{ paddingTop: "100px", paddingBottom: "60px", backgroundColor: "#fff7f9", minHeight: "100vh" }}>
+
+      {/* VOLTAR */}
+      <div style={{ maxWidth: "1100px", margin: "0 auto 12px auto" }}>
+        <a
+          href="/"
+          style={{ color: "#ec4899", fontWeight: "700", textDecoration: "none" }}
+        >
+          ← Voltar para a página inicial
+        </a>
+      </div>
 
       {/* TÍTULO */}
-      <div style={{ textAlign: "center", marginBottom: "40px" }}>
+      <div style={{ textAlign: "center", marginBottom: "30px", padding: "0 20px" }}>
         <h2 style={{ fontSize: "36px", fontWeight: "bold", color: "#ec4899", marginBottom: "8px" }}>
           🎉 Monte seu Kit de Festa
         </h2>
-        <p style={{ color: "#666", fontSize: "18px" }}>
+        <p
+          style={{
+            fontSize: "18px",
+            color: "#5c3d2e",
+            maxWidth: "520px",
+            marginInline: "auto",
+            lineHeight: "1.6",
+            fontWeight: "500",
+            backgroundColor: "rgba(236, 72, 153, 0.1)",
+            padding: "16px 24px",
+            borderRadius: "16px",
+            border: "1px solid rgba(236, 72, 153, 0.2)"
+          }}
+        >
           Escolha os melhores produtos para sua festa!
         </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px", marginBottom: "60px" }}>
-        {kitsProntos.map((kit) => (
-          <div key={kit.id} style={{ backgroundColor: "white", padding: "24px", borderRadius: "16px", boxShadow: "0 8px 24px rgba(236,72,153,0.15)", textAlign: "center", transition: "transform 0.3s" }}>
-
-            <h3 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "8px" }}>{kit.nome}</h3>
-            <p style={{ color: "#666", marginBottom: "12px" }}>{kit.descricao}</p>
-
-            <ul style={{ fontSize: "14px", marginBottom: "16px", listStyle: "none" }}>
-              {kit.itens.map((i, index) => (
-                <li key={index} style={{ marginBottom: "4px" }}>• {i}</li>
-              ))}
-            </ul>
-
-            <p style={{ fontSize: "28px", fontWeight: "bold", color: "#ec4899", marginBottom: "16px" }}>
-              {formatar(kit.preco)}
-            </p>
-
-            <button
-              onClick={() => adicionarKitPronto(kit)}
-              style={{
-                width: "100%",
-                backgroundColor: "#ec4899",
-                color: "white",
-                padding: "12px",
-                borderRadius: "9999px",
-                fontWeight: "600",
-                border: "none",
-                cursor: "pointer"
-              }}
-            >
-              Adicionar ao Carrinho
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {/* MONTE SEU KIT */}
-      <h2 style={{ fontSize: "28px", fontWeight: "bold", textAlign: "center", marginBottom: "16px", color: "#ec4899" }}>
-        ✨ Monte seu Kit
+      {/* MONTE SEU KIT PERSONALIZADO */}
+      <h2 style={{ fontSize: "28px", fontWeight: "bold", textAlign: "center", marginBottom: "12px", color: "#ec4899" }}>
+        ✨ Monte do seu jeito (itens avulsos)
       </h2>
 
-      <p style={{ textAlign: "center", color: "#666", marginBottom: "32px" }}>
-        Escolha os itens para montar seu kit personalizado
+      <p style={{ textAlign: "center", color: "#666", marginBottom: "20px", fontSize: "16px", fontWeight: "500" }}>
+        Selecione itens avulsos e montamos o kit exatamente como você quiser
       </p>
 
-      {/* PRODUTOS */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))", gap: "16px", marginBottom: "40px" }}>
-        {todasOpcoes.map((item) => {
+      {/* BUSCA E CATEGORIAS */}
+      <div style={{ maxWidth: "1100px", margin: "0 auto 20px auto", textAlign: "center" }}>
+        <input
+          type="text"
+          placeholder="Buscar itens..."
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
+          style={{
+            width: "100%",
+            maxWidth: "400px",
+            padding: "14px",
+            border: "1px solid #e5e7eb",
+            borderRadius: "10px",
+            marginBottom: "12px",
+            outline: "none"
+          }}
+        />
+
+        <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+          {categorias.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setCategoria(cat)}
+              style={{
+                padding: "10px 16px",
+                borderRadius: "9999px",
+                border: "1px solid #ec4899",
+                backgroundColor: categoria === cat ? "#ec4899" : "#fff",
+                color: categoria === cat ? "#fff" : "#ec4899",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+                fontWeight: 600
+              }}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* PRODUTOS - 5 COLUNAS */}
+      <style>{`
+        .kit-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 20px;
+          padding: 0 20px;
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+        @media (max-width: 1200px) {
+          .kit-grid { grid-template-columns: repeat(4, 1fr) !important; }
+        }
+        @media (max-width: 900px) {
+          .kit-grid { grid-template-columns: repeat(3, 1fr) !important; }
+        }
+        @media (max-width: 600px) {
+          .kit-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      `}</style>
+      <div className="kit-grid">
+        {itensFiltrados.map((item) => {
           const selecionado = selecionados.find((s) => s.id === item.id);
 
           return (
             <div
               key={item.id}
-              onClick={() => toggleItem(item)}
+              onClick={(e) => { if (!selecionado) toggleItem(item); }}
               style={{
                 backgroundColor: "white",
-                padding: "12px",
-                borderRadius: "12px",
+                borderRadius: "16px",
                 boxShadow: selecionado ? "0 0 0 3px #ec4899" : "0 4px 12px rgba(0,0,0,0.1)",
-                cursor: "pointer",
+                cursor: selecionado ? "default" : "pointer",
                 textAlign: "center",
-                transition: "all 0.2s"
+                transition: "all 0.3s ease",
+                overflow: "hidden"
               }}
             >
-              <img
-                src={item.imagem}
-                style={{ width: "100%", height: "80px", objectFit: "cover", borderRadius: "8px", marginBottom: "8px" }}
-              />
+              <div style={{ width: "100%", height: "220px", overflow: "hidden", position: "relative" }}>
+                <img
+                  src={item.imagem}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "0px", cursor: "pointer" }}
+                  onClick={(e) => { e.stopPropagation(); setImagemAmpliada(item.imagem); }}
+                />
+              </div>
 
-              <h3 style={{ fontSize: "14px", fontWeight: "600" }}>{item.nome}</h3>
+              <div style={{ padding: "16px" }}>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "4px" }}>
+                  <h3 style={{ fontSize: "16px", fontWeight: "bold" }}>{item.nome}</h3>
+                  {selecionado && (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); removerItem(item.id); }}
+                      style={{ background: "none", border: "none", color: "#ef4444", cursor: "pointer", fontSize: "16px", padding: "2px" }}
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
 
-              <p style={{ color: "#22c55e", fontWeight: "bold", fontSize: "14px" }}>
-                {formatar(item.preco)}
-              </p>
+                <p style={{ color: "#22c55e", fontWeight: "bold", fontSize: "16px", marginTop: "12px" }}>
+                  {formatar(item.preco)}
+                </p>
 
-              {selecionado && (
-                <span style={{ color: "#ec4899", fontSize: "12px" }}>✓ selecionado</span>
-              )}
+                <div style={{ display: "flex", justifyContent: "center", gap: "8px", alignItems: "center", marginTop: "12px" }}>
+                  {selecionado ? (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        alterarQuantidade(item.id, -1);
+                      }}
+                      style={{ width: "28px", height: "28px", borderRadius: "50%", border: "1px solid #ddd", background: "#fff", cursor: "pointer" }}
+                    >
+                      -
+                    </button>
+                    <span style={{ minWidth: "20px", textAlign: "center", fontWeight: "700" }}>
+                      {selecionado.quantidade}
+                    </span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        alterarQuantidade(item.id, 1);
+                      }}
+                      style={{ width: "28px", height: "28px", borderRadius: "50%", border: "1px solid #ddd", background: "#fff", cursor: "pointer" }}
+                    >
+                      +
+                    </button>
+                  </>
+                ) : (
+                  <span style={{ color: "#ec4899", fontSize: "14px" }}>Clique para adicionar</span>
+                )}
+              </div>
+              </div>
             </div>
           );
         })}
-      </div>
-
-      {/* QUANTIDADE */}
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "24px", marginBottom: "24px" }}>
-        <button
-          onClick={() => setQuantidade((prev) => Math.max(1, prev - 1))}
-          style={{ width: "40px", height: "40px", border: "1px solid #ddd", borderRadius: "50%", background: "#fff" }}
-        >
-          -
-        </button>
-
-        <span style={{ fontSize: "28px", fontWeight: "bold" }}>{quantidade}</span>
-
-        <button
-          onClick={() => setQuantidade((prev) => prev + 1)}
-          style={{ width: "40px", height: "40px", border: "1px solid #ddd", borderRadius: "50%", background: "#fff" }}
-        >
-          +
-        </button>
       </div>
 
       {/* TOTAL */}
@@ -217,6 +276,11 @@ export default function MonteSeuKit() {
           Adicionar ao Carrinho
         </button>
       </div>
+
+      {/* LIGHTBOX */}
+      {imagemAmpliada && (
+        <Lightbox src={imagemAmpliada} onClose={() => setImagemAmpliada(null)} />
+      )}
 
     </section>
   );

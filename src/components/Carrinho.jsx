@@ -7,20 +7,26 @@ export default function Carrinho() {
     aberto,
     setAberto,
     adicionar,
-    diminuír,
+    diminuir,
     remover,
     totalItens,
     totalValor,
     totalComFrete,
     buscarCep,
+    cep,
     bairro,
     cidade,
+    freteAplicado,
+    freteGratis,
+    FRETE_GRATIS_MINIMO,
+    rua,
     valorFrete,
     gerarMensagemWhatsApp
   } = useCarrinho();
 
   const ref = useRef();
   const [itemAberto, setItemAberto] = useState(null);
+  const [navHeight, setNavHeight] = useState(80);
   const numero = "5511999999999";
 
   useEffect(() => {
@@ -33,12 +39,23 @@ export default function Carrinho() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  useEffect(() => {
+    function updateNav() {
+      const nav = typeof document !== "undefined" ? document.getElementById("navbar") : null;
+      const altura = nav?.offsetHeight || 80;
+      // encosta no navbar com pequeno respiro
+      setNavHeight(altura + 8);
+    }
+    updateNav();
+    window.addEventListener("resize", updateNav);
+    return () => window.removeEventListener("resize", updateNav);
+  }, []);
+
   function finalizar() {
     window.open(`https://wa.me/${numero}?text=${gerarMensagemWhatsApp()}`);
   }
 
-  const temFreteGratis = totalComFrete >= 500;
-  const totalGeral = temFreteGratis ? totalValor : totalComFrete;
+  const totalGeral = freteGratis ? totalValor : totalComFrete;
 
   return (
     <>
@@ -62,16 +79,16 @@ export default function Carrinho() {
       </div>
 
       {aberto && (
-        <div style={{ position: "fixed", inset: 0, backgroundColor: "rgba(0,0,0,0.4)", zIndex: 40 }}></div>
+        <div style={{ position: "fixed", top: navHeight, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.4)", zIndex: 40 }}></div>
       )}
 
       <div
         ref={ref}
         style={{
           position: "fixed",
-          top: "95px",
+          top: navHeight,
           right: 0,
-          height: "calc(100% - 95px)",
+          bottom: 0,
           width: "340px",
           backgroundColor: "white",
           boxShadow: "-4px 0 20px rgba(0,0,0,0.1)",
@@ -108,7 +125,7 @@ export default function Carrinho() {
 
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>
                   <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                    <button onClick={() => item.quantidade > 1 ? diminuír(item.id) : remover(item.id)} style={{ width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #ddd", backgroundColor: "#fff", cursor: "pointer" }}>-</button>
+                    <button onClick={() => item.quantidade > 1 ? diminuir(item.id) : remover(item.id)} style={{ width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #ddd", backgroundColor: "#fff", cursor: "pointer" }}>-</button>
                     <span style={{ minWidth: "24px", textAlign: "center", fontWeight: "600" }}>{item.quantidade}</span>
                     <button onClick={() => adicionar(item)} style={{ width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #ddd", backgroundColor: "#fff", cursor: "pointer" }}>+</button>
                   </div>
@@ -127,48 +144,65 @@ export default function Carrinho() {
         </div>
 
         {/* RODAPÉ */}
-        <div style={{ padding: "16px", borderTop: "1px solid #eee", marginTop: "auto" }}>
-          {/* TOTAL */}
-          <p style={{ fontWeight: "bold", fontSize: "18px", textAlign: "center", marginBottom: "8px" }}>
-            Total: R$ {totalGeral.toFixed(2)}
+        <div style={{ padding: "16px", borderTop: "1px solid #eee", marginTop: "auto", display: "flex", flexDirection: "column", gap: "10px" }}>
+          {/* CEP E ENDEREÇO */}
+          <div>
+            {rua && (
+              <p style={{ fontSize: "13px", color: "#444", marginBottom: "4px", textAlign: "center" }}>
+                {rua}
+              </p>
+            )}
+            {bairro && (
+              <p style={{ fontSize: "13px", textAlign: "center", color: "#666", marginBottom: "6px" }}>
+                📍 {bairro} - {cidade}
+              </p>
+            )}
+            <input
+              type="text"
+              placeholder="Digite seu CEP"
+              onChange={(e) => {
+                const valor = e.target.value.replace(/\D/g, "").slice(0, 8);
+                const formatado = valor.length > 5 ? valor.replace(/(\d{5})(\d+)/, "$1-$2") : valor;
+                e.target.value = formatado;
+                buscarCep(formatado);
+              }}
+              style={{ width: "100%", padding: "12px", border: "1px solid #e5e7eb", borderRadius: "10px", outline: "none", marginBottom: "6px" }}
+            />
+          </div>
+
+          {/* RESUMO */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", fontSize: "14px", color: "#555", rowGap: "4px" }}>
+            <span>Subtotal</span>
+            <span style={{ textAlign: "right", fontWeight: 600 }}>R$ {totalValor.toFixed(2)}</span>
+            <span>Frete</span>
+            <span style={{ textAlign: "right", fontWeight: 600 }}>
+              {freteGratis
+                ? "Grátis"
+                : cep?.replace(/\D/g, "").length === 8
+                  ? `R$ ${valorFrete.toFixed(2)}`
+                  : "Informe o CEP"}
+            </span>
+          </div>
+          <p style={{ fontSize: "12px", textAlign: "center", color: "#777", marginTop: "-4px" }}>
+            Frete grátis para compras acima de R$ {FRETE_GRATIS_MINIMO.toFixed(2)}
           </p>
 
-          {/* ENDEREÇO */}
-          {bairro && (
-            <p style={{ fontSize: "14px", textAlign: "center", color: "#666", marginBottom: "8px" }}>
-              📍 {bairro} - {cidade}
-            </p>
-          )}
-
-          {/* CEP */}
-          <input
-            type="text"
-            placeholder="Digite seu CEP"
-            onChange={(e) => {
-              const valor = e.target.value.replace(/\D/g, "").slice(0, 8);
-              const formatado = valor.length > 5 ? valor.replace(/(\d{5})(\d+)/, "$1-$2") : valor;
-              e.target.value = formatado;
-              buscarCep(formatado);
-            }}
-            style={{ width: "100%", padding: "12px", border: "1px solid #e5e7eb", borderRadius: "10px", outline: "none", marginBottom: "8px" }}
-          />
-
-          {/* FRETE */}
-          <p style={{ fontSize: "14px", textAlign: "center", marginBottom: "12px" }}>
-            🚚 Frete: R$ {valorFrete.toFixed(2)}
+          {/* TOTAL */}
+          <p style={{ fontWeight: "bold", fontSize: "18px", textAlign: "center", marginTop: "4px" }}>
+            Total: R$ {totalGeral.toFixed(2)}
           </p>
 
           {/* BOTÃO FINALIZAR */}
           <button
             onClick={finalizar}
-            style={{ width: "100%", backgroundColor: "#22c55e", color: "white", padding: "14px", borderRadius: "12px", border: "none", fontSize: "16px", fontWeight: "600", cursor: "pointer", marginBottom: "8px" }}
+            style={{ width: "100%", backgroundColor: "#22c55e", color: "white", padding: "14px", borderRadius: "12px", border: "none", fontSize: "16px", fontWeight: "600", cursor: "pointer" }}
           >
             Finalizar Pedido
           </button>
 
           <button
             onClick={() => setAberto(false)}
-            style={{ width: "100%", border: "1px solid #e5e7eb", padding: "12px", borderRadius: "12px", backgroundColor: "#fff", cursor: "pointer" }}
+            style={{ width: "100%", border: "1px solid #e5e7eb", padding: "12px", borderRadius: "12px", backgroundColor: "#f9fafb", cursor: "pointer", fontWeight: 600 }}
           >
             Continuar comprando
           </button>

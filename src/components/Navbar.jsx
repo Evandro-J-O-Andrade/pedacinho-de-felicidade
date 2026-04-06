@@ -1,10 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { produtos } from "../data/produtos";
 
 export default function Navbar() {
   const [busca, setBusca] = useState("");
   const [resultados, setResultados] = useState([]);
+  const [menuAberto, setMenuAberto] = useState(false);
+  const [paginaAtiva, setPaginaAtiva] = useState("/");
+  const menuRef = useRef();
+  const toggleRef = useRef();
   const todos = produtos.flatMap((c) => c.itens);
+
+  useEffect(() => {
+    setPaginaAtiva(window.location.pathname + window.location.hash);
+  }, []);
+
+  useEffect(() => {
+    function handleClickFora(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target) && toggleRef.current && !toggleRef.current.contains(e.target)) {
+        setMenuAberto(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickFora);
+    return () => document.removeEventListener("mousedown", handleClickFora);
+  }, []);
 
   function handleBusca(e) {
     const valor = e.target.value;
@@ -13,74 +31,214 @@ export default function Navbar() {
       const filtro = todos.filter((item) =>
         item.nome.toLowerCase().includes(valor.toLowerCase())
       );
-      setResultados(filtro.slice(0, 5));
+      setResultados(filtro.slice(0, 42));
     } else {
       setResultados([]);
     }
   }
 
+  function fecharBusca() {
+    setResultados([]);
+    setBusca("");
+  }
+
+  function handleResultadoClick() {
+    fecharBusca();
+  }
+
+  function handleInputBlur() {
+    setTimeout(() => {
+      setResultados([]);
+    }, 200);
+  }
+
   return (
-    <nav style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: "rgba(255,255,255,0.95)",
-      backdropFilter: "blur(5px)",
-      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-      padding: "12px 24px",
-      zIndex: 50,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between"
-    }}>
+    <nav
+      id="navbar"
+      className="navbar"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        padding: "16px 16px 20px",
+        zIndex: 100,
+        backdropFilter: "blur(5px)"
+      }}
+    >
+      <style>{`
+        .navbar {
+          background: linear-gradient(180deg, #6b5344 0%, #8b7355 30%, #6b5344 60%, #5c3d2e 80%, #4a3728 100%);
+          box-shadow: 0 2px 15px rgba(74,55,40,0.4);
+        }
+        .nav-links a {
+          color: #f5f5f5;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          position: relative;
+          font-weight: 600;
+          font-size: 15px;
+        }
+        .nav-links a:hover,
+        .nav-links a:active {
+          color: #ffffff;
+          text-shadow: 0 0 12px rgba(255,255,255,0.6);
+        }
+        .nav-links a.active::after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: #ffffff;
+          border-radius: 2px;
+        }
+        @media (max-width: 768px) {
+          .navbar {
+            background: linear-gradient(180deg, #5c3d2e 0%, #4a3728 100%);
+            box-shadow: none;
+          }
+          .nav-links a {
+            color: #f5f5f5 !important;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            transition: color 0.3s ease;
+          }
+          .nav-links a:hover,
+          .nav-links a:active {
+            color: #ffffff !important;
+            text-shadow: 0 0 12px rgba(255,255,255,0.6);
+          }
+          .nav-links a.active::after {
+            display: none;
+          }
+        }
+        .nav-links { display: flex; font-size: 16px; }
+        .nav-toggle { display: none; }
+
+        @media (max-width: 768px) {
+          .nav-container { flex-direction: column; align-items: stretch; gap: 12px; }
+          .nav-row { width: 100%; justify-content: space-between; gap: 12px; display: flex; align-items: center; }
+          .nav-search { width: 100%; }
+          .nav-toggle { display: inline-flex !important; }
+          .nav-links {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(50,50,50,0.7);
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            align-items: flex-start;
+            width: 220px;
+            position: absolute;
+            top: 100%;
+            left: 16px;
+            z-index: 60;
+          }
+          .nav-links.open { display: flex; }
+        }
+        @media (min-width: 769px) {
+          .nav-container { flex-direction: row; align-items: center; justify-content: space-between; }
+          .nav-links { display: flex; font-size: 16px; }
+          .nav-links a { color: #f5f5f5 !important; }
+        }
+      `}</style>
+
+      <div className="nav-container" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
       {/* LOGO */}
-      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-        <img src="/img/logo.png" style={{ width: "70px", height: "70px", objectFit: "contain" }} alt="logo" />
-        <h1 style={{ fontSize: "30px", fontWeight: "bold", color: "#ec4899" }}>Pedacinho de Felicidade</h1>
-      </div>
+        <div className="nav-row" style={{ display: "flex", alignItems: "center", gap: "0px" }}>
+          <img src="/img/logo.png" style={{ width: "150px", height: "150px", objectFit: "contain" }} alt="logo" />
+          <span
+            style={{
+              fontSize: "38px",
+              fontWeight: 900,
+              letterSpacing: "0.8px",
+              color: "#f5f5f5",
+              textShadow: "0 2px 4px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.2)"
+            }}
+          >
+            Pedacinho de Felicidade
+          </span>
+          <button
+            ref={toggleRef}
+            onClick={(e) => {
+              e.stopPropagation();
+              setMenuAberto(!menuAberto);
+            }}
+            aria-label="Menu"
+            className="nav-toggle"
+            style={{
+              marginLeft: "auto",
+              background: "#6b4e3d",
+              color: "#e8dcc8",
+              border: "none",
+              borderRadius: "8px",
+              padding: "10px 12px",
+              fontWeight: 700,
+              cursor: "pointer",
+              display: "none"
+            }}
+          >
+            {menuAberto ? "✕" : "☰"}
+          </button>
+        </div>
 
-      {/* BUSCA */}
-      <div style={{ position: "relative" }}>
-        <input
-          type="text"
-          placeholder="Buscar..."
-          value={busca}
-          onChange={handleBusca}
-          style={{
-            width: "200px",
-            padding: "8px 12px",
-            border: "1px solid #e5e7eb",
-            borderRadius: "8px",
-            outline: "none"
-          }}
-        />
-        {resultados.length > 0 && (
-          <div style={{
-            position: "absolute",
-            top: "100%",
-            marginTop: "4px",
-            width: "200px",
-            backgroundColor: "white",
-            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-            borderRadius: "8px"
-          }}>
-            {resultados.map((item) => (
-              <a key={item.id} href="#cardapio" style={{ display: "block", padding: "12px", borderBottom: "1px solid #f9f9f9" }}>
-                {item.nome}
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
+        {/* BUSCA */}
+        <div className="nav-search" style={{ position: "relative", flex: 1, display: "flex", justifyContent: "center" }}>
+          <input
+            type="text"
+            placeholder="Buscar..."
+            value={busca}
+            onChange={handleBusca}
+            onBlur={handleInputBlur}
+            style={{
+              maxWidth: "320px",
+              padding: "8px 12px",
+              border: "2px solid #6b4e3d",
+              borderRadius: "8px",
+              outline: "none",
+              width: "100%",
+              backgroundColor: "#f5f5f5",
+              color: "#4a3728",
+              fontWeight: 600
+            }}
+          />
+          {resultados.length > 0 && (
+            <div style={{
+              position: "absolute",
+              top: "100%",
+              marginTop: "4px",
+              width: "300px",
+              backgroundColor: "#4a3728",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+              borderRadius: "8px",
+              zIndex: 200
+            }}>
+              {resultados.map((item) => (
+                <a 
+                  key={item.id} 
+                  href="#cardapio" 
+                  onClick={handleResultadoClick}
+                  style={{ display: "block", padding: "12px", borderBottom: "1px solid rgba(255,255,255,0.2)", color: "#e8dcc8", textDecoration: "none", cursor: "pointer" }}
+                >
+                  {item.nome}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
 
-      {/* MENU */}
-      <div style={{ display: "flex", gap: "24px", fontSize: "14px", fontWeight: "500" }}>
-        <a href="#home" style={{ color: "#374151" }}>Home</a>
-        <a href="#monte-seu-kit" style={{ color: "#ec4899" }}>Kit Festa</a>
-        <a href="#cardapio" style={{ color: "#374151" }}>Cardápio</a>
-        <a href="#eventos" style={{ color: "#374151" }}>Eventos</a>
-        <a href="#contato" style={{ color: "#374151" }}>Contato</a>
+        {/* MENU */}
+        <div ref={menuRef} className={`nav-links ${menuAberto ? "open" : ""}`} style={{ gap: "18px", fontSize: "16px", fontWeight: "600", alignItems: "flex-start", marginTop: menuAberto ? "8px" : "0" }}>
+          <a href="/" className={paginaAtiva === "/" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/"); }}>Home</a>
+          <a href="/#kit-festa" className={paginaAtiva.includes("kit-festa") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/#kit-festa"); }}>Kit Festa Rápido</a>
+          <a href="/monte-seu-kit" className={paginaAtiva === "/monte-seu-kit" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/monte-seu-kit"); }}>Monte seu kit</a>
+          <a href="/produtos" className={paginaAtiva === "/produtos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/produtos"); }}>Produtos</a>
+          <a href="/#cardapio" className={paginaAtiva.includes("cardapio") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/#cardapio"); }}>Cardápio</a>
+          <a href="/#eventos" className={paginaAtiva.includes("eventos") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/#eventos"); }}>Eventos</a>
+          <a href="/#contato" className={paginaAtiva.includes("contato") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/#contato"); }}>Contato</a>
+        </div>
       </div>
     </nav>
   );

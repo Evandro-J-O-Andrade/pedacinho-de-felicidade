@@ -1,8 +1,6 @@
 import { produtos } from "../data/produtos";
 
-const formatPreco = (preco, tipo) => {
-  return `R$ ${preco.toFixed(2).replace(".", ",")} / ${tipo}`;
-};
+const formatPreco = (preco, tipo) => `R$ ${preco.toFixed(2).replace(".", ",")} / ${tipo}`;
 
 export default function Destaques() {
   const todos = produtos.flatMap((cat) => cat.itens);
@@ -10,53 +8,73 @@ export default function Destaques() {
   const maisPedidos = todos.filter((p) => p.maisPedido);
 
   return (
-    <section className="py-20 bg-white text-center">
-      <h2 className="text-4xl font-bold mb-12 text-primary">
+    <section
+      id="destaques"
+      style={{ padding: "70px 20px", backgroundColor: "#fff", textAlign: "center" }}
+    >
+      <h2 style={{ fontSize: "32px", fontWeight: "bold", marginBottom: "24px", color: "#ec4899" }}>
         Nossos Queridinhos 💖
       </h2>
 
-      <div className="grid md:grid-cols-5 gap-6 max-w-6xl mx-auto px-6 mb-16">
-
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
+        gap: "16px",
+        maxWidth: "1100px",
+        margin: "0 auto 24px auto"
+      }}>
         {destaques.map((item) => (
-          <div key={item.id} className="rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-            <img src={item.imagem} alt={item.nome} className="w-full h-48 object-cover" />
-            <div className="p-4">
-              <h3 className="text-lg font-bold text-primary">{item.nome}</h3>
-              <p className="text-green-600 font-semibold">
-                {formatPreco(item.preco, item.tipo)}
-              </p>
+          <div key={item.id} style={{
+            borderRadius: "18px",
+            overflow: "hidden",
+            boxShadow: "0 8px 18px rgba(0,0,0,0.08)",
+            background: "#fff"
+          }}>
+            <img src={item.imagem} alt={item.nome} style={{ width: "100%", height: "140px", objectFit: "cover" }} />
+            <div style={{ padding: "12px" }}>
+              <h3 style={{ fontWeight: "bold", fontSize: "15px", color: "#ec4899", marginBottom: "4px" }}>{item.nome}</h3>
+              <p style={{ color: "#16a34a", fontWeight: 700 }}>{formatPreco(item.preco, item.tipo)}</p>
             </div>
           </div>
         ))}
-
       </div>
 
       <a
         href="#cardapio"
-        className="inline-block mt-8 bg-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-pink-600 transition"
+        style={{
+          display: "inline-block",
+          backgroundColor: "#ec4899",
+          color: "#fff",
+          padding: "12px 28px",
+          borderRadius: "9999px",
+          fontWeight: 700,
+          textDecoration: "none",
+          boxShadow: "0 6px 14px rgba(236,72,153,0.22)"
+        }}
       >
         Ver mais
       </a>
 
       {maisPedidos.length > 0 && (
-        <>
-          <h3 className="text-2xl font-bold mb-8 text-primary">
+        <div style={{ marginTop: "28px" }}>
+          <h3 style={{ fontSize: "22px", fontWeight: "bold", marginBottom: "16px", color: "#ec4899" }}>
             Mais Pedidos 🔥
           </h3>
-          <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto px-6">
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            gap: "14px",
+            maxWidth: "900px",
+            margin: "0 auto"
+          }}>
             {maisPedidos.map((item) => (
-              <div key={item.id} className="bg-pink-50 p-4 rounded-xl">
-                <p className="font-bold text-primary">{item.nome}</p>
-                <p className="text-green-600 font-semibold">
-                  {formatPreco(item.preco, item.tipo)}
-                </p>
+              <div key={item.id} style={{ background: "#fff7f9", padding: "12px", borderRadius: "12px" }}>
+                <p style={{ fontWeight: "bold", color: "#ec4899" }}>{item.nome}</p>
+                <p style={{ color: "#16a34a", fontWeight: 700 }}>{formatPreco(item.preco, item.tipo)}</p>
               </div>
             ))}
           </div>
-          <a href="#cardapio" className="mt-6 inline-block text-pink-500">
-            Ver mais →
-          </a>
-        </>
+        </div>
       )}
     </section>
   );

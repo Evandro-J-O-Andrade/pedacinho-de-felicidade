@@ -7,5 +7,14 @@ export const fretes = [
   { bairro: "Zona Norte", valor: 8 },
   { bairro: "Zona Sul", valor: 10 },
   { bairro: "Zona Leste", valor: 10 }
-
 ];
+
+// fallback por estado (UF) quando não houver match de bairro/zona
+export const fretesUf = {
+  SP: 30,
+  RJ: 30,
+  RS: 50,
+  SC: 50,
+  PR: 50,
+  default: 70
+};

@@ -2,18 +2,36 @@ export default function Contato() {
   const numero = "5511999999999";
 
   return (
-    <section id="contato" className="py-20 px-6 bg-white text-center">
-      <h2 className="text-3xl font-bold mb-4 text-primary">Contato</h2>
+    <section
+      id="contato"
+      style={{
+        padding: "70px 20px",
+        backgroundColor: "#fff",
+        textAlign: "center"
+      }}
+    >
+      <h2 style={{ fontSize: "32px", fontWeight: "bold", marginBottom: "10px", color: "#ec4899" }}>
+        Contato
+      </h2>
 
-      <p className="mb-4 text-gray-600">
+      <p style={{ color: "#555", marginBottom: "20px" }}>
         Fale conosco pelo WhatsApp
       </p>
 
       <a
         href={`https://wa.me/${numero}`}
-        className="bg-primary text-white px-6 py-3 rounded-full hover:opacity-90 inline-block"
+        style={{
+          display: "inline-block",
+          backgroundColor: "#22c55e",
+          color: "#fff",
+          padding: "14px 26px",
+          borderRadius: "9999px",
+          fontWeight: 700,
+          textDecoration: "none",
+          boxShadow: "0 6px 16px rgba(34,197,94,0.25)"
+        }}
       >
-        WhatsApp
+        Abrir WhatsApp
       </a>
     </section>
   );
