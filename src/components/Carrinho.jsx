@@ -85,6 +85,7 @@ export default function Carrinho() {
 
       <div
         ref={ref}
+        className="carrinho-mobile"
         style={{
           position: "fixed",
           top: navHeight,
@@ -100,14 +101,21 @@ export default function Carrinho() {
           flexDirection: "column"
         }}
       >
+        <style>{`
+          @media (max-width: 400px) {
+            .carrinho-mobile {
+              width: 100% !important;
+            }
+          }
+        `}</style>
         {/* HEADER */}
-        <div style={{ padding: "20px", borderBottom: "1px solid #eee", textAlign: "center", position: "relative" }}>
+        <div style={{ padding: "20px", borderBottom: "1px solid #eee", textAlign: "center", position: "relative", flexShrink: 0 }}>
           <h2 style={{ fontWeight: "bold", fontSize: "20px", color: "#ec4899" }}>Seu Pedido</h2>
           <button onClick={() => setAberto(false)} style={{ position: "absolute", right: "16px", top: "16px", fontSize: "20px", border: "none", background: "none", cursor: "pointer" }}>✕</button>
         </div>
 
-        {/* ITENS */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "16px" }}>
+        {/* ITENS - área rolável */}
+        <div style={{ flex: 1, overflowY: "auto", padding: "16px", minHeight: 0 }}>
           {carrinho.length === 0 && (
             <p style={{ textAlign: "center", color: "#666", padding: "40px 0" }}>Carrinho vazio</p>
           )}
@@ -145,7 +153,7 @@ export default function Carrinho() {
         </div>
 
         {/* RODAPÉ */}
-        <div style={{ padding: "16px", borderTop: "1px solid #eee", marginTop: "auto", display: "flex", flexDirection: "column", gap: "10px" }}>
+        <div style={{ padding: "16px", borderTop: "1px solid #eee", marginTop: "auto", display: "flex", flexDirection: "column", gap: "10px", flexShrink: 0 }}>
           {/* CEP E ENDEREÇO */}
           <div>
             {rua && (
