@@ -2,12 +2,12 @@ import { useCarrinho } from "../context/CarrinhoContext";
 import { useState, useEffect } from "react";
 
 export default function ToastCarrinho() {
-  const { ultimoItemAdicionado } = useCarrinho();
+  const { ultimoItemAdicionado, timestampAdicao } = useCarrinho();
   const [visivel, setVisivel] = useState(false);
   const [itemAtual, setItemAtual] = useState("");
 
   useEffect(() => {
-    if (ultimoItemAdicionado) {
+    if (ultimoItemAdicionado && timestampAdicao) {
       setItemAtual(ultimoItemAdicionado);
       setVisivel(true);
       
@@ -17,7 +17,7 @@ export default function ToastCarrinho() {
 
       return () => clearTimeout(timer);
     }
-  }, [ultimoItemAdicionado]);
+  }, [timestampAdicao]);
 
   if (!visivel) return null;
 
@@ -29,30 +29,42 @@ export default function ToastCarrinho() {
       transform: "translateX(-50%)",
       backgroundColor: "#22c55e",
       color: "white",
-      padding: "12px 20px",
-      borderRadius: "12px",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-      zIndex: 100,
+      padding: "14px 24px",
+      borderRadius: "50px",
+      boxShadow: "0 4px 20px rgba(34, 197, 94, 0.3)",
+      zIndex: 200,
       display: "flex",
       alignItems: "center",
-      gap: "10px",
+      gap: "12px",
       fontWeight: "600",
-      animation: "fadeInDown 0.3s ease"
+      fontSize: "15px",
+      animation: "toastSlideIn 0.4s ease"
     }}>
       <style>{`
-        @keyframes fadeInDown {
+        @keyframes toastSlideIn {
           from {
             opacity: 0;
-            transform: translateX(-50%) translateY(-20px);
+            transform: translateX(-50%) translateY(-30px) scale(0.9);
           }
           to {
             opacity: 1;
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-50%) translateY(0) scale(1);
           }
         }
       `}</style>
-      <span style={{ fontSize: "20px" }}>✓</span>
-      <span>{itemAtual} adicionado ao carrinho</span>
+      <span style={{ 
+        backgroundColor: "white", 
+        color: "#22c55e", 
+        borderRadius: "50%", 
+        width: "28px", 
+        height: "28px", 
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "16px",
+        fontWeight: "bold"
+      }}>✓</span>
+      <span>"{itemAtual}" adicionado ao carrinho</span>
     </div>
   );
 }

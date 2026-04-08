@@ -22,6 +22,7 @@ export function CarrinhoProvider({ children }) {
   const [enderecoValido, setEnderecoValido] = useState(false);
 
   const [ultimoItemAdicionado, setUltimoItemAdicionado] = useState(null);
+  const [timestampAdicao, setTimestampAdicao] = useState(0);
 
   const normalize = (str) =>
     (str || "")
@@ -93,11 +94,14 @@ export function CarrinhoProvider({ children }) {
   }
 
   function adicionar(produto) {
+    const timestamp = Date.now();
+    setTimestampAdicao(timestamp);
+    setUltimoItemAdicionado(produto.nome);
+    
     setCarrinho((prev) => {
       const existe = prev.find((item) => item.id === produto.id);
 
       if (existe) {
-        setUltimoItemAdicionado(produto.nome);
         return prev.map((item) =>
           item.id === produto.id
             ? { ...item, quantidade: item.quantidade + 1 }
@@ -105,7 +109,6 @@ export function CarrinhoProvider({ children }) {
         );
       }
 
-      setUltimoItemAdicionado(produto.nome);
       return [
         ...prev,
         {
@@ -228,7 +231,8 @@ CEP: ${cep}
         gerarMensagemWhatsApp,
 
         ultimoItemAdicionado,
-        setUltimoItemAdicionado
+        setUltimoItemAdicionado,
+        timestampAdicao
       }}
     >
       {children}
