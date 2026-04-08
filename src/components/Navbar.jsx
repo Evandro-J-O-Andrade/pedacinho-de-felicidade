@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { produtos } from "../data/produtos";
 
 export default function Navbar() {
@@ -8,7 +8,7 @@ export default function Navbar() {
   const [paginaAtiva, setPaginaAtiva] = useState("/");
   const menuRef = useRef();
   const toggleRef = useRef();
-  const todos = produtos.flatMap((c) => c.itens);
+  const todos = useMemo(() => produtos.flatMap((c) => c.itens), []);
 
   useEffect(() => {
     setPaginaAtiva(window.location.pathname + window.location.hash);
@@ -37,13 +37,21 @@ export default function Navbar() {
     }
   }
 
-  function fecharBusca() {
-    setResultados([]);
-    setBusca("");
+  function handleBuscaKeyDown(e) {
+    if (e.key === "Enter" && busca.length > 0) {
+      window.location.href = "/#cardapio";
+      setBusca("");
+      setResultados([]);
+    }
   }
 
-  function handleResultadoClick() {
-    fecharBusca();
+  function handleResultadoClick(e, item) {
+    e.preventDefault();
+    setBusca("");
+    setResultados([]);
+    setTimeout(() => {
+      window.location.href = "/#cardapio";
+    }, 100);
   }
 
   function handleInputBlur() {
@@ -68,7 +76,8 @@ export default function Navbar() {
     >
       <style>{`
         .navbar {
-          background: linear-gradient(180deg, #6b5344 0%, #8b7355 30%, #6b5344 60%, #5c3d2e 80%, #4a3728 100%);
+          background: linear-gradient(180deg, rgba(107,83,68,0.92) 0%, rgba(139,115,85,0.92) 30%, rgba(107,83,68,0.92) 60%, rgba(92,61,46,0.95) 80%, rgba(74,55,40,0.98) 100%);
+          backdrop-filter: blur(12px);
           box-shadow: 0 2px 15px rgba(74,55,40,0.4);
         }
         .nav-links a {
@@ -98,6 +107,14 @@ export default function Navbar() {
           .navbar {
             background: linear-gradient(180deg, #5c3d2e 0%, #4a3728 100%);
             box-shadow: none;
+            padding: 10px 12px 12px !important;
+          }
+          .navbar .nav-logo-img {
+            width: 80px !important;
+            height: 80px !important;
+          }
+          .navbar .nav-logo-text {
+            font-size: 18px !important;
           }
           .nav-links a {
             color: #f5f5f5 !important;
@@ -148,8 +165,8 @@ export default function Navbar() {
       <div className="nav-container" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
       {/* LOGO */}
         <div className="nav-row" style={{ display: "flex", alignItems: "center", gap: "0px" }}>
-          <img src="/img/logo.png" style={{ width: "150px", height: "150px", objectFit: "contain" }} alt="logo" />
-          <span
+          <img className="nav-logo-img" src="/img/logo.png" style={{ width: "150px", height: "150px", objectFit: "contain" }} alt="logo" />
+          <span className="nav-logo-text"
             style={{
               fontSize: "38px",
               fontWeight: 900,
@@ -158,7 +175,7 @@ export default function Navbar() {
               textShadow: "0 2px 4px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.2)"
             }}
           >
-            Pedacinho de Felicidade
+            Pedacinhos de Felicidade
           </span>
           <button
             ref={toggleRef}
@@ -191,6 +208,7 @@ export default function Navbar() {
             placeholder="Buscar..."
             value={busca}
             onChange={handleBusca}
+            onKeyDown={handleBuscaKeyDown}
             onBlur={handleInputBlur}
             style={{
               maxWidth: "320px",
@@ -219,7 +237,7 @@ export default function Navbar() {
                 <a 
                   key={item.id} 
                   href="#cardapio" 
-                  onClick={handleResultadoClick}
+                  onClick={(e) => handleResultadoClick(e, item)}
                   style={{ display: "block", padding: "12px", borderBottom: "1px solid rgba(255,255,255,0.2)", color: "#e8dcc8", textDecoration: "none", cursor: "pointer" }}
                 >
                   {item.nome}

@@ -73,7 +73,20 @@ export default function MonteSeuKit() {
     .filter((item) => item.nome.toLowerCase().includes(busca.toLowerCase()));
 
   return (
-    <section id="monte-seu-kit" style={{ paddingTop: "100px", paddingBottom: "60px", backgroundColor: "#fff7f9", minHeight: "100vh" }}>
+    <div style={{ paddingTop: "150px", minHeight: "100vh", backgroundColor: "#fff7f9" }}>
+      <style>{`
+        @media only screen and (min-width: 350px) and (max-width: 1024px) {
+          .monte-kit-container {
+            paddingTop: 120px !important;
+          }
+        }
+        @media only screen and (max-width: 349px) {
+          .monte-kit-container {
+            paddingTop: 110px !important;
+          }
+        }
+      `}</style>
+      <section className="monte-kit-container" id="monte-seu-kit" style={{ paddingBottom: "60px" }}>
 
       {/* VOLTAR */}
       <div style={{ maxWidth: "1100px", margin: "0 auto 12px auto" }}>
@@ -167,14 +180,17 @@ export default function MonteSeuKit() {
           max-width: 1400px;
           margin: 0 auto;
         }
-        @media (max-width: 1200px) {
+        @media only screen and (min-width: 901px) and (max-width: 1200px) {
           .kit-grid { grid-template-columns: repeat(4, 1fr) !important; }
         }
-        @media (max-width: 900px) {
+        @media only screen and (min-width: 601px) and (max-width: 900px) {
           .kit-grid { grid-template-columns: repeat(3, 1fr) !important; }
         }
-        @media (max-width: 600px) {
+        @media only screen and (min-width: 350px) and (max-width: 600px) {
           .kit-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media only screen and (max-width: 349px) {
+          .kit-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
       <div className="kit-grid">
@@ -285,5 +301,6 @@ export default function MonteSeuKit() {
       )}
 
     </section>
+    </div>
   );
 }

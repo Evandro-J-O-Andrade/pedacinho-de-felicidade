@@ -14,6 +14,9 @@ export function CarrinhoProvider({ children }) {
   const [carrinho, setCarrinho] = useState(getStorageCarrinho);
   const [aberto, setAberto] = useState(false);
 
+  const [nomeCliente, setNomeCliente] = useState("");
+  const [telefoneCliente, setTelefoneCliente] = useState("");
+
   const [cep, setCep] = useState("");
   const [bairro, setBairro] = useState("");
   const [cidade, setCidade] = useState("");
@@ -97,7 +100,7 @@ export function CarrinhoProvider({ children }) {
     const timestamp = Date.now();
     setTimestampAdicao(timestamp);
     setUltimoItemAdicionado(produto.nome);
-    
+
     setCarrinho((prev) => {
       const existe = prev.find((item) => item.id === produto.id);
 
@@ -153,21 +156,30 @@ export function CarrinhoProvider({ children }) {
     [carrinho]
   );
 
-  const freteAplicado = useMemo(
+  const freightAplicado = useMemo(
     () => (totalValor >= FRETE_GRATIS_MINIMO ? 0 : Number(valorFrete)),
     [totalValor, valorFrete]
   );
 
   const totalComFrete = useMemo(
-    () => Number(totalValor) + freteAplicado,
-    [totalValor, freteAplicado]
+    () => Number(totalValor) + freightAplicado,
+    [totalValor, freightAplicado]
   );
 
-  const freteGratis = totalValor >= FRETE_GRATIS_MINIMO;
+  const freightGratis = totalValor >= FRETE_GRATIS_MINIMO;
 
   useEffect(() => {
     localStorage.setItem("carrinho", JSON.stringify(carrinho));
   }, [carrinho]);
+
+  function pedidoValido() {
+    return (
+      carrinho.length > 0 &&
+      nomeCliente.trim() !== "" &&
+      cep.length === 8 &&
+      enderecoValido
+    );
+  }
 
   function gerarMensagemWhatsApp() {
     const itens = carrinho.map(
@@ -175,12 +187,15 @@ export function CarrinhoProvider({ children }) {
         `• ${i.nome} (x${i.quantidade}) - R$ ${(i.preco * i.quantidade).toFixed(2)}`
     );
 
-    const textoFrete = freteGratis
+    const textoFrete = freightGratis
       ? "Grátis"
-      : `R$ ${freteAplicado.toFixed(2)}`;
+      : `R$ ${freightAplicado.toFixed(2)}`;
 
     return encodeURIComponent(
 `🍰 *NOVO PEDIDO - SITE*
+
+👤 *Cliente:* ${nomeCliente}
+📞 *Telefone:* ${telefoneCliente}
 
 🛍️ *Itens:*
 ${itens.join("\n")}
@@ -209,6 +224,11 @@ CEP: ${cep}
         aberto,
         setAberto,
 
+        nomeCliente,
+        setNomeCliente,
+        telefoneCliente,
+        setTelefoneCliente,
+
         cep,
         setCep,
         bairro,
@@ -219,8 +239,8 @@ CEP: ${cep}
         buscarCep,
         fretes,
         rua,
-        freteAplicado,
-        freteGratis,
+        freightAplicado,
+        freightGratis,
         FRETE_GRATIS_MINIMO,
         enderecoValido,
 
@@ -229,6 +249,7 @@ CEP: ${cep}
         totalComFrete,
 
         gerarMensagemWhatsApp,
+        pedidoValido,
 
         ultimoItemAdicionado,
         setUltimoItemAdicionado,

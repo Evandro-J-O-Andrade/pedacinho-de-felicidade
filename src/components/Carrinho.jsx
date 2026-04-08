@@ -7,28 +7,15 @@ export default function Carrinho() {
     aberto,
     setAberto,
     adicionar,
-    disminuir,
+    diminuir,
     remover,
     totalItens,
-    totalValor,
-    totalComFrete,
-    buscarCep,
-    cep,
-    bairro,
-    cidade,
-    freteAplicado,
-    freteGratis,
-    FRETE_GRATIS_MINIMO,
-    rua,
-    valorFrete,
-    gerarMensagemWhatsApp
+    totalValor
   } = useCarrinho();
 
   const ref = useRef();
   const [itemAberto, setItemAberto] = useState(null);
   const [navHeight, setNavHeight] = useState(80);
-
-  const numero = "5511971914833";
 
   useEffect(() => {
     function handleClick(e) {
@@ -51,12 +38,6 @@ export default function Carrinho() {
     return () => window.removeEventListener("resize", updateNav);
   }, []);
 
-  function finalizar() {
-    window.open(`https://wa.me/${numero}?text=${gerarMensagemWhatsApp()}`);
-  }
-
-  const totalGeral = freteGratis ? totalValor : totalComFrete;
-
   return (
     <>
       <style>{`
@@ -64,14 +45,10 @@ export default function Carrinho() {
           border: none;
           cursor: pointer;
           transition: all 0.2s ease;
-          font-family: 'Poppins', sans-serif;
         }
         .carrinho-btn:hover {
           transform: translateY(-2px);
           box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .carrinho-btn:active {
-          transform: translateY(0);
         }
         .carrinho-control {
           width: 28px;
@@ -86,22 +63,9 @@ export default function Carrinho() {
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: all 0.2s ease;
         }
         .carrinho-control:hover {
           background: #fbcfe8;
-        }
-        .carrinho-remove {
-          background: none;
-          border: none;
-          color: #f43f5e;
-          cursor: pointer;
-          font-size: 14px;
-          opacity: 0.7;
-          transition: opacity 0.2s;
-        }
-        .carrinho-remove:hover {
-          opacity: 1;
         }
       `}</style>
 
@@ -120,15 +84,12 @@ export default function Carrinho() {
           cursor: "pointer",
           zIndex: 40,
           fontWeight: "600",
-          fontSize: "15px",
           display: "flex",
           alignItems: "center",
-          gap: "8px",
-          transition: "all 0.3s ease"
+          gap: "8px"
         }}
       >
-        <span style={{ fontSize: "18px" }}>🛒</span>
-        <span>{totalItens} {totalItens === 1 ? "item" : "itens"}</span>
+        🛒 {totalItens} {totalItens === 1 ? "item" : "itens"}
       </div>
 
       {/* BACKDROP */}
@@ -172,14 +133,14 @@ export default function Carrinho() {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          opacity: 0.05,
+          opacity: 0.18,
           pointerEvents: "none",
           zIndex: 0
         }}>
           <img 
             src="/img/logo.png" 
             alt="" 
-            style={{ width: "250px", height: "250px", objectFit: "contain" }}
+            style={{ width: "380px", height: "380px", objectFit: "contain" }}
           />
         </div>
 
@@ -187,36 +148,14 @@ export default function Carrinho() {
         <div style={{ 
           padding: "20px 16px", 
           borderBottom: "1px solid #fce7f3", 
-          position: "relative",
+          textAlign: "center",
           background: "linear-gradient(135deg, #fff0f5 0%, #fdf2f8 100%)",
+          position: "relative",
           zIndex: 1
         }}>
-          <h2 style={{ 
-            textAlign: "center", 
-            color: "#ec4899",
-            fontWeight: "700",
-            fontSize: "22px",
-            margin: 0,
-            fontFamily: "'Poppins', sans-serif"
-          }}>
+          <h2 style={{ color: "#ec4899", fontWeight: "700", fontSize: "22px", margin: 0 }}>
             ✨ Seu Pedido
           </h2>
-          <button
-            onClick={() => setAberto(false)}
-            style={{
-              position: "absolute",
-              right: "16px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              fontSize: "22px",
-              border: "none",
-              background: "none",
-              cursor: "pointer",
-              color: "#9ca3af"
-            }}
-          >
-            ✕
-          </button>
         </div>
 
         {/* LISTA */}
@@ -238,18 +177,13 @@ export default function Carrinho() {
 
             return (
               <div key={item.id} style={{ 
-                marginBottom: "14px", 
-                borderBottom: "1px solid #fce7f3", 
-                paddingBottom: "14px",
+                marginBottom: "14px",
                 backgroundColor: "rgba(255,255,255,0.7)",
                 borderRadius: "12px",
                 padding: "12px"
               }}>
-                
-                {/* LINHA PRINCIPAL */}
                 <div style={{ display: "flex", gap: "12px" }}>
                   
-                  {/* IMAGEM */}
                   <div style={{ position: "relative" }}>
                     <img
                       src={item.imagem || "/img/produtos/bolo.png"}
@@ -281,45 +215,25 @@ export default function Carrinho() {
                     </div>
                   </div>
 
-                  {/* INFO */}
                   <div style={{ flex: 1 }}>
                     <div
                       onClick={() => setItemAberto(abertoItem ? null : item.id)}
-                      style={{ 
-                        fontWeight: "600", 
-                        cursor: "pointer",
-                        color: "#4b5563",
-                        fontSize: "14px",
-                        lineHeight: "1.3"
-                      }}
+                      style={{ fontWeight: "600", cursor: "pointer", color: "#4b5563" }}
                     >
                       {item.nome}
                     </div>
 
-                    <span style={{ color: "#22c55e", fontWeight: "700", fontSize: "15px", display: "block", marginTop: "4px" }}>
+                    <span style={{ color: "#22c55e", fontWeight: "700", fontSize: "15px" }}>
                       R$ {(item.preco * item.quantidade).toFixed(2)}
                     </span>
 
-                    {/* CONTROLES */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "8px" }}>
+                    <div style={{ display: "flex", gap: "10px", marginTop: "8px" }}>
+                      <button className="carrinho-control" onClick={() => diminuir(item.id)}>−</button>
+                      <span style={{ fontWeight: "600", minWidth: "24px", textAlign: "center" }}>{item.quantidade}</span>
+                      <button className="carrinho-control" onClick={() => adicionar(item)}>+</button>
                       <button 
-                        className="carrinho-control"
-                        onClick={() => diminuir(item.id)}
-                      >
-                        −
-                      </button>
-                      <span style={{ fontWeight: "600", minWidth: "24px", textAlign: "center", color: "#4b5563" }}>
-                        {item.quantidade}
-                      </span>
-                      <button 
-                        className="carrinho-control"
-                        onClick={() => adicionar(item)}
-                      >
-                        +
-                      </button>
-                      <button 
-                        className="carrinho-remove"
-                        onClick={() => remover(item.id)}
+                        onClick={() => remover(item.id)} 
+                        style={{ background: "none", border: "none", color: "#f43f5e", cursor: "pointer", fontSize: "14px" }}
                       >
                         ✕
                       </button>
@@ -327,7 +241,6 @@ export default function Carrinho() {
                   </div>
                 </div>
 
-                {/* DESCRIÇÃO */}
                 {abertoItem && (
                   <div style={{ 
                     fontSize: "12px", 
@@ -335,8 +248,7 @@ export default function Carrinho() {
                     marginTop: "10px",
                     backgroundColor: "#fff5f8",
                     padding: "8px 12px",
-                    borderRadius: "8px",
-                    lineHeight: "1.4"
+                    borderRadius: "8px"
                   }}>
                     📝 {item.descricao}
                   </div>
@@ -346,103 +258,40 @@ export default function Carrinho() {
           })}
         </div>
 
-        {/* FOOTER FIXO */}
-        <div style={{
-          padding: "16px",
+        {/* FOOTER */}
+        <div style={{ 
+          padding: "16px", 
           borderTop: "1px solid #fce7f3",
           background: "linear-gradient(180deg, #fff5f8 0%, #fff0f5 100%)",
           position: "relative",
           zIndex: 1
         }}>
-          
-          {/* CEP */}
-          <input
-            type="text"
-            placeholder="Digite seu CEP"
-            onChange={(e) => {
-              const valor = e.target.value.replace(/\D/g, "").slice(0, 8);
-              const formatado = valor.length > 5 ? valor.replace(/(\d{5})(\d+)/, "$1-$2") : valor;
-              e.target.value = formatado;
-              buscarCep(formatado);
-            }}
-            style={{
-              width: "100%",
-              padding: "12px 16px",
-              borderRadius: "12px",
-              border: "1px solid #fce7f3",
-              marginBottom: "10px",
-              fontSize: "14px",
-              outline: "none",
-              backgroundColor: "white",
-              color: "#4b5563"
-            }}
-          />
-
-          {/* ENDEREÇO */}
-          {bairro && (
-            <p style={{ fontSize: "12px", textAlign: "center", color: "#9ca3af", marginBottom: "8px" }}>
-              📍 {bairro} - {cidade}
-            </p>
-          )}
-
-          {/* FRETE GRÁTIS INFO */}
-          {totalValor < FRETE_GRATIS_MINIMO && (
-            <p style={{ fontSize: "11px", textAlign: "center", color: "#f472b6", marginTop: "4px" }}>
-              🚚 Frete grátis para compras acima de R$ {FRETE_GRATIS_MINIMO.toFixed(2)}
-            </p>
-          )}
-          {freteGratis && (
-            <p style={{ fontSize: "11px", textAlign: "center", color: "#22c55e", fontWeight: "600", marginTop: "4px" }}>
-              🎉 Frete grátis aplicado!
-            </p>
-          )}
-
-          {/* TOTAL */}
-          <div style={{ 
+          <p style={{ 
             textAlign: "center", 
             fontWeight: "700", 
-            marginTop: "12px",
-            fontSize: "20px",
-            color: "#ec4899"
+            marginTop: "12px", 
+            fontSize: "20px", 
+            color: "#ec4899" 
           }}>
-            Total: R$ {totalGeral.toFixed(2)}
-          </div>
-
-          {/* BOTÕES */}
-          <button
-            onClick={finalizar}
-            className="carrinho-btn"
-            style={{
-              width: "100%",
-              background: "linear-gradient(135deg, #22c55e 0%, #4ade80 100%)",
-              color: "white",
-              padding: "14px",
-              borderRadius: "14px",
-              border: "none",
-              marginTop: "12px",
-              fontWeight: "600",
-              fontSize: "16px"
-            }}
-          >
-            💬 Finalizar no WhatsApp
-          </button>
+            Subtotal: R$ {totalValor.toFixed(2)}
+          </p>
 
           <button
             onClick={() => window.location.href = "/carrinho"}
             className="carrinho-btn"
             style={{
               width: "100%",
-              marginTop: "8px",
-              padding: "12px",
-              borderRadius: "12px",
-              border: "2px solid #fce7f3",
-              backgroundColor: "white",
-              color: "#ec4899",
+              marginTop: "12px",
+              padding: "14px",
+              background: "linear-gradient(135deg, #22c55e 0%, #4ade80 100%)",
+              color: "white",
+              border: "none",
+              borderRadius: "14px",
               fontWeight: "600",
-              fontSize: "14px"
+              fontSize: "16px"
             }}
           >
-            📋 Ver carrinho completo
+            💰 Finalizar Compra
           </button>
 
           <button
@@ -451,16 +300,17 @@ export default function Carrinho() {
             style={{
               width: "100%",
               marginTop: "8px",
-              padding: "12px",
-              borderRadius: "12px",
-              border: "1px solid #e5e7eb",
-              backgroundColor: "white",
-              color: "#6b7280",
+              padding: "10px",
+              border: "1px dashed #fce7f3",
+              borderRadius: "20px",
+              backgroundColor: "transparent",
+              color: "#ec4899",
               fontWeight: "500",
-              fontSize: "14px"
+              fontSize: "13px",
+              letterSpacing: "0.5px"
             }}
           >
-            ← Continuar comprando
+            ← Continuar compras
           </button>
         </div>
       </div>

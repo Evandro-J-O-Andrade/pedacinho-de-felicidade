@@ -1,32 +1,51 @@
 import { useState } from "react";
+import { useCarrinho } from "../context/CarrinhoContext";
 import { produtos } from "../data/produtos";
 import ProdutoCard from "./ProdutoCard";
 import Lightbox from "./Lightbox";
 
 export default function ProdutosPage() {
+  const { adicionar } = useCarrinho();
   const [categoria, setCategoria] = useState("todos");
   const [busca, setBusca] = useState("");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
 
   const categorias = ["todos", ...produtos.map((c) => c.categoria)];
 
-  const produtosFiltrados = produtos
+  const itensFiltrados = produtos
     .filter((c) => categoria === "todos" || c.categoria === categoria)
     .flatMap((c) => c.itens)
     .filter((item) => item.nome.toLowerCase().includes(busca.toLowerCase()));
+
+  function formatar(v) {
+    return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  }
 
   return (
     <>
       <div
         style={{
-          paddingTop: "120px",
+          paddingTop: "180px",
           paddingBottom: "60px",
           minHeight: "100vh",
           backgroundColor: "#fff7f9"
         }}
       >
+        <style>{`
+          @media only screen and (min-width: 350px) and (max-width: 1024px) {
+            .produtos-page {
+              paddingTop: 130px !important;
+            }
+          }
+          @media only screen and (max-width: 349px) {
+            .produtos-page {
+              paddingTop: 120px !important;
+            }
+          }
+        `}</style>
+
         {/* HEADER */}
-        <div style={{ textAlign: "center", marginBottom: "30px", padding: "0 20px" }}>
+        <div className="produtos-page" style={{ textAlign: "center", marginBottom: "30px", padding: "0 20px" }}>
           <h1
             style={{
               fontSize: "36px",
@@ -75,106 +94,79 @@ export default function ProdutosPage() {
         </div>
 
         {/* BUSCA E CATEGORIAS */}
-        <div style={{ maxWidth: "1100px", margin: "0 auto 20px auto", textAlign: "center" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 20px" }}>
           <input
             type="text"
-            placeholder="Buscar produtos..."
+            placeholder="Buscar produto..."
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             style={{
               width: "100%",
-              maxWidth: "400px",
-              padding: "14px",
-              border: "1px solid #e5e7eb",
-              borderRadius: "10px",
-              marginBottom: "12px",
+              padding: "14px 20px",
+              borderRadius: "12px",
+              border: "2px solid #fce7f3",
+              marginBottom: "16px",
+              fontSize: "16px",
               outline: "none"
             }}
           />
 
-          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "8px", overflowX: "auto", paddingBottom: "12px", flexWrap: "wrap", justifyContent: "center" }}>
             {categorias.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setCategoria(cat)}
                 style={{
-                  padding: "10px 18px",
-                  borderRadius: "9999px",
-                  border: "2px solid #ec4899",
-                  backgroundColor: categoria === cat ? "#ec4899" : "#fff",
-                  color: categoria === cat ? "#fff" : "#ec4899",
+                  padding: "10px 20px",
+                  borderRadius: "25px",
+                  border: cat === categoria ? "none" : "1px solid #fce7f3",
+                  backgroundColor: cat === categoria ? "#ec4899" : "white",
+                  color: cat === categoria ? "white" : "#5c3d2e",
+                  fontWeight: "600",
                   cursor: "pointer",
-                  fontWeight: 700,
-                  fontSize: "14px",
-                  transition: "all 0.3s ease"
+                  whiteSpace: "nowrap"
                 }}
               >
-                {cat}
+                {cat === "todos" ? "Todos" : cat}
               </button>
             ))}
           </div>
         </div>
 
-        {/* MICROCOPY */}
-        <p
-          style={{
-            textAlign: "center",
-            marginBottom: "20px",
-            color: "#777",
-            fontSize: "14px"
-          }}
-        >
-          Clique no produto para ver maior ou adicionar ao carrinho 👇
-        </p>
-
-        {/* GRID PRODUTOS - 5 COLUNAS */}
+        {/* GRID */}
         <style>{`
           .produtos-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            padding: 0 20px;
-            max-width: 1400px;
+            padding: 20px;
+            max-width: 1100px;
             margin: 0 auto;
           }
-          @media (max-width: 1200px) {
-            .produtos-grid { grid-template-columns: repeat(4, 1fr) !important; }
-          }
-          @media (max-width: 900px) {
+          @media only screen and (min-width: 901px) and (max-width: 1100px) {
             .produtos-grid { grid-template-columns: repeat(3, 1fr) !important; }
           }
-          @media (max-width: 600px) {
+          @media only screen and (min-width: 601px) and (max-width: 900px) {
             .produtos-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          }
+          @media only screen and (min-width: 350px) and (max-width: 600px) {
+            .produtos-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; padding: 10px !important; }
+          }
+          @media only screen and (max-width: 349px) {
+            .produtos-grid { grid-template-columns: 1fr !important; gap: 10px !important; padding: 10px !important; }
           }
         `}</style>
         <div className="produtos-grid">
-          {produtosFiltrados.map((item) => (
-            <ProdutoCard
-              key={item.id}
-              item={item}
-              onImageClick={setImagemAmpliada}
-            />
+          {itensFiltrados.map((item) => (
+            <ProdutoCard key={item.id} item={item} onImageClick={setImagemAmpliada} />
           ))}
         </div>
 
-        {/* CTA KIT FESTA */}
-        <div style={{ textAlign: "center", marginTop: "40px" }}>
-          <a
-            href="/monte-seu-kit"
-            style={{
-              background: "#ec4899",
-              color: "#fff",
-              padding: "14px 28px",
-              borderRadius: "999px",
-              fontWeight: "bold",
-              textDecoration: "none",
-              boxShadow: "0 4px 12px rgba(236,72,153,0.4)",
-              display: "inline-block"
-            }}
-          >
-            🎉 Montar Kit Festa
-          </a>
-        </div>
+        {itensFiltrados.length === 0 && (
+          <p style={{ textAlign: "center", color: "#888", marginTop: "40px" }}>
+            Nenhum produto encontrado 😢
+          </p>
+        )}
       </div>
 
       {/* LIGHTBOX */}
