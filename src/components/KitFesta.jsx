@@ -79,8 +79,9 @@ export default function KitFesta() {
                   adicionar({
                     id: kit.id,
                     nome: kit.nome,
-                    descricao: kit.descricao,
+                    descricao: `${kit.descricao} - ${kit.itens.join(", ")}`,
                     preco: kit.preco,
+                    imagem: kit.imagem,
                     tipo: "un"
                   })
                 }

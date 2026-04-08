@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 
@@ -9,8 +10,10 @@ import { CarrinhoProvider } from "./context/CarrinhoContext";
 // ROOT
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <CarrinhoProvider>
-      <App />
-    </CarrinhoProvider>
+    <BrowserRouter>
+      <CarrinhoProvider>
+        <App />
+      </CarrinhoProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

@@ -27,8 +27,8 @@ export default function Carrinho() {
   const ref = useRef();
   const [itemAberto, setItemAberto] = useState(null);
   const [navHeight, setNavHeight] = useState(80);
+
   const numero = "5511971914833";
-  const nome = "Esmeralda";
 
   useEffect(() => {
     function handleClick(e) {
@@ -42,9 +42,8 @@ export default function Carrinho() {
 
   useEffect(() => {
     function updateNav() {
-      const nav = typeof document !== "undefined" ? document.getElementById("navbar") : null;
+      const nav = document.getElementById("navbar");
       const altura = nav?.offsetHeight || 80;
-      // encosta no navbar com pequeno respiro
       setNavHeight(altura + 8);
     }
     updateNav();
@@ -69,29 +68,41 @@ export default function Carrinho() {
           right: "16px",
           backgroundColor: "#ec4899",
           color: "white",
-          padding: "12px 20px",
+          padding: "12px 18px",
           borderRadius: "9999px",
           boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
           cursor: "pointer",
-          zIndex: 40
+          zIndex: 40,
+          fontWeight: "600"
         }}
       >
-        🛒 ({totalItens})
+        🛒 {totalItens}
       </div>
 
+      {/* BACKDROP */}
       {aberto && (
-        <div style={{ position: "fixed", top: navHeight, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.4)", zIndex: 40 }}></div>
+        <div
+          style={{
+            position: "fixed",
+            top: navHeight,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0,0,0,0.4)",
+            zIndex: 40
+          }}
+        />
       )}
 
+      {/* CARRINHO */}
       <div
         ref={ref}
-        className="carrinho-mobile"
         style={{
           position: "fixed",
           top: navHeight,
           right: 0,
           bottom: 0,
-          width: "340px",
+          width: "360px",
           backgroundColor: "white",
           boxShadow: "-4px 0 20px rgba(0,0,0,0.1)",
           zIndex: 50,
@@ -101,50 +112,84 @@ export default function Carrinho() {
           flexDirection: "column"
         }}
       >
-        <style>{`
-          @media (max-width: 400px) {
-            .carrinho-mobile {
-              width: 100% !important;
-            }
-          }
-        `}</style>
         {/* HEADER */}
-        <div style={{ padding: "20px", borderBottom: "1px solid #eee", textAlign: "center", position: "relative", flexShrink: 0 }}>
-          <h2 style={{ fontWeight: "bold", fontSize: "20px", color: "#ec4899" }}>Seu Pedido</h2>
-          <button onClick={() => setAberto(false)} style={{ position: "absolute", right: "16px", top: "16px", fontSize: "20px", border: "none", background: "none", cursor: "pointer" }}>✕</button>
+        <div style={{ padding: "16px", borderBottom: "1px solid #eee", position: "relative" }}>
+          <h2 style={{ textAlign: "center", color: "#ec4899" }}>Seu Pedido</h2>
+          <button
+            onClick={() => setAberto(false)}
+            style={{
+              position: "absolute",
+              right: "16px",
+              top: "12px",
+              fontSize: "20px",
+              border: "none",
+              background: "none",
+              cursor: "pointer"
+            }}
+          >
+            ✕
+          </button>
         </div>
 
-        {/* ITENS - área rolável */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "16px", minHeight: 0 }}>
+        {/* LISTA */}
+        <div style={{ flex: 1, overflowY: "auto", padding: "12px" }}>
           {carrinho.length === 0 && (
-            <p style={{ textAlign: "center", color: "#666", padding: "40px 0" }}>Carrinho vazio</p>
+            <p style={{ textAlign: "center", color: "#777" }}>
+              Carrinho vazio
+            </p>
           )}
 
           {carrinho.map((item) => {
-            const itemExpansivel = itemAberto === item.id;
+            const abertoItem = itemAberto === item.id;
 
             return (
-              <div key={item.id} style={{ borderBottom: "1px solid #eee", paddingBottom: "12px", marginBottom: "12px" }}>
-                <div
-                  onClick={() => setItemAberto(itemExpansivel ? null : item.id)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <h3 style={{ fontWeight: "600", fontSize: "15px" }}>{item.nome}</h3>
-                </div>
+              <div key={item.id} style={{ marginBottom: "12px", borderBottom: "1px solid #eee", paddingBottom: "10px" }}>
+                
+                {/* LINHA PRINCIPAL */}
+                <div style={{ display: "flex", gap: "10px" }}>
+                  
+                  {/* IMAGEM */}
+                  <img
+                    src={item.imagem || "/img/produtos/bolo.png"}
+                    alt={item.nome}
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      borderRadius: "10px",
+                      objectFit: "cover",
+                      backgroundColor: "#f0f0f0"
+                    }}
+                  />
 
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>
-                  <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                    <button onClick={() => item.quantidade > 1 ? diminuir(item.id) : remover(item.id)} style={{ width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #ddd", backgroundColor: "#fff", cursor: "pointer" }}>-</button>
-                    <span style={{ minWidth: "24px", textAlign: "center", fontWeight: "600" }}>{item.quantidade}</span>
-                    <button onClick={() => adicionar(item)} style={{ width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #ddd", backgroundColor: "#fff", cursor: "pointer" }}>+</button>
+                  {/* INFO */}
+                  <div style={{ flex: 1 }}>
+                    <div
+                      onClick={() => setItemAberto(abertoItem ? null : item.id)}
+                      style={{ fontWeight: "600", cursor: "pointer" }}
+                    >
+                      {item.nome}
+                    </div>
+
+                    <span style={{ color: "#22c55e", fontWeight: "bold" }}>
+                      R$ {(item.preco * item.quantidade).toFixed(2)}
+                    </span>
+
+                    {/* CONTROLES */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "6px" }}>
+                      <button onClick={() => diminuir(item.id)}>-</button>
+                      <span>{item.quantidade}</span>
+                      <button onClick={() => adicionar(item)}>+</button>
+                      <button onClick={() => remover(item.id)} style={{ color: "red" }}>
+                        x
+                      </button>
+                    </div>
                   </div>
-                  <span style={{ fontWeight: "bold", color: "#22c55e" }}>R$ {(item.preco * item.quantidade).toFixed(2)}</span>
-                  <button onClick={() => remover(item.id)} style={{ color: "red", border: "none", background: "none", cursor: "pointer" }}>x</button>
                 </div>
 
-                {itemExpansivel && (
-                  <div style={{ marginTop: "8px", fontSize: "12px", color: "#888", fontStyle: "italic" }} className="fade-in">
-                    {item.descricao || "Sem descrição"}
+                {/* DESCRIÇÃO */}
+                {abertoItem && (
+                  <div style={{ fontSize: "12px", color: "#777", marginTop: "6px" }}>
+                    {item.descricao}
                   </div>
                 )}
               </div>
@@ -152,66 +197,96 @@ export default function Carrinho() {
           })}
         </div>
 
-        {/* RODAPÉ */}
-        <div style={{ padding: "16px", borderTop: "1px solid #eee", marginTop: "auto", display: "flex", flexDirection: "column", gap: "10px", flexShrink: 0 }}>
-          {/* CEP E ENDEREÇO */}
-          <div>
-            {rua && (
-              <p style={{ fontSize: "13px", color: "#444", marginBottom: "4px", textAlign: "center" }}>
-                {rua}
-              </p>
-            )}
-            {bairro && (
-              <p style={{ fontSize: "13px", textAlign: "center", color: "#666", marginBottom: "6px" }}>
-                📍 {bairro} - {cidade}
-              </p>
-            )}
-            <input
-              type="text"
-              placeholder="Digite seu CEP"
-              onChange={(e) => {
-                const valor = e.target.value.replace(/\D/g, "").slice(0, 8);
-                const formatado = valor.length > 5 ? valor.replace(/(\d{5})(\d+)/, "$1-$2") : valor;
-                e.target.value = formatado;
-                buscarCep(formatado);
-              }}
-              style={{ width: "100%", padding: "12px", border: "1px solid #e5e7eb", borderRadius: "10px", outline: "none", marginBottom: "6px" }}
-            />
-          </div>
+        {/* FOOTER FIXO */}
+        <div style={{
+          padding: "14px",
+          borderTop: "1px solid #eee",
+          background: "#fff"
+        }}>
+          
+          {/* CEP */}
+          <input
+            type="text"
+            placeholder="Digite seu CEP"
+            onChange={(e) => {
+              const valor = e.target.value.replace(/\D/g, "").slice(0, 8);
+              const formatado = valor.length > 5 ? valor.replace(/(\d{5})(\d+)/, "$1-$2") : valor;
+              e.target.value = formatado;
+              buscarCep(formatado);
+            }}
+            style={{
+              width: "100%",
+              padding: "10px",
+              borderRadius: "8px",
+              border: "1px solid #ddd",
+              marginBottom: "6px"
+            }}
+          />
 
-          {/* RESUMO */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", fontSize: "14px", color: "#555", rowGap: "4px" }}>
-            <span>Subtotal</span>
-            <span style={{ textAlign: "right", fontWeight: 600 }}>R$ {totalValor.toFixed(2)}</span>
-            <span>Frete</span>
-            <span style={{ textAlign: "right", fontWeight: 600 }}>
-              {freteGratis
-                ? "Grátis"
-                : cep?.replace(/\D/g, "").length === 8
-                  ? `R$ ${valorFrete.toFixed(2)}`
-                  : "Informe o CEP"}
-            </span>
-          </div>
-          <p style={{ fontSize: "12px", textAlign: "center", color: "#777", marginTop: "-4px" }}>
-            Frete grátis para compras acima de R$ {FRETE_GRATIS_MINIMO.toFixed(2)}
-          </p>
+          {/* ENDEREÇO */}
+          {bairro && (
+            <p style={{ fontSize: "12px", textAlign: "center" }}>
+              📍 {bairro} - {cidade}
+            </p>
+          )}
+
+          {/* FRETE GRÁTIS INFO */}
+          {totalValor < FRETE_GRATIS_MINIMO && (
+            <p style={{ fontSize: "11px", textAlign: "center", color: "#888", marginTop: "4px" }}>
+              Frete grátis para compras acima de R$ {FRETE_GRATIS_MINIMO.toFixed(2)}
+            </p>
+          )}
+          {freteGratis && (
+            <p style={{ fontSize: "11px", textAlign: "center", color: "#22c55e", marginTop: "4px" }}>
+              Frete grátis aplicado!
+            </p>
+          )}
 
           {/* TOTAL */}
-          <p style={{ fontWeight: "bold", fontSize: "18px", textAlign: "center", marginTop: "4px" }}>
+          <p style={{ textAlign: "center", fontWeight: "bold", marginTop: "6px" }}>
             Total: R$ {totalGeral.toFixed(2)}
           </p>
 
-          {/* BOTÃO FINALIZAR */}
+          {/* BOTÕES */}
           <button
             onClick={finalizar}
-            style={{ width: "100%", backgroundColor: "#22c55e", color: "white", padding: "14px", borderRadius: "12px", border: "none", fontSize: "16px", fontWeight: "600", cursor: "pointer" }}
+            style={{
+              width: "100%",
+              backgroundColor: "#22c55e",
+              color: "white",
+              padding: "12px",
+              borderRadius: "10px",
+              border: "none",
+              marginTop: "8px",
+              fontWeight: "600"
+            }}
           >
-            Finalizar Pedido
+            Finalizar no WhatsApp
+          </button>
+
+          <button
+            onClick={() => window.location.href = "/carrinho"}
+            style={{
+              width: "100%",
+              marginTop: "6px",
+              padding: "10px",
+              borderRadius: "10px",
+              border: "1px solid #ddd"
+            }}
+          >
+            Ver carrinho completo
           </button>
 
           <button
             onClick={() => setAberto(false)}
-            style={{ width: "100%", border: "1px solid #e5e7eb", padding: "12px", borderRadius: "12px", backgroundColor: "#f9fafb", cursor: "pointer", fontWeight: 600 }}
+            style={{
+              width: "100%",
+              marginTop: "6px",
+              padding: "10px",
+              borderRadius: "10px",
+              border: "1px solid #ddd",
+              backgroundColor: "#f9fafb"
+            }}
           >
             Continuar comprando
           </button>

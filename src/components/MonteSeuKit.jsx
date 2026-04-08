@@ -50,6 +50,7 @@ export default function MonteSeuKit() {
 
   function adicionarKit() {
     const nomeKit = `Kit Personalizado (${selecionados.map((i) => i.nome).join(", ")})`;
+    const imagemKit = selecionados.length > 0 ? selecionados[0].imagem : "/img/produtos/bolo.png";
 
     adicionar({
       id: Date.now(),
@@ -58,6 +59,7 @@ export default function MonteSeuKit() {
         .map((i) => `${i.quantidade}x ${i.nome}`)
         .join(", "),
       preco: getTotal(),
+      imagem: imagemKit,
       tipo: "un"
     });
 

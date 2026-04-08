@@ -233,9 +233,9 @@ export default function Navbar() {
         <div ref={menuRef} className={`nav-links ${menuAberto ? "open" : ""}`} style={{ gap: "18px", fontSize: "16px", fontWeight: "600", alignItems: "flex-start", marginTop: menuAberto ? "8px" : "0" }}>
           <a href="/" className={paginaAtiva === "/" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/"); }}>Home</a>
           <a href="/#kit-festa" className={paginaAtiva.includes("kit-festa") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/#kit-festa"); }}>Kit Festa Rápido</a>
-          <a href="/monte-seu-kit" className={paginaAtiva === "/monte-seu-kit" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/monte-seu-kit"); }}>Monte seu kit</a>
-          <a href="/produtos" className={paginaAtiva === "/produtos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/produtos"); }}>Produtos</a>
           <a href="/#cardapio" className={paginaAtiva.includes("cardapio") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/#cardapio"); }}>Cardápio</a>
+          <a href="/produtos" className={paginaAtiva === "/produtos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/produtos"); }}>Produtos</a>
+          <a href="/monte-seu-kit" className={paginaAtiva === "/monte-seu-kit" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/monte-seu-kit"); }}>Monte seu kit</a>
           <a href="/#eventos" className={paginaAtiva.includes("eventos") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/#eventos"); }}>Eventos</a>
           <a href="/#contato" className={paginaAtiva.includes("contato") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/#contato"); }}>Contato</a>
         </div>

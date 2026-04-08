@@ -1,11 +1,17 @@
-import { createContext, useContext, useState, useMemo } from "react";
+import { createContext, useContext, useState, useMemo, useEffect } from "react";
 import { fretes, fretesUf } from "../data/fretes";
 
 const CarrinhoContext = createContext();
 const FRETE_GRATIS_MINIMO = 500;
 
+function getStorageCarrinho() {
+  if (typeof window === "undefined") return [];
+  const saved = localStorage.getItem("carrinho");
+  return saved ? JSON.parse(saved) : [];
+}
+
 export function CarrinhoProvider({ children }) {
-  const [carrinho, setCarrinho] = useState([]);
+  const [carrinho, setCarrinho] = useState(getStorageCarrinho);
   const [aberto, setAberto] = useState(false);
 
   const [cep, setCep] = useState("");
@@ -14,6 +20,8 @@ export function CarrinhoProvider({ children }) {
   const [rua, setRua] = useState("");
   const [valorFrete, setValorFrete] = useState(0);
   const [enderecoValido, setEnderecoValido] = useState(false);
+
+  const [ultimoItemAdicionado, setUltimoItemAdicionado] = useState(null);
 
   const normalize = (str) =>
     (str || "")
@@ -24,18 +32,21 @@ export function CarrinhoProvider({ children }) {
 
   async function buscarCep(cepDigitado) {
     const cepLimpo = cepDigitado.replace(/\D/g, "").slice(0, 8);
+
     setCep(cepLimpo);
 
-    if (cepLimpo.length !== 8) return;
+    if (cepLimpo.length !== 8) {
+      setEnderecoValido(false);
+      return;
+    }
 
     try {
       const res = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
       const data = await res.json();
 
       if (data.erro) {
+        setEnderecoValido(false);
         setValorFrete(0);
-        setBairro("");
-        setCidade("");
         return;
       }
 
@@ -44,6 +55,7 @@ export function CarrinhoProvider({ children }) {
       setBairro(data.bairro || "");
       setRua(data.logradouro || "");
       setCidade(data.localidade || "");
+      setEnderecoValido(true);
 
       const fretesNormalizados = fretes.map((f) => ({
         ...f,
@@ -54,18 +66,13 @@ export function CarrinhoProvider({ children }) {
         (f) => bairroApi.includes(f.chave) || f.chave.includes(bairroApi)
       );
 
-      // fallback: detect palavras-chave de zona no nome do bairro
       if (!encontrado) {
-        if (bairroApi.includes("leste")) {
-          encontrado = fretesNormalizados.find((f) => f.chave.includes("leste"));
-        } else if (bairroApi.includes("oeste")) {
-          encontrado = fretesNormalizados.find((f) => f.chave.includes("oeste"));
-        } else if (bairroApi.includes("norte")) {
-          encontrado = fretesNormalizados.find((f) => f.chave.includes("norte"));
-        } else if (bairroApi.includes("sul")) {
-          encontrado = fretesNormalizados.find((f) => f.chave.includes("sul"));
-        } else if (bairroApi.includes("centro")) {
-          encontrado = fretesNormalizados.find((f) => f.chave.includes("centro"));
+        const zonas = ["leste", "oeste", "norte", "sul", "centro"];
+        const zona = zonas.find((z) => bairroApi.includes(z));
+        if (zona) {
+          encontrado = fretesNormalizados.find((f) =>
+            f.chave.includes(zona)
+          );
         }
       }
 
@@ -75,17 +82,13 @@ export function CarrinhoProvider({ children }) {
         valor = encontrado.valor;
       } else {
         const uf = (data.uf || "").toUpperCase();
-        if (uf && fretesUf[uf] !== undefined) {
-          valor = fretesUf[uf];
-        } else if (fretesUf.default !== undefined) {
-          valor = fretesUf.default;
-        }
+        valor = fretesUf[uf] ?? fretesUf.default ?? 0;
       }
 
       setValorFrete(valor);
     } catch {
+      setEnderecoValido(false);
       setValorFrete(0);
-      setRua("");
     }
   }
 
@@ -94,6 +97,7 @@ export function CarrinhoProvider({ children }) {
       const existe = prev.find((item) => item.id === produto.id);
 
       if (existe) {
+        setUltimoItemAdicionado(produto.nome);
         return prev.map((item) =>
           item.id === produto.id
             ? { ...item, quantidade: item.quantidade + 1 }
@@ -101,10 +105,19 @@ export function CarrinhoProvider({ children }) {
         );
       }
 
-      return [...prev, { ...produto, quantidade: 1 }];
+      setUltimoItemAdicionado(produto.nome);
+      return [
+        ...prev,
+        {
+          id: produto.id,
+          nome: produto.nome,
+          preco: produto.preco,
+          imagem: produto.imagem || "/img/produtos/bolo.png",
+          descricao: produto.descricao || "",
+          quantidade: 1
+        }
+      ];
     });
-
-    setAberto(true);
   }
 
   function diminuir(id) {
@@ -149,24 +162,35 @@ export function CarrinhoProvider({ children }) {
 
   const freteGratis = totalValor >= FRETE_GRATIS_MINIMO;
 
+  useEffect(() => {
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  }, [carrinho]);
+
   function gerarMensagemWhatsApp() {
     const itens = carrinho.map(
       (i) =>
-        `• ${i.nome} (x${i.quantidade}) - R$ ${
-          i.preco * i.quantidade
-        }`
+        `• ${i.nome} (x${i.quantidade}) - R$ ${(i.preco * i.quantidade).toFixed(2)}`
     );
 
     const textoFrete = freteGratis
-      ? `Frete: R$ 0,00 (grátis a partir de R$ ${FRETE_GRATIS_MINIMO})`
-      : `Frete: R$ ${freteAplicado.toFixed(2)}`;
+      ? "Grátis"
+      : `R$ ${freteAplicado.toFixed(2)}`;
 
     return encodeURIComponent(
-      `Pedido:\n\n${itens.join(
-        "\n"
-      )}\n\nRua: ${rua}\nCEP: ${cep}\nBairro: ${bairro}\nCidade: ${cidade}\n${textoFrete}\nTotal: R$ ${totalComFrete.toFixed(
-        2
-      )}`
+`🍰 *NOVO PEDIDO - SITE*
+
+🛍️ *Itens:*
+${itens.join("\n")}
+
+📦 *Entrega:*
+${rua}
+${bairro} - ${cidade}
+CEP: ${cep}
+
+🚚 *Frete:* ${textoFrete}
+
+💰 *Total:* R$ ${totalComFrete.toFixed(2)}
+`
     );
   }
 
@@ -195,12 +219,16 @@ export function CarrinhoProvider({ children }) {
         freteAplicado,
         freteGratis,
         FRETE_GRATIS_MINIMO,
+        enderecoValido,
 
         totalItens,
         totalValor,
         totalComFrete,
 
-        gerarMensagemWhatsApp
+        gerarMensagemWhatsApp,
+
+        ultimoItemAdicionado,
+        setUltimoItemAdicionado
       }}
     >
       {children}
