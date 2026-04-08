@@ -11,36 +11,22 @@
   box-sizing: border-box;
 }
 
-/* =========================
-    BODY (IDENTIDADE)
- ========================= */
-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #fef2f5;
-  color: #2d2d2d;
+html, body {
+  min-height: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
-/* =========================
-    FUNDO DECORATIVO (MARCA D'ÁGUA)
- ========================= */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url('/img/bg-doces.png');
-  background-repeat: repeat;
-  background-size: 220px;
-  opacity: 0.12;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* =========================
-   GARANTE QUE O CONTEÚDO FIQUE ACIMA
-========================= */
 #root {
+  min-height: 100%;
   position: relative;
   z-index: 1;
+}
+
+/* Remove marca d'água em páginas específicas */
+body.sem-marca-dagua::before {
+  display: none !important;
 }
 
 /* =========================
@@ -143,10 +129,14 @@ html {
 }
 
 /* =========================
-   ANIMAÇÕES SUAVES
+    BODY (IDENTIDADE)
 ========================= */
-.fade-in {
-  animation: fadeIn 0.6s ease-in-out;
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fef2f5;
+  color: #2d2d2d;
+  min-height: 100vh;
+  padding-bottom: 0;
 }
 
 @keyframes fadeIn {

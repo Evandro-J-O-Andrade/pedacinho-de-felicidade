@@ -184,31 +184,31 @@ export function CarrinhoProvider({ children }) {
   function gerarMensagemWhatsApp() {
     const itens = carrinho.map(
       (i) =>
-        `• ${i.nome} (x${i.quantidade}) - R$ ${(i.preco * i.quantidade).toFixed(2)}`
+        `${i.quantidade}x ${i.nome} - R$ ${(i.preco * i.quantidade).toFixed(2).replace(".", ",")}`
     );
 
     const textoFrete = freightGratis
-      ? "Grátis"
-      : `R$ ${freightAplicado.toFixed(2)}`;
+      ? "FRETE GRÁTIS 🚚"
+      : `Frete: R$ ${freightAplicado.toFixed(2).replace(".", ",")}`;
 
     return encodeURIComponent(
-`🍰 *NOVO PEDIDO - SITE*
+`🍰 *PEDIDO - PEDACINHOS DE FELICIDADE*
 
-👤 *Cliente:* ${nomeCliente}
-📞 *Telefone:* ${telefoneCliente}
+👤 *CLIENTE:* ${nomeCliente}
+📱 *WhatsApp:* ${telefoneCliente}
 
-🛍️ *Itens:*
-${itens.join("\n")}
+🛒 *MEU PEDIDO:*
+${itens.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
-📦 *Entrega:*
-${rua}
-${bairro} - ${cidade}
-CEP: ${cep}
+📍 *ENDEREÇO DE ENTREGA:*
+${rua}, ${bairro}
+${cidade} - CEP: ${cep}
 
-🚚 *Frete:* ${textoFrete}
+${textoFrete}
 
-💰 *Total:* R$ ${totalComFrete.toFixed(2)}
-`
+💵 *TOTAL A PAGAR:* R$ ${totalComFrete.toFixed(2).replace(".", ",")}
+
+_aguardo sua confirmação! Obrigado(a) pelo pedido._ 💜`
     );
   }
 

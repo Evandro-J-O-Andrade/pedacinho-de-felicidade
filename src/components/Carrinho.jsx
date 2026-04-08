@@ -78,12 +78,13 @@ export default function Carrinho() {
           right: "20px",
           background: "linear-gradient(135deg, #ec4899 0%, #f472b6 100%)",
           color: "white",
-          padding: "14px 24px",
+          padding: "18px 28px",
           borderRadius: "50px",
           boxShadow: "0 8px 25px rgba(236, 72, 153, 0.35)",
           cursor: "pointer",
           zIndex: 40,
-          fontWeight: "600",
+          fontWeight: "700",
+          fontSize: "16px",
           display: "flex",
           alignItems: "center",
           gap: "8px"
@@ -117,6 +118,7 @@ export default function Carrinho() {
           right: 0,
           bottom: 0,
           width: "380px",
+          maxWidth: "100%",
           background: "linear-gradient(180deg, #fffafc 0%, #fff5f8 100%)",
           boxShadow: "-8px 0 30px rgba(236, 72, 153, 0.15)",
           zIndex: 50,
@@ -127,6 +129,13 @@ export default function Carrinho() {
           overflow: "hidden"
         }}
       >
+        <style>{`
+          @media (max-width: 400px) {
+            [style*="position: fixed"] {
+              max-width: 100% !important;
+            }
+          }
+        `}</style>
         {/* FUNDO MARCA D'ÁGUA */}
         <div style={{
           position: "absolute",
@@ -243,12 +252,15 @@ export default function Carrinho() {
 
                 {abertoItem && (
                   <div style={{ 
-                    fontSize: "12px", 
-                    color: "#9ca3af", 
+                    fontSize: "13px", 
+                    color: "#6b7280", 
                     marginTop: "10px",
-                    backgroundColor: "#fff5f8",
-                    padding: "8px 12px",
-                    borderRadius: "8px"
+                    backgroundColor: "#fef3c7",
+                    padding: "10px 14px",
+                    borderRadius: "8px",
+                    border: "1px dashed #f59e0b",
+                    fontWeight: 500,
+                    lineHeight: 1.4
                   }}>
                     📝 {item.descricao}
                   </div>

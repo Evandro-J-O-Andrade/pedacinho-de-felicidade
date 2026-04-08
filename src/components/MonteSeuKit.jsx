@@ -91,11 +91,17 @@ export default function MonteSeuKit() {
       `}</style>
       <section className="monte-kit-container" id="monte-seu-kit" style={{ paddingBottom: "60px", paddingInline: "16px" }}>
 
-      {/* VOLTAR */}
+      {/* VOLTAR - SÓ MOSTRA NO MOBILE */}
       <div style={{ maxWidth: "1100px", margin: "0 auto 12px auto", padding: "0 16px" }}>
+        <style>{`
+          @media (min-width: 769px) {
+            .voltar-link { display: none !important; }
+          }
+        `}</style>
         <a
           href="/"
-          style={{ color: "#ec4899", fontWeight: "700", textDecoration: "none", display: "inline-block" }}
+          className="voltar-link"
+          style={{ color: "#ec4899", fontWeight: "700", textDecoration: "none", display: "inline-block", paddingTop: "10px" }}
         >
           ← Voltar para a página inicial
         </a>
