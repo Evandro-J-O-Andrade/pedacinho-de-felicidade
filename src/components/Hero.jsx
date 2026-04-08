@@ -27,8 +27,8 @@ export default function Hero() {
         @media only screen and (max-width: 1024px) {
           #home {
             min-height: 50vh !important;
-            background-size: 100% 100% !important;
-            background-position: top left !important;
+            background-size: cover !important;
+            background-position: center center !important;
             margin-top: 175px !important;
           }
         }
