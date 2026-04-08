@@ -75,24 +75,27 @@ export default function MonteSeuKit() {
   return (
     <div style={{ paddingTop: "150px", minHeight: "100vh", backgroundColor: "#fff7f9" }}>
       <style>{`
+        .monte-kit-container {
+          padding-top: 20px;
+        }
         @media only screen and (min-width: 350px) and (max-width: 1024px) {
           .monte-kit-container {
-            paddingTop: 120px !important;
+            paddingTop: 135px !important;
           }
         }
         @media only screen and (max-width: 349px) {
           .monte-kit-container {
-            paddingTop: 110px !important;
+            paddingTop: 125px !important;
           }
         }
       `}</style>
-      <section className="monte-kit-container" id="monte-seu-kit" style={{ paddingBottom: "60px" }}>
+      <section className="monte-kit-container" id="monte-seu-kit" style={{ paddingBottom: "60px", paddingInline: "16px" }}>
 
       {/* VOLTAR */}
-      <div style={{ maxWidth: "1100px", margin: "0 auto 12px auto" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto 12px auto", padding: "0 16px" }}>
         <a
           href="/"
-          style={{ color: "#ec4899", fontWeight: "700", textDecoration: "none" }}
+          style={{ color: "#ec4899", fontWeight: "700", textDecoration: "none", display: "inline-block" }}
         >
           ← Voltar para a página inicial
         </a>
@@ -125,6 +128,23 @@ export default function MonteSeuKit() {
       <h2 style={{ fontSize: "28px", fontWeight: "bold", textAlign: "center", marginBottom: "12px", color: "#ec4899" }}>
         ✨ Monte do seu jeito (itens avulsos)
       </h2>
+
+      <div style={{
+        backgroundColor: "#fef3c7",
+        border: "1px solid #f59e0b",
+        borderRadius: "12px",
+        padding: "12px 20px",
+        marginBottom: "16px",
+        display: "inline-block",
+        maxWidth: "90%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        display: "block"
+      }}>
+        <p style={{ color: "#92400e", fontSize: "14px", fontWeight: "600", margin: 0, textAlign: "center" }}>
+          💡 Selecione seus itens e vá até o final da página para adicionar ao carrinho!
+        </p>
+      </div>
 
       <p style={{ textAlign: "center", color: "#666", marginBottom: "20px", fontSize: "16px", fontWeight: "500" }}>
         Selecione itens avulsos e montamos o kit exatamente como você quiser

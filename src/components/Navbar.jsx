@@ -105,13 +105,14 @@ export default function Navbar() {
         }
         @media (max-width: 768px) {
           .navbar {
-            background: linear-gradient(180deg, #5c3d2e 0%, #4a3728 100%);
-            box-shadow: none;
-            padding: 10px 12px 12px !important;
+            background: linear-gradient(180deg, rgba(92,61,46,0.92) 0%, rgba(74,55,40,0.95) 100%);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 15px rgba(74,55,40,0.4);
+            padding: 14px 12px 16px !important;
           }
           .navbar .nav-logo-img {
-            width: 80px !important;
-            height: 80px !important;
+            width: 95px !important;
+            height: 95px !important;
           }
           .navbar .nav-logo-text {
             font-size: 18px !important;
