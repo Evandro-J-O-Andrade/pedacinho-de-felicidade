@@ -258,6 +258,12 @@ export default function MonteSeuKit() {
                   )}
                 </div>
 
+                {item.descricao && (
+                  <p style={{ color: "#6b7280", fontSize: "13px", marginTop: "8px", lineHeight: "1.4" }}>
+                    {item.descricao}
+                  </p>
+                )}
+
                 <p style={{ color: "#22c55e", fontWeight: "bold", fontSize: "16px", marginTop: "12px" }}>
                   {formatar(item.preco)}
                 </p>

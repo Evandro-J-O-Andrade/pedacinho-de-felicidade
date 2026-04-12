@@ -8,7 +8,7 @@ export default function CarrinhoPage() {
     totalComFrete,
     gerarMensagemWhatsApp,
     remover,
-    diminuir,
+    disminuir,
     adicionar,
     nomeCliente,
     setNomeCliente,
@@ -19,6 +19,10 @@ export default function CarrinhoPage() {
     bairro,
     cidade,
     rua,
+    numero,
+    setNumero,
+    complemento,
+    setComplemento,
     valorFrete,
     buscarCep,
     freightAplicado,
@@ -28,7 +32,7 @@ export default function CarrinhoPage() {
   } = useCarrinho();
 
   const [navHeight, setNavHeight] = useState(120);
-  const numero = "5511971914833";
+  const numeroZap = "5511971914833";
 
   useEffect(() => {
     function updateNav() {
@@ -63,7 +67,7 @@ export default function CarrinhoPage() {
       alert("Por favor, insira um CEP válido!");
       return;
     }
-    window.open(`https://wa.me/${numero}?text=${gerarMensagemWhatsApp()}`);
+    window.open(`https://wa.me/${numeroZap}?text=${gerarMensagemWhatsApp()}`);
   }
 
   const inputStyle = {
@@ -98,8 +102,8 @@ export default function CarrinhoPage() {
             max-width: 700px;
           }
           .carrinho-item-img {
-            width: 120px !important;
-            height: 120px !important;
+            width: 180px !important;
+            height: 180px !important;
           }
         }
         .carrinho-btn-acao {
@@ -123,8 +127,8 @@ export default function CarrinhoPage() {
         }
         @media (min-width: 769px) {
           .carrinho-item-img {
-            width: 100px !important;
-            height: 100px !important;
+            width: 160px !important;
+            height: 160px !important;
           }
         }
       `}</style>
@@ -330,6 +334,23 @@ export default function CarrinhoPage() {
                 <p style={{ fontSize: "14px", color: "#065f46", fontWeight: "500" }}>
                   📍 {rua}, {bairro} - {cidade}
                 </p>
+              </div>
+            )}
+
+            {enderecoValido && (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginTop: "12px" }}>
+                <input
+                  placeholder="Número"
+                  value={numero}
+                  onChange={(e) => setNumero(e.target.value)}
+                  style={inputStyle}
+                />
+                <input
+                  placeholder="Complemento (apt, sala, etc)"
+                  value={complemento}
+                  onChange={(e) => setComplemento(e.target.value)}
+                  style={inputStyle}
+                />
               </div>
             )}
           </div>

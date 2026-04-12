@@ -21,6 +21,8 @@ export function CarrinhoProvider({ children }) {
   const [bairro, setBairro] = useState("");
   const [cidade, setCidade] = useState("");
   const [rua, setRua] = useState("");
+  const [numero, setNumero] = useState("");
+  const [complemento, setComplemento] = useState("");
   const [valorFrete, setValorFrete] = useState(0);
   const [enderecoValido, setEnderecoValido] = useState(false);
 
@@ -191,6 +193,10 @@ export function CarrinhoProvider({ children }) {
       ? "FRETE GRÁTIS 🚚"
       : `Frete: R$ ${freightAplicado.toFixed(2).replace(".", ",")}`;
 
+    const enderecoCompleto = numero
+    ? `${rua}, ${numero}${complemento ? ` - ${complemento}` : ""}, ${bairro}`
+    : `${rua}, ${bairro}`;
+
     return encodeURIComponent(
 `🍰 *PEDIDO - PEDACINHOS DE FELICIDADE*
 
@@ -201,7 +207,7 @@ export function CarrinhoProvider({ children }) {
 ${itens.map((item, i) => `${i + 1}. ${item}`).join("\n")}
 
 📍 *ENDEREÇO DE ENTREGA:*
-${rua}, ${bairro}
+${enderecoCompleto}
 ${cidade} - CEP: ${cep}
 
 ${textoFrete}
@@ -239,6 +245,10 @@ _aguardo sua confirmação! Obrigado(a) pelo pedido._ 💜`
         buscarCep,
         fretes,
         rua,
+        numero,
+        setNumero,
+        complemento,
+        setComplemento,
         freightAplicado,
         freightGratis,
         FRETE_GRATIS_MINIMO,
