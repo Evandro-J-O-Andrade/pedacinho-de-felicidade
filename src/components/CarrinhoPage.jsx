@@ -2,7 +2,7 @@ import { useCarrinho } from "../context/CarrinhoContext";
 import { useEffect, useState } from "react";
 
 export default function CarrinhoPage() {
-  const {
+const {
     carrinho,
     totalValor,
     totalComFrete,
@@ -10,6 +10,7 @@ export default function CarrinhoPage() {
     remover,
     diminuir,
     adicionar,
+    limpar,
     nomeCliente,
     setNomeCliente,
     telefoneCliente,
@@ -90,12 +91,13 @@ freightGratis,
     width: "100%",
     padding: "14px 16px",
     borderRadius: "12px",
-    border: "2px solid #fce7f3",
+    border: "2px solid #f472b6",
     marginBottom: "12px",
     fontSize: "15px",
     outline: "none",
     transition: "border-color 0.3s",
-    backgroundColor: "#fafafa"
+    backgroundColor: "#ffffff",
+    boxShadow: "0 2px 8px rgba(236, 72, 153, 0.1)"
   };
 
   return (
@@ -107,21 +109,31 @@ freightGratis,
       minHeight: "100vh", 
       paddingBottom: "120px",
       background: "linear-gradient(180deg, #fff0f5 0%, #fff 100%)",
-      backgroundImage: "url('/img/logo.png')",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center center",
-      backgroundSize: "300px",
-      backgroundAttachment: "fixed",
-      opacity: 0.85
+      position: "relative"
     }}>
+      <img 
+        src="/img/logo.png" 
+        alt=""
+        style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "350px",
+          opacity: 0.15,
+          pointerEvents: "none",
+          zIndex: 0
+        }}
+      />
+      <div className="carrinho-container" style={{ position: "relative", zIndex: 1 }}>
       <style>{`
         .carrinho-container {
-          max-width: 600px;
+          max-width: 700px;
           margin: 0 auto;
         }
         @media (min-width: 769px) {
           .carrinho-container {
-            max-width: 700px;
+            max-width: 900px;
           }
           .carrinho-item-img {
             width: 180px !important;
@@ -423,6 +435,47 @@ freightGratis,
             </div>
           </div>
 
+          <div style={{ display: "flex", gap: "12px", marginBottom: "12px" }}>
+            {carrinho.length > 0 && (
+              <button 
+                onClick={() => {
+                  if (confirm("Limpar carrinho?")) {
+                    limpar();
+                  }
+                }}
+                style={{ 
+                  flex: 1, 
+                  backgroundColor: "#fee2e2", 
+                  color: "#dc2626", 
+                  padding: "14px", 
+                  borderRadius: "16px", 
+                  border: "2px solid #dc2626", 
+                  fontSize: "14px", 
+                  fontWeight: "600", 
+                  cursor: "pointer"
+                }}
+              >
+                🗑️ Limpar
+              </button>
+            )}
+            <button 
+              onClick={() => window.location.href = "/"}
+              style={{ 
+                flex: 1, 
+                backgroundColor: "transparent", 
+                color: "#ec4899", 
+                padding: "14px", 
+                borderRadius: "16px", 
+                border: "2px solid #ec4899", 
+                fontSize: "14px", 
+                fontWeight: "600", 
+                cursor: "pointer"
+              }}
+            >
+              ← Continuar
+            </button>
+          </div>
+
           <button 
             onClick={finalizar}
             style={{ 
@@ -441,26 +494,9 @@ freightGratis,
           >
             💬 Finalizar Pedido
           </button>
-
-          <button 
-            onClick={() => window.location.href = "/"}
-            style={{ 
-              width: "100%", 
-              backgroundColor: "transparent", 
-              color: "#ec4899", 
-              padding: "16px", 
-              borderRadius: "16px", 
-              border: "2px solid #ec4899", 
-              fontSize: "16px", 
-              fontWeight: "600", 
-              cursor: "pointer",
-              marginTop: "12px"
-            }}
-          >
-            ← Continuar Comprando
-          </button>
         </>
       )}
+      </div>
     </div>
   );
 }

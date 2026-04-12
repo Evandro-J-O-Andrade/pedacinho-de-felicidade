@@ -9,6 +9,7 @@ export default function Carrinho() {
     adicionar,
     diminuir,
     remover,
+    limpar,
     totalItens,
     totalValor
   } = useCarrinho();
@@ -155,16 +156,38 @@ export default function Carrinho() {
 
         {/* HEADER */}
         <div style={{ 
-          padding: "20px 16px", 
+          padding: "12px 16px", 
           borderBottom: "1px solid #fce7f3", 
-          textAlign: "center",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
           background: "linear-gradient(135deg, #fff0f5 0%, #fdf2f8 100%)",
           position: "relative",
           zIndex: 1
         }}>
-          <h2 style={{ color: "#ec4899", fontWeight: "700", fontSize: "22px", margin: 0 }}>
+          <h2 style={{ color: "#ec4899", fontWeight: "700", fontSize: "20px", margin: 0 }}>
             ✨ Seu Pedido
           </h2>
+          {carrinho.length > 0 && (
+            <button
+              onClick={() => {
+                if (confirm("Limpar carrinho?")) {
+                  limpar();
+                }
+              }}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#dc2626",
+                fontSize: "14px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "4px"
+              }}>
+              Limpar 🗑️
+            </button>
+          )}
         </div>
 
         {/* LISTA */}
