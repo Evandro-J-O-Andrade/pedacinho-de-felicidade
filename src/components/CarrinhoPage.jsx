@@ -131,10 +131,11 @@ freightGratis,
           max-width: 700px;
           margin: 0 auto;
         }
+.carrinho-item-img {
+          width: 120px !important;
+          height: 120px !important;
+        }
         @media (min-width: 769px) {
-          .carrinho-container {
-            max-width: 900px;
-          }
           .carrinho-item-img {
             width: 180px !important;
             height: 180px !important;
@@ -161,8 +162,8 @@ freightGratis,
         }
         @media (min-width: 769px) {
           .carrinho-item-img {
-            width: 160px !important;
-            height: 160px !important;
+            width: 180px !important;
+            height: 180px !important;
           }
         }
       `}</style>
