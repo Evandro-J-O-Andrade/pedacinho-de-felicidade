@@ -1,8 +1,7 @@
-import { createContext, useContext, useState, useMemo, useEffect } from "react";
-import { fretes, fretesUf } from "../data/fretes";
+import { createContext, useContext, useState, useMemo, useEffect, useCallback } from "react";
+import { fretes, fretesUf, FRETE_GRATIS_MINIMO } from "../data/fretes";
 
 const CarrinhoContext = createContext();
-const FRETE_GRATIS_MINIMO = 500;
 
 function getStorageCarrinho() {
   if (typeof window === "undefined") return [];
@@ -183,40 +182,57 @@ export function CarrinhoProvider({ children }) {
     );
   }
 
-  function gerarMensagemWhatsApp() {
-    const itens = carrinho.map(
-      (i) =>
-        `${i.quantidade}x ${i.nome} - R$ ${(i.preco * i.quantidade).toFixed(2).replace(".", ",")}`
-    );
+const gerarMensagemWhatsApp = useCallback(() => {
+    const saudacao = () => {
+      const hora = new Date().getHours();
+      if (hora < 12) return "Bom dia";
+      if (hora < 18) return "Boa tarde";
+      return "Boa noite";
+    };
+
+    const itens = carrinho.map((i, index) => {
+      const descricao = i.descricao ? `\n   ✨ ${i.descricao}` : "";
+
+      return `${index + 1}. ${i.quantidade}x ${i.nome}
+   💰 R$ ${(i.preco * i.quantidade).toFixed(2).replace(".", ",")}${descricao}`;
+    });
 
     const textoFrete = freightGratis
-      ? "FRETE GRÁTIS 🚚"
-      : `Frete: R$ ${freightAplicado.toFixed(2).replace(".", ",")}`;
+      ? "🚚 *FRETE GRÁTIS* 🎉"
+      : `🚚 Frete: R$ ${freightAplicado.toFixed(2).replace(".", ",")}`;
 
     const enderecoCompleto = numero
-    ? `${rua}, ${numero}${complemento ? ` - ${complemento}` : ""}, ${bairro}`
-    : `${rua}, ${bairro}`;
+      ? `${rua}, ${numero}${complemento ? ` - ${complemento}` : ""}, ${bairro}`
+      : `${rua}, ${bairro}`;
 
-    return encodeURIComponent(
-`🍰 *PEDIDO - PEDACINHOS DE FELICIDADE*
+    const mensagem =
+`🍰 *PEDIDO - PEDACINHOS DE FELICIDADE* 💜
 
-👤 *CLIENTE:* ${nomeCliente}
+${saudacao()} ${nomeCliente} 💜
+
+👤 *Cliente:* ${nomeCliente}
 📱 *WhatsApp:* ${telefoneCliente}
 
-🛒 *MEU PEDIDO:*
-${itens.map((item, i) => `${i + 1}. ${item}`).join("\n")}
+🛒 *Olha só o que você escolheu:* 😍
+${itens.join("\n\n")}
 
-📍 *ENDEREÇO DE ENTREGA:*
+📍 *Endereço de entrega:*
 ${enderecoCompleto}
 ${cidade} - CEP: ${cep}
 
 ${textoFrete}
 
-💵 *TOTAL A PAGAR:* R$ ${totalComFrete.toFixed(2).replace(".", ",")}
+💵 *Total do seu pedido:* R$ ${totalComFrete.toFixed(2).replace(".", ",")}
 
-_aguardo sua confirmação! Obrigado(a) pelo pedido._ 💜`
-    );
-  }
+💖 _Seu pedido foi recebido com muito carinho!_
+👩‍🍳 _Já vamos começar a preparar tudo fresquinho pra você._
+
+✨ _Se quiser ajustar algo ou tiver algum detalhe especial, é só me falar aqui!_
+
+🙏 _Obrigada pela preferência e confiança!_ 💕`;
+
+    return mensagem;
+  }, [carrinho, nomeCliente, telefoneCliente, rua, numero, complemento, bairro, cidade, cep, freightGratis, freightAplicado, totalComFrete]);
 
   return (
     <CarrinhoContext.Provider

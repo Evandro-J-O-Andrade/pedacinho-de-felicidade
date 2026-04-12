@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pedacinhodefelicidade.com.br/sitemap.xml
+Sitemap: https://pedacinhosdefelicidade.com.br/sitemap.xml

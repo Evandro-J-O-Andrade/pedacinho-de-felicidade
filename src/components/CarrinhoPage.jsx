@@ -8,7 +8,7 @@ export default function CarrinhoPage() {
     totalComFrete,
     gerarMensagemWhatsApp,
     remover,
-    disminuir,
+    diminuir,
     adicionar,
     nomeCliente,
     setNomeCliente,
@@ -23,14 +23,13 @@ export default function CarrinhoPage() {
     setNumero,
     complemento,
     setComplemento,
-    valorFrete,
     buscarCep,
     freightAplicado,
-    freightGratis,
-    FRETE_GRATIS_MINIMO,
+freightGratis,
     enderecoValido
   } = useCarrinho();
 
+  const FRETE_GRATIS_MINIMO = 500;
   const [navHeight, setNavHeight] = useState(120);
   const numeroZap = "5511971914833";
 
@@ -48,26 +47,43 @@ export default function CarrinhoPage() {
   function handleCepChange(e) {
     const valor = e.target.value.replace(/\D/g, "").slice(0, 8);
     const formatado = valor.length > 5 ? valor.replace(/(\d{5})(\d+)/, "$1-$2") : valor;
+
     setCep(valor);
+
     if (valor.length === 8) {
       buscarCep(formatado);
     }
   }
 
   function finalizar() {
-    if (!nomeCliente.trim()) {
-      alert("Por favor, insira seu nome!");
+    const telefoneLimpo = telefoneCliente.replace(/\D/g, "");
+
+    if (!nomeCliente.trim() || nomeCliente.trim().length < 3) {
+      alert("Por favor, insira seu nome completo!");
       return;
     }
-    if (!telefoneCliente.trim()) {
-      alert("Por favor, insira seu telefone!");
+
+    if (!telefoneLimpo || telefoneLimpo.length < 10) {
+      alert("Por favor, insira um telefone válido!");
       return;
     }
+
     if (!enderecoValido) {
       alert("Por favor, insira um CEP válido!");
       return;
     }
-    window.open(`https://wa.me/${numeroZap}?text=${gerarMensagemWhatsApp()}`);
+
+    if (!numero || !numero.trim()) {
+      alert("Por favor, informe o número da casa!");
+      return;
+    }
+
+    const texto = gerarMensagemWhatsApp();
+
+    window.open(
+      `https://api.whatsapp.com/send?phone=${numeroZap}&text=${encodeURIComponent(texto)}`,
+      "_blank"
+    );
   }
 
   const inputStyle = {
@@ -90,7 +106,13 @@ export default function CarrinhoPage() {
       margin: "0 auto", 
       minHeight: "100vh", 
       paddingBottom: "120px",
-      background: "linear-gradient(180deg, #fff0f5 0%, #fff 100%)"
+      background: "linear-gradient(180deg, #fff0f5 0%, #fff 100%)",
+      backgroundImage: "url('/img/logo.png')",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center center",
+      backgroundSize: "300px",
+      backgroundAttachment: "fixed",
+      opacity: 0.85
     }}>
       <style>{`
         .carrinho-container {
@@ -140,7 +162,7 @@ export default function CarrinhoPage() {
         fontWeight: "800", 
         fontSize: "32px" 
       }}>
-        🛒 Confira seu Pedido
+        🛒 Confira o seu Pedido
       </h2>
 
       <p style={{ 
@@ -168,7 +190,6 @@ export default function CarrinhoPage() {
         </div>
       ) : (
         <>
-          {/* LISTA DE PRODUTOS */}
           <div style={{ 
             display: "flex", 
             flexDirection: "column", 
@@ -277,7 +298,6 @@ export default function CarrinhoPage() {
             })}
           </div>
 
-          {/* DADOS DO CLIENTE */}
           <div style={{ 
             backgroundColor: "white", 
             borderRadius: "16px", 
@@ -305,7 +325,6 @@ export default function CarrinhoPage() {
             />
           </div>
 
-          {/* ENDEREÇO */}
           <div style={{ 
             backgroundColor: "white", 
             borderRadius: "16px", 
@@ -355,7 +374,6 @@ export default function CarrinhoPage() {
             )}
           </div>
 
-          {/* TOTAL */}
           <div style={{ 
             backgroundColor: "white", 
             borderRadius: "16px", 
@@ -373,7 +391,7 @@ export default function CarrinhoPage() {
                 <span style={{ color: "#22c55e", fontWeight: "600" }}>🎉 Grátis</span>
               ) : (
                 <span style={{ color: "#f59e0b", fontWeight: "600" }}>
-                  {enderecoValido ? `R$ ${freightAplicado.toFixed(2)}` : "Calculando..."}
+                  {enderecoValido ? `R$ ${freightAplicado.toFixed(2)}` : "Digite o CEP"}
                 </span>
               )}
             </div>
@@ -387,7 +405,7 @@ export default function CarrinhoPage() {
                 textAlign: "center"
               }}>
                 <p style={{ fontSize: "14px", color: "#92400e", margin: 0 }}>
-                  🚚 Compra acima de <strong>R$ {(FRETE_GRATIS_MINIMO - totalValor).toFixed(2)}</strong> você ganha Frete Grátis!
+                  🚚 Compra acima de <strong>R$ 500,00</strong> você ganha Frete Grátis!
                 </p>
               </div>
             )}
@@ -405,7 +423,6 @@ export default function CarrinhoPage() {
             </div>
           </div>
 
-          {/* BOTÃO FINALIZAR */}
           <button 
             onClick={finalizar}
             style={{ 

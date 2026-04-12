@@ -1,3 +1,5 @@
+export const FRETE_GRATIS_MINIMO = 500;
+
 export const fretes = [
   { bairro: "Centro", valor: 5 },
   { bairro: "Vila Nova", valor: 7 },

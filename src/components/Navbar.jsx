@@ -172,8 +172,11 @@ export default function Navbar() {
               fontSize: "38px",
               fontWeight: 900,
               letterSpacing: "0.8px",
-              color: "#f5f5f5",
-              textShadow: "0 2px 4px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.2)"
+              background: "linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff, #5f27cd)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              textShadow: "none"
             }}
           >
             Pedacinhos de Felicidade
