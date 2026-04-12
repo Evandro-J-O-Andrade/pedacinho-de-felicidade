@@ -102,12 +102,13 @@ freightGratis,
 
   return (
     <div style={{ 
-      paddingTop: `${navHeight}px`, 
-      padding: "20px", 
+      paddingTop: `${navHeight}px`,
+      paddingLeft: "20px",
+      paddingRight: "20px",
+      paddingBottom: "120px",
       maxWidth: "100%", 
       margin: "0 auto", 
       minHeight: "100vh", 
-      paddingBottom: "120px",
       background: "linear-gradient(180deg, #fff0f5 0%, #fff 100%)",
       position: "relative"
     }}>
@@ -136,31 +137,9 @@ freightGratis,
           height: 120px !important;
         }
         @media (min-width: 769px) {
-          .carrinho-item-img {
-            width: 180px !important;
-            height: 180px !important;
+          .carrinho-container {
+            max-width: 1000px;
           }
-        }
-        .carrinho-btn-acao {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          border: 2px solid #fce7f3;
-          background: #fff0f5;
-          color: #ec4899;
-          font-size: 18px;
-          font-weight: bold;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.2s;
-        }
-        .carrinho-btn-acao:hover {
-          background: #fbcfe8;
-          transform: scale(1.1);
-        }
-        @media (min-width: 769px) {
           .carrinho-item-img {
             width: 180px !important;
             height: 180px !important;
@@ -495,6 +474,26 @@ freightGratis,
           >
             💬 Finalizar Pedido
           </button>
+
+          <div style={{ marginTop: "16px", padding: "16px", backgroundColor: "#f0fdf4", borderRadius: "12px", border: "1px solid #bbf7d0" }}>
+            <h3 style={{ color: "#16a34a", fontSize: "16px", marginBottom: "12px" }}>🚚 Informações de Entrega</h3>
+            <ul style={{ color: "#15803d", fontSize: "13px", paddingLeft: "16px", lineHeight: 1.8 }}>
+              <li>Entregamos em toda a região de Poá e entorno</li>
+              <li>Frete grátis para pedidos acima de R$ 500</li>
+              <li>Pedidos com antecedência mínima de 48h</li>
+            </ul>
+          </div>
+
+          <div style={{ marginTop: "16px", padding: "16px", backgroundColor: "#fef3c7", borderRadius: "12px", border: "1px solid #fcd34d" }}>
+            <h3 style={{ color: "#d97706", fontSize: "16px", marginBottom: "12px" }}>❓ Perguntas Frequentes</h3>
+            <div style={{ color: "#92400e", fontSize: "13px", lineHeight: 1.8 }}>
+              <p><strong>Qual o prazo?</strong><br/>48h de antecedência</p>
+              <p style={{ marginTop: "8px" }}><strong>Como pago?</strong><br/>Pix ou transferência</p>
+              <p style={{ marginTop: "8px" }}><strong>Posso personalizar?</strong><br/>Sim! Escreva no pedido</p>
+              <p style={{ marginTop: "8px" }}><strong>Vocês entregam?</strong><br/>Sim, em Poá e região</p>
+              <p style={{ marginTop: "8px" }}><strong>Posso buscar?</strong><br/>Sim, sem custo</p>
+            </div>
+          </div>
         </>
       )}
       </div>
