@@ -27,6 +27,8 @@ export function CarrinhoProvider({ children }) {
 
   const [ultimoItemAdicionado, setUltimoItemAdicionado] = useState(null);
   const [timestampAdicao, setTimestampAdicao] = useState(0);
+  const [mensagemToast, setMensagemToast] = useState(null);
+  const [timestampToast, setTimestampToast] = useState(0);
 
   const normalize = (str) =>
     (str || "")
@@ -144,7 +146,12 @@ export function CarrinhoProvider({ children }) {
   }
 
   function limpar() {
+    const totalItenslimpados = carrinho.reduce((acc, i) => acc + i.quantidade, 0);
     setCarrinho([]);
+    if (totalItenslimpados > 0) {
+      setMensagemToast("Carrinho limpo com sucesso! 💜");
+      setTimestampToast(Date.now());
+    }
   }
 
   const totalItens = useMemo(
@@ -279,7 +286,9 @@ ${textoFrete}
 
         ultimoItemAdicionado,
         setUltimoItemAdicionado,
-        timestampAdicao
+        timestampAdicao,
+        mensagemToast,
+        timestampToast
       }}
     >
       {children}

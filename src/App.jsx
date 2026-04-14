@@ -16,6 +16,7 @@ import BannerSazonal from "./components/BannerSazonal";
 import ProdutosPage from "./components/ProdutosPage";
 import CarrinhoPage from "./components/CarrinhoPage";
 import ToastCarrinho from "./components/ToastCarrinho";
+import ToastLimparCarrinho from "./components/ToastLimparCarrinho";
 import SazonalPage from "./components/SazonalPage";
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
       <style>{`body { background-color: #fef2f5; margin: 0; }`}</style>
       <Navbar />
       <ToastCarrinho />
+      <ToastLimparCarrinho />
       <Routes>
         <Route path="/" element={
           <>

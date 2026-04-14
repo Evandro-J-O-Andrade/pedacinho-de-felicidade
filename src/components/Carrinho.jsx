@@ -171,7 +171,7 @@ export default function Carrinho() {
           {carrinho.length > 0 && (
             <button
               onClick={() => {
-                if (confirm("Limpar carrinho?")) {
+                if (carrinho.length > 0) {
                   limpar();
                 }
               }}

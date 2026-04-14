@@ -443,9 +443,7 @@ freightGratis,
             {carrinho.length > 0 && (
               <button 
                 onClick={() => {
-                  if (confirm("Limpar carrinho?")) {
-                    limpar();
-                  }
+                  limpar();
                 }}
                 style={{ 
                   flex: 1, 
