@@ -28,21 +28,25 @@ export default function BannerSazonal() {
   };
 
   return (
-    <div style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: "rgba(0,0,0,0.6)",
-      backdropFilter: "blur(5px)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      zIndex: 9999,
-      padding: "20px",
-      animation: "fadeIn 0.5s ease"
-    }}>
+    <div 
+      onClick={handleFechar}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0,0,0,0.6)",
+        backdropFilter: "blur(5px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 9999,
+        padding: "20px",
+        animation: "fadeIn 0.5s ease",
+        cursor: "pointer"
+      }}
+    >
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: scale(0.9); }

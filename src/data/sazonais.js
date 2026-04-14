@@ -4,7 +4,7 @@ export const eventosSazonais = [
     nome: "Páscoa",
     ativo: true,
     inicio: "2026-03-20",
-    fim: "2026-12-31",
+    fim: "2026-04-30",
     destaqueInicio: "2026-03-10",
     banner: "/img/sazonal/banners/bannerpascoa.png",
     titulo: "🐰 Páscoa chegou!",
@@ -30,7 +30,7 @@ export const eventosSazonais = [
   {
     id: "diadospais",
     nome: "Dia dos Pais",
-    ativo: true,
+    ativo: false,
     inicio: "2026-07-01",
     fim: "2026-08-31",
     destaqueInicio: "2026-07-15",
@@ -44,7 +44,7 @@ export const eventosSazonais = [
   {
     id: "diasmaes",
     nome: "Dia das Mães",
-    ativo: true,
+    ativo: false,
     inicio: "2026-04-01",
     fim: "2026-05-31",
     destaqueInicio: "2026-04-20",
@@ -58,7 +58,7 @@ export const eventosSazonais = [
   {
     id: "namorados",
     nome: "Dia dos Namorados",
-    ativo: true,
+    ativo: false,
     inicio: "2026-05-01",
     fim: "2026-06-30",
     destaqueInicio: "2026-05-25",
@@ -72,7 +72,7 @@ export const eventosSazonais = [
   {
     id: "professor",
     nome: "Dia do Professor",
-    ativo: true,
+    ativo: false,
     inicio: "2026-09-01",
     fim: "2026-10-31",
     destaqueInicio: "2026-09-25",
@@ -86,7 +86,7 @@ export const eventosSazonais = [
   {
     id: "mulheres",
     nome: "Dia das Mulheres",
-    ativo: true,
+    ativo: false,
     inicio: "2026-02-01",
     fim: "2026-03-31",
     destaqueInicio: "2026-02-20",
@@ -100,7 +100,7 @@ export const eventosSazonais = [
   {
     id: "junina",
     nome: "Festa Junina",
-    ativo: true,
+    ativo: false,
     inicio: "2026-05-01",
     fim: "2026-07-31",
     destaqueInicio: "2026-05-20",
@@ -114,7 +114,7 @@ export const eventosSazonais = [
   {
     id: "anonovo",
     nome: "Ano Novo",
-    ativo: true,
+    ativo: false,
     inicio: "2026-11-01",
     fim: "2027-01-15",
     destaqueInicio: "2026-12-01",
@@ -128,7 +128,7 @@ export const eventosSazonais = [
   {
     id: "carnaval",
     nome: "Carnaval",
-    ativo: true,
+    ativo: false,
     inicio: "2026-01-01",
     fim: "2026-02-28",
     destaqueInicio: "2026-01-15",
@@ -142,7 +142,7 @@ export const eventosSazonais = [
   {
     id: "blackfriday",
     nome: "Black Friday",
-    ativo: true,
+    ativo: false,
     inicio: "2026-11-20",
     fim: "2026-11-30",
     destaqueInicio: "2026-11-15",

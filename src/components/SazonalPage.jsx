@@ -34,80 +34,91 @@ export default function SazonalPage() {
   };
 
   if (!eventos || eventos.length === 0) {
+    const todosEventos = getTodosEventos();
+    
     return (
-      <div style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "rgba(0,0,0,0.7)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 9999,
-        padding: "20px"
-      }}>
+      <div 
+        onClick={() => navigate("/")}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: "rgba(0,0,0,0.7)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 9999,
+          padding: "20px",
+          cursor: "pointer"
+        }}
+      >
         <div style={{
-          maxWidth: "420px",
+          maxWidth: "500px",
           width: "100%",
           background: "#fff",
           borderRadius: "20px",
           overflow: "hidden",
           textAlign: "center",
-          padding: "30px"
+          padding: "0"
         }}>
-          {proximoEvento?.banner && (
-            <img 
-              src={proximoEvento.banner} 
-              alt={proximoEvento.nome}
-              style={{ width: "100%", height: "180px", objectFit: "cover", borderRadius: "12px", marginBottom: "20px" }}
-            />
-          )}
-          <span style={{
-            background: proximoEvento?.cor || "#ec4899",
-            color: "#fff",
-            padding: "6px 16px",
-            borderRadius: "20px",
-            fontSize: "12px",
-            fontWeight: "600",
-            textTransform: "uppercase"
-          }}>
-            Em Breve
-          </span>
+          <img 
+            src="/img/sazonal/banners/bannertodoseventos.png" 
+            alt="Em Breve"
+            style={{ width: "100%", height: "250px", objectFit: "cover", display: "block" }}
+          />
           
-          <h2 style={{ margin: "16px 0 8px", fontSize: "24px", color: "#333" }}>
-            {proximoEvento?.nome || "PróximasDatas"}
-          </h2>
-          
-          <p style={{ fontSize: "18px", color: "#666", marginBottom: "8px" }}>
-            {proximoEvento?.titulo}
-          </p>
-          
-          <p style={{ fontSize: "16px", color: "#ec4899", fontWeight: "bold", marginBottom: "24px" }}>
-            {diasAte > 0 ? `Falta${diasAte} dias paraaburir!` : "Em breve no site"}
-          </p>
-          
-          <button
-            onClick={() => navigate("/")}
-            style={{
-              width: "100%",
+          <div style={{ padding: "20px" }}>
+            <span style={{
               background: "#ec4899",
-              border: "none",
-              padding: "14px",
-              borderRadius: "10px",
               color: "#fff",
-              fontSize: "16px",
-              fontWeight: "bold",
-              cursor: "pointer"
-            }}
-          >
-            ← Voltar para Home
-          </button>
+              padding: "6px 16px",
+              borderRadius: "20px",
+              fontSize: "12px",
+              fontWeight: "600",
+              textTransform: "uppercase"
+            }}>
+              Em Breve
+            </span>
+            
+            <h2 style={{ margin: "16px 0 12px", fontSize: "22px", color: "#333" }}>
+              Próximos Eventos
+            </h2>
+            
+            <div style={{ textAlign: "left", marginBottom: "20px", padding: "0 10px" }}>
+              {todosEventos.map(evt => {
+                const dias = getDiasAteEvento(evt);
+                return (
+                  <div key={evt.id} style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid #eee" }}>
+                    <span style={{ color: "#333", fontWeight: "500" }}>{evt.nome}</span>
+                    <span style={{ color: "#ec4899", fontWeight: "bold" }}>{dias ? `${dias} dias` : "Em breve"}</span>
+                  </div>
+                );
+              })}
+            </div>
+            
+            <button
+              onClick={(e) => { e.stopPropagation(); navigate("/"); }}
+              style={{
+                width: "100%",
+                background: "#ec4899",
+                border: "none",
+                padding: "14px",
+                borderRadius: "10px",
+                color: "#fff",
+                fontSize: "16px",
+                fontWeight: "bold",
+                cursor: "pointer"
+              }}
+            >
+              ← Voltar para Home
+            </button>
+          </div>
         </div>
       </div>
     );
-  }
+}
 
   const lista = getListaPorEvento(eventoSelecionado);
 

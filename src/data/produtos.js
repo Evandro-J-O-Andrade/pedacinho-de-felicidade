@@ -93,134 +93,154 @@ export const produtos = [
       { id: 92, nome: "Tag Doces", descricao: "Etiquetas", preco: 15, tipo: "kit", imagem: "/img/produtos/bolo3.png" }
     ]
   },
-  {
+{
     categoria: "Páscoa",
     itens: [
-      { id: 101, nome: "Ovo de Páscoa Gourmet 350g", descricao: "Chocolate ao leite com recheio de brigadeiro cremoso", preco: 85, tipo: "un", imagem: "/img/produtos/pascoa1.png", sazonal: "pascoa", destaque: true },
-      { id: 102, nome: "Ovo de Páscoa Kinder", descricao: "Chocolate ao leite com surpresa interna", preco: 95, tipo: "un", imagem: "/img/produtos/pascoa2.png", sazonal: "pascoa" },
-      { id: 103, nome: "Caixa de Mini Ovos Sortidos", descricao: "Variedade de sabores artesanais", preco: 60, tipo: "caixa", imagem: "/img/produtos/pascoa3.png", sazonal: "pascoa" },
-      { id: 104, nome: "Ovo de Colher Ninho e Nutella", descricao: "Recheio duplo super cremoso", preco: 110, tipo: "un", imagem: "/img/produtos/pascoa1.png", sazonal: "pascoa" },
-      { id: 105, nome: "Trio Coelhinho de Chocolate", descricao: "Chocolate artesanal decorado", preco: 45, tipo: "kit", imagem: "/img/produtos/pascoa2.png", sazonal: "pascoa" },
-      { id: 106, nome: "Coelho de Páscoa Gigante", descricao: "Chocolate 500g artesanal com amêndoas", preco: 120, tipo: "un", imagem: "/img/produtos/pascoa1.png", sazonal: "pascoa" },
-      { id: 107, nome: "Cesta de Páscoa Premium", descricao: "Ovos, chocolates e trufas Selectionadas", preco: 250, tipo: "kit", imagem: "/img/produtos/pascoa2.png", sazonal: "pascoa" },
-      { id: 108, nome: "Ovo de Páscoa Branco", descricao: "Chocolate branco com morango", preco: 90, tipo: "un", imagem: "/img/produtos/pascoa3.png", sazonal: "pascoa" }
+      { id: 101, nome: "Ovo de Páscoa Gourmet 350g", descricao: "Chocolate ao leite com recheio de brigadeiro cremoso", preco: 85, tipo: "un", imagem: "/img/sazonal/pascoa/ovogourmetleitcremoso.png", sazonal: "pascoa", destaque: true },
+      { id: 102, nome: "Ovo de Páscoa Kinder", descricao: "Chocolate ao leite com surpresa interna", preco: 95, tipo: "un", imagem: "/img/sazonal/pascoa/kinderovo.png", sazonal: "pascoa" },
+      { id: 103, nome: "Caixa de Mini Ovos Sortidos", descricao: "Variedade de sabores artesanais", preco: 60, tipo: "caixa", imagem: "/img/sazonal/pascoa/miniovos.png", sazonal: "pascoa" },
+      { id: 104, nome: "Ovo de Colher Ninho e Nutella", descricao: "Recheio duplo super cremoso", preco: 110, tipo: "un", imagem: "/img/sazonal/pascoa/ovotrufadoprestigio.png", sazonal: "pascoa" },
+      { id: 105, nome: "Trio Coelhinho de Chocolate", descricao: "Chocolate artesanal decorado", preco: 45, tipo: "kit", imagem: "/img/sazonal/pascoa/ovotradicionalbombom.png", sazonal: "pascoa" },
+      { id: 106, nome: "Coelho de Páscoa Gigante", descricao: "Chocolate 500g artesanal com amêndoas", preco: 120, tipo: "un", imagem: "/img/sazonal/pascoa/ovotrugadomaracuja.png", sazonal: "pascoa" },
+      { id: 107, nome: "Cesta de Páscoa Premium", descricao: "Ovos, chocolates e trufas Selectionadas", preco: 250, tipo: "kit", imagem: "/img/sazonal/pascoa/bombom.png", sazonal: "pascoa" },
+      { id: 108, nome: "Ovo de Páscoa Branco", descricao: "Chocolate branco com morango", preco: 90, tipo: "un", imagem: "/img/sazonal/pascoa/ovogourmetleitcremoso.png", sazonal: "pascoa" },
+      { id: 109, nome: "Caixa Bombons Páscoa", descricao: "24 unidades sortidas", preco: 65, tipo: "caixa", imagem: "/img/sazonal/pascoa/bombom.png", sazonal: "pascoa" },
+      { id: 110, nome: "Biscoito Páscoa", descricao: "Cookies decorados", preco: 40, tipo: "kit", imagem: "/img/sazonal/pascoa/miniovos.png", sazonal: "pascoa" }
     ]
   },
   {
     categoria: "Natal",
     itens: [
-      { id: 201, nome: "Panetone Recheado 1kg", descricao: "Chocolate trufado artesanal", preco: 75, tipo: "un", imagem: "/img/produtos/natal1.png", sazonal: "natal" },
-      { id: 202, nome: "Chocotone Gourmet", descricao: "Gotas de chocolate e recheio cremoso", preco: 80, tipo: "un", imagem: "/img/produtos/natal2.png", sazonal: "natal" },
-      { id: 203, nome: "Kit Ceia Natalina", descricao: "Panetone + doces + sobremesas especiais", preco: 150, tipo: "kit", imagem: "/img/produtos/natal3.png", sazonal: "natal" },
-      { id: 204, nome: "Biscoitos Decorados Natalinos", descricao: "Glacê artesanal temático", preco: 55, tipo: "kit", imagem: "/img/produtos/natal1.png", sazonal: "natal" },
-      { id: 205, nome: "Guirlanda de Brownie", descricao: "Brownie decorado especial", preco: 95, tipo: "un", imagem: "/img/produtos/natal2.png", sazonal: "natal" },
-      { id: 206, nome: "Tronco de Natal", descricao: "Rolo de chocolate com castanhas", preco: 85, tipo: "un", imagem: "/img/produtos/natal1.png", sazonal: "natal" },
-      { id: 207, nome: "Bolo de Natal", descricao: "Frutas cristalizadas e/nozes", preco: 120, tipo: "un", imagem: "/img/produtos/natal2.png", sazonal: "natal" },
-      { id: 208, nome: "Kit Presente de Natal", descricao: "Seleção gourmet de doces", preco: 180, tipo: "kit", imagem: "/img/produtos/natal3.png", sazonal: "natal" }
+      { id: 201, nome: "Panetone Recheado 1kg", descricao: "Chocolate trufado artesanal", preco: 75, tipo: "un", imagem: "/img/sazonal/natal/panetonetrufado.png", sazonal: "natal" },
+      { id: 202, nome: "Chocotone Gourmet", descricao: "Gotas de chocolate e recheio cremoso", preco: 80, tipo: "un", imagem: "/img/sazonal/natal/panetonetrufado.png", sazonal: "natal" },
+      { id: 203, nome: "Kit Ceia Natalina", descricao: "Panetone + doces + sobremesas especiais", preco: 150, tipo: "kit", imagem: "/img/sazonal/natal/kitpanetone.png", sazonal: "natal" },
+      { id: 204, nome: "Biscoitos Decorados Natalinos", descricao: "Glacê artesanal temático", preco: 55, tipo: "kit", imagem: "/img/sazonal/natal/panetonetrufado.png", sazonal: "natal" },
+      { id: 205, nome: "Guirlanda de Brownie", descricao: "Brownie decorado especial", preco: 95, tipo: "un", imagem: "/img/sazonal/natal/panetonetrufado.png", sazonal: "natal" },
+      { id: 206, nome: "Tronco de Natal", descricao: "Rolo de chocolate com castanhas", preco: 85, tipo: "un", imagem: "/img/sazonal/natal/panetonetrufado.png", sazonal: "natal" },
+      { id: 207, nome: "Bolo de Natal", descricao: "Frutas cristalizadas e/nozes", preco: 120, tipo: "un", imagem: "/img/sazonal/natal/panetonetrufado.png", sazonal: "natal" },
+      { id: 208, nome: "Kit Presente de Natal", descricao: "Seleção gourmet de doces", preco: 180, tipo: "kit", imagem: "/img/sazonal/natal/kitpanetone.png", sazonal: "natal" },
+      { id: 209, nome: "Trufa Natalina", descricao: "Chocolate com frutas cristalizadas", preco: 12, tipo: "un", imagem: "/img/sazonal/natal/panetonetrufado.png", sazonal: "natal" },
+      { id: 210, nome: "Cesta Natalina Premium", descricao: "Panetone + trufas + biscoitos", preco: 250, tipo: "kit", imagem: "/img/sazonal/natal/kitpanetone.png", sazonal: "natal" }
     ]
   },
   {
     categoria: "Dia dos Pais",
     itens: [
-      { id: 301, nome: "Bolo de Chocolatewhisky", descricao: "Massa chocolate com licor de whisky", preco: 95, tipo: "kg", imagem: "/img/produtos/bolo.png", sazonal: "diadospais" },
-      { id: 302, nome: "Trufa de Café", descricao: "Chocolate com café brasileiro", preco: 8, tipo: "un", imagem: "/img/produtos/doces.png", sazonal: "diadospais" },
-      { id: 303, nome: "Cesta do Papai", descricao: "Cervejas artesanais + doces", preco: 220, tipo: "kit", imagem: "/img/produtos/bolo3.png", sazonal: "diadospais" },
-      { id: 304, nome: "Bolo de Cenoura com Chocolate", descricao: "Cobertura de chocolate Brigadeiro", preco: 85, tipo: "kg", imagem: "/img/produtos/bolo4.jpeg", sazonal: "diadospais" },
-      { id: 305, nome: "Mini Trufas Variadas", descricao: "6 unidades Sortidas", preco: 45, tipo: "kit", imagem: "/img/produtos/doces.png", sazonal: "diadospais" },
-      { id: 306, nome: "Brownie com Nozes", descricao: "Brownie artesanal com nozes", preco: 50, tipo: "un", imagem: "/img/produtos/bolo.png", sazonal: "diadospais" },
-      { id: 307, nome: "Kit Café da Manhã", descricao: "Café + brownies + trufas", preco: 150, tipo: "kit", imagem: "/img/produtos/bolo3.png", sazonal: "diadospais" },
-      { id: 308, nome: "Pão de Mel Recheado", descricao: "Com doce de leite", preco: 15, tipo: "un", imagem: "/img/produtos/bolo4.jpeg", sazonal: "diadospais" }
+      { id: 301, nome: "Bolo de Chocolatewhisky", descricao: "Massa chocolate com licor de whisky", preco: 95, tipo: "kg", imagem: "/img/sazonal/pais/bolochocolate.png", sazonal: "diadospais" },
+      { id: 302, nome: "Trufa de Café", descricao: "Chocolate com café brasileiro", preco: 8, tipo: "un", imagem: "/img/sazonal/pais/trufacafe.png", sazonal: "diadospais" },
+      { id: 303, nome: "Cesta do Papai", descricao: "Cervejas artesanais + doces", preco: 220, tipo: "kit", imagem: "/img/sazonal/pais/cestadopapai.png", sazonal: "diadospais" },
+      { id: 304, nome: "Bolo de Cenoura com Chocolate", descricao: "Cobertura de chocolate Brigadeiro", preco: 85, tipo: "kg", imagem: "/img/sazonal/pais/bolocenoura.png", sazonal: "diadospais" },
+      { id: 305, nome: "Mini Trufas Variadas", descricao: "6 unidades Sortidas", preco: 45, tipo: "kit", imagem: "/img/sazonal/pais/minitrufas.png", sazonal: "diadospais" },
+      { id: 306, nome: "Brownie com Nozes", descricao: "Brownie artesanal com nozes", preco: 50, tipo: "un", imagem: "/img/sazonal/pais/brownieno.png", sazonal: "diadospais" },
+      { id: 307, nome: "Kit Café da Manhã", descricao: "Café + brownies + trufas", preco: 150, tipo: "kit", imagem: "/img/sazonal/pais/kitcafe.png", sazonal: "diadospais" },
+      { id: 308, nome: "Pão de Mel Recheado", descricao: "Com doce de leite", preco: 15, tipo: "un", imagem: "/img/sazonal/pais/paodemel.png", sazonal: "diadospais" },
+      { id: 309, nome: "Bolo Nevado", descricao: "Brigadeiro branco e coco", preco: 90, tipo: "kg", imagem: "/img/sazonal/pais/bolonevado.png", sazonal: "diadospais" },
+      { id: 310, nome: "Kit Churrasco", descricao: "Cervejas + doces", preco: 180, tipo: "kit", imagem: "/img/sazonal/pais/ktchurrasco.png", sazonal: "diadospais" }
     ]
   },
-  {
+{
     categoria: "Dia das Mães",
     itens: [
-      { id: 401, nome: "Bolo de Morango Premium", descricao: "Morangos frescos com chantilly", preco: 110, tipo: "kg", imagem: "/img/produtos/bolo.png", sazonal: "diasmaes" },
-      { id: 402, nome: "Torta de Limão", descricao: "Merengue e creme de limão", preco: 90, tipo: "un", imagem: "/img/produtos/bolo3.png", sazonal: "diasmaes" },
-      { id: 403, nome: "Cesta Sweet Mãe", descricao: "Doces brancos e flores", preco: 200, tipo: "kit", imagem: "/img/produtos/bolo4.jpeg", sazonal: "diasmaes" },
-      { id: 404, nome: "Bolo Red Velvet", descricao: "Cream cheese clássico", preco: 100, tipo: "kg", imagem: "/img/produtos/bolo.png", sazonal: "diasmaes" },
-      { id: 405, nome: "Brigadeiro Branco", descricao: "Caixa com 12 unidades", preco: 40, tipo: "caixa", imagem: "/img/produtos/doces.png", sazonal: "diasmaes" },
-      { id: 406, nome: "Torta Holandesa", descricao: "Cream cheese e chocolate", preco: 95, tipo: "un", imagem: "/img/produtos/bolo3.png", sazonal: "diasmaes" },
-      { id: 407, nome: "Flor de Marshmallow", descricao: "Decoração edible", preco: 35, tipo: "un", imagem: "/img/produtos/doces.png", sazonal: "diasmaes" },
-      { id: 408, nome: "Café com Doces", descricao: "Café gourmet + trufas", preco: 120, tipo: "kit", imagem: "/img/produtos/bolo4.jpeg", sazonal: "diasmaes" }
+      { id: 401, nome: "Bolo de Morango Premium", descricao: "Morangos frescos com chantilly", preco: 110, tipo: "kg", imagem: "/img/sazonal/maes/bolomorango.png", sazonal: "diasmaes" },
+      { id: 402, nome: "Torta de Limão", descricao: "Merengue e creme de limón", preco: 90, tipo: "un", imagem: "/img/sazonal/maes/tortalima.png", sazonal: "diasmaes" },
+      { id: 403, nome: "Cesta Sweet Mãe", descricao: "Doces brancos e flores", preco: 200, tipo: "kit", imagem: "/img/sazonal/maes/cestamae.png", sazonal: "diasmaes" },
+      { id: 404, nome: "Bolo Red Velvet", descricao: "Cream cheese clássico", preco: 100, tipo: "kg", imagem: "/img/sazonal/maes/redvelvet.png", sazonal: "diasmaes" },
+      { id: 405, nome: "Brigadeiro Branco", descricao: "Caixa com 12 unidades", preco: 40, tipo: "caixa", imagem: "/img/sazonal/maes/brigadeiro.png", sazonal: "diasmaes" },
+      { id: 406, nome: "Torta Holandesa", descricao: "Cream cheese e chocolate", preco: 95, tipo: "un", imagem: "/img/sazonal/maes/tortaholandesa.png", sazonal: "diasmaes" },
+      { id: 407, nome: "Flor de Marshmallow", descricao: "Decoração edible", preco: 35, tipo: "un", imagem: "/img/sazonal/maes/flormarsh.png", sazonal: "diasmaes" },
+      { id: 408, nome: "Café com Doces", descricao: "Café gourmet + trufas", preco: 120, tipo: "kit", imagem: "/img/sazonal/maes/cafecafe.png", sazonal: "diasmaes" },
+      { id: 409, nome: "Bolo Cookies", descricao: "Massa com cookie", preco: 95, tipo: "kg", imagem: "/img/sazonal/maes/bolocookies.png", sazonal: "diasmaes" },
+      { id: 410, nome: "Mini Doces", descricao: "12 unidades sortidas", preco: 50, tipo: "kit", imagem: "/img/sazonal/maes/minidoce.png", sazonal: "diasmaes" }
     ]
   },
   {
     categoria: "Dia dos Namorados",
     itens: [
-      { id: 501, nome: "Bolo Amor", descricao: "Coração de morango com chocolate", preco: 120, tipo: "kg", imagem: "/img/produtos/bolo.png", sazonal: "namorados" },
-      { id: 502, nome: "Trufa Coração", descricao: "Coração de chocolate trufado", preco: 12, tipo: "un", imagem: "/img/produtos/doces.png", sazonal: "namorados" },
-      { id: 503, nome: "Caixa de Beijinhos", descricao: "12 unidades coração", preco: 45, tipo: "caixa", imagem: "/img/produtos/doces.png", sazonal: "namorados" },
-      { id: 504, nome: "Bolo de Chocolate", descricao: "Coração de chocolate", preco: 95, tipo: "kg", imagem: "/img/produtos/bolo3.png", sazonal: "namorados" },
-      { id: 505, nome: "Sorvete de Morango", descricao: "Caseiro com morangos", preco: 50, tipo: "litro", imagem: "/img/produtos/bolo4.jpeg", sazonal: "namorados" },
-      { id: 506, nome: "Mini Tortas", descricao: "6 unidades sortidas", preco: 60, tipo: "kit", imagem: "/img/produtos/bolo.png", sazonal: "namorados" },
-      { id: 507, nome: "Cesta Romântica", descricao: "Vinho + chocolates + flores", preco: 280, tipo: "kit", imagem: "/img/produtos/bolo3.png", sazonal: "namorados" },
-      { id: 508, nome: "Macarons", descricao: "12 unidades sortidas", preco: 70, tipo: "caixa", imagem: "/img/produtos/doces.png", sazonal: "namorados" }
+      { id: 501, nome: "Bolo Amor", descricao: "Coração de morango com chocolate", preco: 120, tipo: "kg", imagem: "/img/sazonal/namorados/boloamor.png", sazonal: "namorados" },
+      { id: 502, nome: "Trufa Coração", descricao: "Coração de chocolate trufado", preco: 12, tipo: "un", imagem: "/img/sazonal/namorados/trufacora.png", sazonal: "namorados" },
+      { id: 503, nome: "Caixa de Beijinhos", descricao: "12 unidades coração", preco: 45, tipo: "caixa", imagem: "/img/sazonal/namorados/beijinho.png", sazonal: "namorados" },
+      { id: 504, nome: "Bolo de Chocolate", descricao: "Coração de chocolate", preco: 95, tipo: "kg", imagem: "/img/sazonal/namorados/bolochoco.png", sazonal: "namorados" },
+      { id: 505, nome: "Sorvete de Morango", descricao: "Caseiro com morangos", preco: 50, tipo: "litro", imagem: "/img/sazonal/namorados/sorvete.png", sazonal: "namorados" },
+      { id: 506, nome: "Mini Tortas", descricao: "6 unidades sortidas", preco: 60, tipo: "kit", imagem: "/img/sazonal/namorados/minitorta.png", sazonal: "namorados" },
+      { id: 507, nome: "Cesta Romântica", descricao: "Vinho + chocolates + flores", preco: 280, tipo: "kit", imagem: "/img/sazonal/namorados/cestaromantica.png", sazonal: "namorados" },
+      { id: 508, nome: "Macarons", descricao: "12 unidades sortidas", preco: 70, tipo: "caixa", imagem: "/img/sazonal/namorados/macarons.png", sazonal: "namorados" },
+      { id: 509, nome: "Bolo Morango com Nutella", descricao: "Recheio especial", preco: 110, tipo: "kg", imagem: "/img/sazonal/namorados/bolomorango.png", sazonal: "namorados" },
+      { id: 510, nome: "Kit Café da Manhã", descricao: "Vinho + brigadeiros", preco: 180, tipo: "kit", imagem: "/img/sazonal/namorados/kitcafe.png", sazonal: "namorados" }
     ]
   },
-  {
+{
     categoria: "Dia do Professor",
     itens: [
-      { id: 601, nome: "Bolo de Cenoura", descricao: "Cobertura de chocolate", preco: 80, tipo: "kg", imagem: "/img/produtos/bolo.png", sazonal: "professor" },
-      { id: 602, nome: "Cesta do Docente", descricao: "Café + biscoitos + chocolates", preco: 130, tipo: "kit", imagem: "/img/produtos/bolo3.png", sazonal: "professor" },
-      { id: 603, nome: "Bolo Floresta Negra", descricao: "Chocolate com cerejas", preco: 110, tipo: "kg", imagem: "/img/produtos/bolo4.jpeg", sazonal: "professor" },
-      { id: 604, nome: "Trufa de Nozes", descricao: "Chocolate com nozes", preco: 10, tipo: "un", imagem: "/img/produtos/doces.png", sazonal: "professor" },
-      { id: 605, nome: "Biscoitosda Professor", descricao: "Biscoitos decorados", preco: 35, tipo: "kit", imagem: "/img/produtos/doces.png", sazonal: "professor" },
-      { id: 606, nome: "Bolo Ninho", descricao: "Mousse de ninho", preco: 105, tipo: "kg", imagem: "/img/produtos/bolo.png", sazonal: "professor" },
-      { id: 607, nome: "Café Gourmet", descricao: "Café+ brigadeiro", preco: 55, tipo: "kit", imagem: "/img/produtos/bolo3.png", sazonal: "professor" },
-      { id: 608, nome: "Pão de Mel", descricao: "Com chocolate", preco: 12, tipo: "un", imagem: "/img/produtos/bolo4.jpeg", sazonal: "professor" }
+      { id: 601, nome: "Bolo de Cenoura", descricao: "Cobertura de chocolate", preco: 80, tipo: "kg", imagem: "/img/sazonal/professor/bolocenoura.png", sazonal: "professor" },
+      { id: 602, nome: "Cesta do Docente", descricao: "Café + biscoitos + chocolates", preco: 130, tipo: "kit", imagem: "/img/sazonal/professor/cestadocente.png", sazonal: "professor" },
+      { id: 603, nome: "Bolo Floresta Negra", descricao: "Chocolate com cerejas", preco: 110, tipo: "kg", imagem: "/img/sazonal/professor/florestanegra.png", sazonal: "professor" },
+      { id: 604, nome: "Trufa de Nozes", descricao: "Chocolate com nozes", preco: 10, tipo: "un", imagem: "/img/sazonal/professor/trufanozes.png", sazonal: "professor" },
+      { id: 605, nome: "Biscoitos do Professor", descricao: "Biscoitos decorados", preco: 35, tipo: "kit", imagem: "/img/sazonal/professor/biscoitos.png", sazonal: "professor" },
+      { id: 606, nome: "Bolo Ninho", descricao: "Mousse de ninho", preco: 105, tipo: "kg", imagem: "/img/sazonal/professor/boloninho.png", sazonal: "professor" },
+      { id: 607, nome: "Café Gourmet", descricao: "Café+ brigadeiro", preco: 55, tipo: "kit", imagem: "/img/sazonal/professor/cafegourmet.png", sazonal: "professor" },
+      { id: 608, nome: "Pão de Mel", descricao: "Com chocolate", preco: 12, tipo: "un", imagem: "/img/sazonal/professor/paodemel.png", sazonal: "professor" },
+      { id: 609, nome: "Bolo Prestígio", descricao: "Chocolate e coco", preco: 95, tipo: "kg", imagem: "/img/sazonal/professor/boloprestigio.png", sazonal: "professor" },
+      { id: 610, nome: "Kit Doces", descricao: "Diversos brigadeiros", preco: 60, tipo: "kit", imagem: "/img/sazonal/professor/kitdoces.png", sazonal: "professor" }
     ]
   },
   {
     categoria: "Dia das Mulheres",
     itens: [
-      { id: 701, nome: "Bolo Feminista", descricao: "Rosa de chocolate", preco: 100, tipo: "kg", imagem: "/img/produtos/bolo.png", sazonal: "mulheres" },
-      { id: 702, nome: "Taça de Morango", descricao: "Morango com chocolate", preco: 25, tipo: "un", imagem: "/img/produtos/bolo3.png", sazonal: "mulheres" },
-      { id: 703, nome: "Cesta Divas", descricao: "Espumante + doces", preco: 250, tipo: "kit", imagem: "/img/produtos/bolo4.jpeg", sazonal: "mulheres" },
-      { id: 704, nome: "Torta de Morango", descricao: "Creme e morangos", preco: 90, tipo: "un", imagem: "/img/produtos/bolo.png", sazonal: "mulheres" },
-      { id: 705, nome: "Brigadeiros Rosa", descricao: "12 unidades Pink", preco: 45, tipo: "caixa", imagem: "/img/produtos/doces.png", sazonal: "mulheres" },
-      { id: 706, nome: "Bolo Red Velvet", descricao: "Cream cheese pink", preco: 105, tipo: "kg", imagem: "/img/produtos/bolo3.png", sazonal: "mulheres" },
-      { id: 707, nome: "Doces Light", descricao: "Doces sem açúcar", preco: 60, tipo: "kit", imagem: "/img/produtos/doces.png", sazonal: "mulheres" },
-      { id: 708, nome: "Bala de Coração", descricao: "Balas heart", preco: 20, tipo: "kit", imagem: "/img/produtos/doces.png", sazonal: "mulheres" }
+      { id: 701, nome: "Bolo Feminista", descricao: "Rosa de chocolate", preco: 100, tipo: "kg", imagem: "/img/sazonal/mulheres/bolofem.png", sazonal: "mulheres" },
+      { id: 702, nome: "Taça de Morango", descricao: "Morango com chocolate", preco: 25, tipo: "un", imagem: "/img/sazonal/mulheres/tacamorango.png", sazonal: "mulheres" },
+      { id: 703, nome: "Cesta Divas", descricao: "Espumante + doces", preco: 250, tipo: "kit", imagem: "/img/sazonal/mulheres/cestadivas.png", sazonal: "mulheres" },
+      { id: 704, nome: "Torta de Morango", descricao: "Creme e morangos", preco: 90, tipo: "un", imagem: "/img/sazonal/mulheres/tortamorango.png", sazonal: "mulheres" },
+      { id: 705, nome: "Brigadeiros Rosa", descricao: "12 unidades Pink", preco: 45, tipo: "caixa", imagem: "/img/sazonal/mulheres/brigadeirorosa.png", sazonal: "mulheres" },
+      { id: 706, nome: "Bolo Red Velvet", descricao: "Cream cheese pink", preco: 105, tipo: "kg", imagem: "/img/sazonal/mulheres/redvelvetpink.png", sazonal: "mulheres" },
+      { id: 707, nome: "Doces Light", descricao: "Doces sem açúcar", preco: 60, tipo: "kit", imagem: "/img/sazonal/mulheres/docelight.png", sazonal: "mulheres" },
+      { id: 708, nome: "Bala de Coração", descricao: "Balas heart", preco: 20, tipo: "kit", imagem: "/img/sazonal/mulheres/balacora.png", sazonal: "mulheres" },
+      { id: 709, nome: "Bolo Morango Chantilly", descricao: "Morangos frescos", preco: 95, tipo: "kg", imagem: "/img/sazonal/mulheres/bolomorchant.png", sazonal: "mulheres" },
+      { id: 710, nome: "Cesta Café", descricao: "Café gourmet + doces", preco: 150, tipo: "kit", imagem: "/img/sazonal/mulheres/cestacafe.png", sazonal: "mulheres" }
     ]
   },
-  {
+{
     categoria: "Festa Junina",
     itens: [
-      { id: 801, nome: "Pé de Moleque", descricao: "Amendoim crocante", preco: 25, tipo: "un", imagem: "/img/produtos/doces.png", sazonal: "junina" },
-      { id: 802, nome: "Canjica", descricao: "Canjica com coco", preco: 15, tipo: "un", imagem: "/img/produtos/bolo.png", sazonal: "junina" },
-      { id: 803, nome: "Paçoca", descricao: "Pasta de amendoim", preco: 20, tipo: "un", imagem: "/img/produtos/doces.png", sazonal: "junina" },
-      { id: 804, nome: "Bolo de Milho", descricao: "Milho verde caseiro", preco: 70, tipo: "kg", imagem: "/img/produtos/bolo3.png", sazonal: "junina" },
-      { id: 805, nome: "Quenta de Amendoim", descricao: "Pipoca doce", preco: 18, tipo: "un", imagem: "/img/produtos/doces.png", sazonal: "junina" },
-      { id: 806, nome: "Curau", descricao: "Milho verde cremoso", preco: 12, tipo: "un", imagem: "/img/produtos/bolo4.jpeg", sazonal: "junina" },
-      { id: 807, nome: "Kit Festa Junina", descricao: "Salgados + doces típicos", preco: 180, tipo: "kit", imagem: "/img/produtos/salgados.png", sazonal: "junina" },
-      { id: 808, nome: "Brigadeiro de Capinha", descricao: "Com amendoim", preco: 8, tipo: "un", imagem: "/img/produtos/doces.png", sazonal: "junina" }
+      { id: 801, nome: "Pé de Moleque", descricao: "Amendoim crocante", preco: 25, tipo: "un", imagem: "/img/sazonal/junina/pipocaninho.png", sazonal: "junina" },
+      { id: 802, nome: "Canjica", descricao: "Canjica com coco", preco: 15, tipo: "un", imagem: "/img/sazonal/junina/pipocaninho.png", sazonal: "junina" },
+      { id: 803, nome: "Paçoca", descricao: "Pasta de amendoim", preco: 20, tipo: "un", imagem: "/img/sazonal/junina/pipocaninho.png", sazonal: "junina" },
+      { id: 804, nome: "Bolo de Milho", descricao: "Milho verde caseiro", preco: 70, tipo: "kg", imagem: "/img/sazonal/junina/pipocaninho.png", sazonal: "junina" },
+      { id: 805, nome: "Quentão", descricao: "Pipoca doce", preco: 18, tipo: "un", imagem: "/img/sazonal/junina/pipocaninho.png", sazonal: "junina" },
+      { id: 806, nome: "Curau", descricao: "Milho verde cremoso", preco: 12, tipo: "un", imagem: "/img/sazonal/junina/pipocaninho.png", sazonal: "junina" },
+      { id: 807, nome: "Kit Festa Junina", descricao: "Salgados + doces típicos", preco: 180, tipo: "kit", imagem: "/img/sazonal/junina/pipocaninho.png", sazonal: "junina" },
+      { id: 808, nome: "Brigadeiro de Amendoim", descricao: "Com amendoim", preco: 8, tipo: "un", imagem: "/img/sazonal/junina/pipocaninho.png", sazonal: "junina" },
+      { id: 809, nome: "Arroz Doce", descricao: "Doce cremoso", preco: 25, tipo: "kg", imagem: "/img/sazonal/junina/pipocaninho.png", sazonal: "junina" },
+      { id: 810, nome: "Maçã do Amor", descricao: "Maçã caramelizada", preco: 12, tipo: "un", imagem: "/img/sazonal/junina/pipocaninho.png", sazonal: "junina" }
     ]
   },
-  {
+{
     categoria: "Ano Novo",
     itens: [
-      { id: 901, nome: "Bolo Ano Novo", descricao: "Dourado com frutas", preco: 120, tipo: "kg", imagem: "/img/produtos/bolo.png", sazonal: "anonovo" },
-      { id: 902, nome: "Trufas Douradas", descricao: "Chocolate com Ouro", preco: 12, tipo: "un", imagem: "/img/produtos/doces.png", sazonal: "anonovo" },
-      { id: 903, nome: "Champagne Cake", descricao: "Bolo com espumante", preco: 150, tipo: "un", imagem: "/img/produtos/bolo3.png", sazonal: "anonovo" },
-      { id: 904, nome: "Doces Especiais", descricao: "Caixa premium", preco: 100, tipo: "kit", imagem: "/img/produtos/doces.png", sazonal: "anonovo" },
-      { id: 905, nome: "Panetone Espumante", descricao: "Panetone com espumante", preco: 85, tipo: "un", imagem: "/img/produtos/bolo4.jpeg", sazonal: "anonovo" },
-      { id: 906, nome: "Minibolas Ouro", descricao: "12 unidades", preco: 45, tipo: "caixa", imagem: "/img/produtos/doces.png", sazonal: "anonovo" },
-      { id: 907, nome: "Kit Reveillon", descricao: "Espumante + doces", preco: 220, tipo: "kit", imagem: "/img/produtos/bolo3.png", sazonal: "anonovo" },
-      { id: 908, nome: "Uva com Prosciutto", descricao: "Uva + presunto", preco: 35, tipo: "kit", imagem: "/img/produtos/doces.png", sazonal: "anonovo" }
+      { id: 901, nome: "Bolo Dourado", descricao: "Dourado com frutas", preco: 120, tipo: "kg", imagem: "/img/sazonal/anonovo/bolodourado.png", sazonal: "anonovo" },
+      { id: 902, nome: "Trufas Douradas", descricao: "Chocolate com Ouro", preco: 12, tipo: "un", imagem: "/img/sazonal/anonovo/trufasouro.png", sazonal: "anonovo" },
+      { id: 903, nome: "Champagne Cake", descricao: "Bolo com espumante", preco: 150, tipo: "un", imagem: "/img/sazonal/anonovo/champcake.png", sazonal: "anonovo" },
+      { id: 904, nome: "Doces Especiais", descricao: "Caixa premium", preco: 100, tipo: "kit", imagem: "/img/sazonal/anonovo/docesespeciais.png", sazonal: "anonovo" },
+      { id: 905, nome: "Panetone Espumante", descricao: "Panetone com espumante", preco: 85, tipo: "un", imagem: "/img/sazonal/anonovo/panetoneesp.png", sazonal: "anonovo" },
+      { id: 906, nome: "Minibolas Ouro", descricao: "12 unidades", preco: 45, tipo: "caixa", imagem: "/img/sazonal/anonovo/minibolas.png", sazonal: "anonovo" },
+      { id: 907, nome: "Kit Reveillon", descricao: "Espumante + doces", preco: 220, tipo: "kit", imagem: "/img/sazonal/anonovo/kitreveillon.png", sazonal: "anonovo" },
+      { id: 908, nome: "Uva com Prosciutto", descricao: "Uva + presunto", preco: 35, tipo: "kit", imagem: "/img/sazonal/anonovo/uvaprosciutto.png", sazonal: "anonovo" },
+      { id: 909, nome: "Bolo Festivo", descricao: "Bolo com Topper", preco: 130, tipo: "kg", imagem: "/img/sazonal/anonovo/bolofestivo.png", sazonal: "anonovo" },
+      { id: 910, nome: "Cesta Ano Novo", descricao: "Espumante + frutas", preco: 280, tipo: "kit", imagem: "/img/sazonal/anonovo/cestaanonovo.png", sazonal: "anonovo" }
     ]
   },
-  {
+{
     categoria: "Carnaval",
     itens: [
-      { id: 1001, nome: "Bolo de Carnival", descricao: "Cores festivas", preco: 95, tipo: "kg", imagem: "/img/produtos/bolo.png", sazonal: "carnaval" },
-      { id: 1002, nome: "Trufas Coloridas", descricao: "Chrom/confetes", preco: 10, tipo: "un", imagem: "/img/produtos/doces.png", sazonal: "carnaval" },
-      { id: 1003, nome: "Cupcake Carnival", descricao: "Topper festivo", preco: 15, tipo: "un", imagem: "/img/produtos/bolo3.png", sazonal: "carnaval" },
-      { id: 1004, nome: "Doces do Momento", descricao: "Mix colorido", preco: 60, tipo: "kit", imagem: "/img/produtos/doces.png", sazonal: "carnaval" },
-      { id: 1005, nome: "Picole de Frutas", descricao: "Sabores tropicais", preco: 8, tipo: "un", imagem: "/img/produtos/bolo4.jpeg", sazonal: "carnaval" },
-      { id: 1006, nome: "Bala Loca", descricao: "Balas spray", preco: 12, tipo: "kit", imagem: "/img/produtos/doces.png", sazonal: "carnaval" },
-      { id: 1007, nome: "Pipoca Carnaval", descricao: "Pipoca colorida", preco: 25, tipo: "un", imagem: "/img/produtos/doces.png", sazonal: "carnaval" },
-      { id: 1008, nome: "Kit Folia", descricao: "Doces + fantasias", preco: 150, tipo: "kit", imagem: "/img/produtos/bolo.png", sazonal: "carnaval" }
+      { id: 1001, nome: "Bolo Folia", descricao: "Cores festivas", preco: 95, tipo: "kg", imagem: "/img/sazonal/carnaval/bolofolia.png", sazonal: "carnaval" },
+      { id: 1002, nome: "Trufas Coloridas", descricao: "Chrom/confetes", preco: 10, tipo: "un", imagem: "/img/sazonal/carnaval/trufacolor.png", sazonal: "carnaval" },
+      { id: 1003, nome: "Cupcake Carnaval", descricao: "Topper festivo", preco: 15, tipo: "un", imagem: "/img/sazonal/carnaval/cupcake.png", sazonal: "carnaval" },
+      { id: 1004, nome: "Mix Colorido", descricao: "Mix colorido", preco: 60, tipo: "kit", imagem: "/img/sazonal/carnaval/mixcolor.png", sazonal: "carnaval" },
+      { id: 1005, nome: "Picolé Frutas", descricao: "Sabores tropicais", preco: 8, tipo: "un", imagem: "/img/sazonal/carnaval/picole.png", sazonal: "carnaval" },
+      { id: 1006, nome: "Bala Loca", descricao: "Balas spray", preco: 12, tipo: "kit", imagem: "/img/sazonal/carnaval/balaloca.png", sazonal: "carnaval" },
+      { id: 1007, nome: "Pipoca Colorida", descricao: "Pipoca colorida", preco: 25, tipo: "un", imagem: "/img/sazonal/carnaval/pipoca.png", sazonal: "carnaval" },
+      { id: 1008, nome: "Kit Folia", descricao: "Doces + fantasias", preco: 150, tipo: "kit", imagem: "/img/sazonal/carnaval/kitfolia.png", sazonal: "carnaval" },
+      { id: 1009, nome: "Bolo Rainbow", descricao: "Arco-íris de cores", preco: 120, tipo: "kg", imagem: "/img/sazonal/carnaval/bolorainbow.png", sazonal: "carnaval" },
+      { id: 1010, nome: "Cesta Festiva", descricao: "Diversos doces", preco: 180, tipo: "kit", imagem: "/img/sazonal/carnaval/cestafestiva.png", sazonal: "carnaval" }
     ]
   }
 ];
