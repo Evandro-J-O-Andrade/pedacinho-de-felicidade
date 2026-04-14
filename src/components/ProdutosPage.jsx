@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useCarrinho } from "../context/CarrinhoContext";
 import { produtos } from "../data/produtos";
+import { getEventoAtivo } from "../utils/sazonalUtils";
 import ProdutoCard from "./ProdutoCard";
 import Lightbox from "./Lightbox";
 
@@ -12,10 +13,18 @@ export default function ProdutosPage() {
 
   const categorias = ["todos", ...produtos.map((c) => c.categoria)];
 
-  const itensFiltrados = produtos
-    .filter((c) => categoria === "todos" || c.categoria === categoria)
-    .flatMap((c) => c.itens)
-    .filter((item) => item.nome.toLowerCase().includes(busca.toLowerCase()));
+  const evento = getEventoAtivo();
+
+  // Filtra itens por busca
+  const filtrarPorBusca = (itens) => {
+    if (!busca) return itens;
+    return itens.filter(item => item.nome.toLowerCase().includes(busca.toLowerCase()));
+  };
+
+  // Lista de categorias ativas para renderizar seções
+  const categoriasAtivas = categoria === "todos" 
+    ? produtos 
+    : produtos.filter(c => c.categoria === categoria);
 
   function formatar(v) {
     return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -33,14 +42,37 @@ export default function ProdutosPage() {
       >
         <style>{`
           @media only screen and (min-width: 350px) and (max-width: 1024px) {
-            .produtos-page {
-              paddingTop: 130px !important;
-            }
+            .produtos-page { paddingTop: 130px !important; }
           }
           @media only screen and (max-width: 349px) {
-            .produtos-page {
-              paddingTop: 120px !important;
-            }
+            .produtos-page { paddingTop: 120px !important; }
+          }
+          .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+          }
+          @media only screen and (min-width: 901px) and (max-width: 1100px) {
+            .produtos-grid { grid-template-columns: repeat(3, 1fr) !important; }
+          }
+          @media only screen and (min-width: 601px) and (max-width: 900px) {
+            .produtos-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          }
+          @media only screen and (min-width: 350px) and (max-width: 600px) {
+            .produtos-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; padding: 10px !important; }
+          }
+          @media only screen and (max-width: 349px) {
+            .produtos-grid { grid-template-columns: 1fr !important; gap: 10px !important; padding: 10px !important; }
+          }
+          .sessao-titulo {
+            font-size: 28px;
+            color: #ec4899;
+            text-align: center;
+            margin: 30px 0 15px;
+            padding: 0 20px;
           }
         `}</style>
 
@@ -133,36 +165,30 @@ export default function ProdutosPage() {
           </div>
         </div>
 
-        {/* GRID */}
-        <style>{`
-          .produtos-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            padding: 20px;
-            max-width: 1100px;
-            margin: 0 auto;
+        {/* GRID POR CATEGORIA */}
+        {categoriasAtivas.map(cat => {
+          const itens = filtrarPorBusca(cat.itens);
+          
+          // Se não tem evento ativo, esconde categorias Páscoa e Natal
+          if (!evento && (cat.categoria === "Páscoa" || cat.categoria === "Natal")) {
+            return null;
           }
-          @media only screen and (min-width: 901px) and (max-width: 1100px) {
-            .produtos-grid { grid-template-columns: repeat(3, 1fr) !important; }
-          }
-          @media only screen and (min-width: 601px) and (max-width: 900px) {
-            .produtos-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          }
-          @media only screen and (min-width: 350px) and (max-width: 600px) {
-            .produtos-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; padding: 10px !important; }
-          }
-          @media only screen and (max-width: 349px) {
-            .produtos-grid { grid-template-columns: 1fr !important; gap: 10px !important; padding: 10px !important; }
-          }
-        `}</style>
-        <div className="produtos-grid">
-          {itensFiltrados.map((item) => (
-            <ProdutoCard key={item.id} item={item} onImageClick={setImagemAmpliada} />
-          ))}
-        </div>
 
-        {itensFiltrados.length === 0 && (
+          if (itens.length === 0) return null;
+
+          return (
+            <div key={cat.categoria}>
+              <h2 className="sessao-titulo">{cat.categoria}</h2>
+              <div className="produtos-grid">
+                {itens.map(item => (
+                  <ProdutoCard key={item.id} item={item} onImageClick={setImagemAmpliada} />
+                ))}
+              </div>
+            </div>
+          );
+        })}
+
+        {categoriasAtivas.every(cat => filtrarPorBusca(cat.itens).length === 0) && (
           <p style={{ textAlign: "center", color: "#888", marginTop: "40px" }}>
             Nenhum produto encontrado 😢
           </p>

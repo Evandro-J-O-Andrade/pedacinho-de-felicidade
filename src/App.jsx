@@ -12,9 +12,11 @@ import Carrinho from "./components/Carrinho";
 import Footer from "./components/Footer";
 import MonteSeuKit from "./components/MonteSeuKit";
 import WhatsApp from "./components/WhatsApp";
+import BannerSazonal from "./components/BannerSazonal";
 import ProdutosPage from "./components/ProdutosPage";
 import CarrinhoPage from "./components/CarrinhoPage";
 import ToastCarrinho from "./components/ToastCarrinho";
+import SazonalPage from "./components/SazonalPage";
 
 export default function App() {
   const location = useLocation();
@@ -36,6 +38,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={
           <>
+            <BannerSazonal />
             <Hero />
             <Produtos />
             <KitFesta />
@@ -65,6 +68,13 @@ export default function App() {
           <>
             <CarrinhoPage />
             <WhatsApp />
+          </>
+        } />
+        <Route path="/sazonal" element={
+          <>
+            <SazonalPage />
+            <WhatsApp />
+            <Carrinho />
           </>
         } />
       </Routes>

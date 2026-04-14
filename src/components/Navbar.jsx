@@ -258,6 +258,7 @@ export default function Navbar() {
           <a href="/#cardapio" className={paginaAtiva.includes("cardapio") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/#cardapio"); }}>Cardápio</a>
           <a href="/produtos" className={paginaAtiva === "/produtos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/produtos"); }}>Produtos</a>
           <a href="/monte-seu-kit" className={paginaAtiva === "/monte-seu-kit" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/monte-seu-kit"); }}>Monte seu kit</a>
+          <a href="/sazonal" className={paginaAtiva === "/sazonal" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/sazonal"); }}>Delícias de Temporada</a>
           <a href="/#eventos" className={paginaAtiva.includes("eventos") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/#eventos"); }}>Eventos</a>
           <a href="/#contato" className={paginaAtiva.includes("contato") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setPaginaAtiva("/#contato"); }}>Contato</a>
         </div>
