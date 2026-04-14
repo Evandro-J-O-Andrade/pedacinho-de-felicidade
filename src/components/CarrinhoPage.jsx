@@ -136,6 +136,30 @@ freightGratis,
           width: 120px !important;
           height: 120px !important;
         }
+        .carrinho-btn-acao {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          border: 2px solid #fce7f3;
+          background: linear-gradient(135deg, #fff0f5 0%, #fdf2f8 100%);
+          color: #ec4899;
+          font-size: 18px;
+          font-weight: bold;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 8px rgba(236, 72, 153, 0.15);
+        }
+        .carrinho-btn-acao:hover {
+          background: linear-gradient(135deg, #fbcfe8 0%, #f9a8d4 100%);
+          transform: scale(1.05);
+          box-shadow: 0 4px 12px rgba(236, 72, 153, 0.25);
+        }
+        .carrinho-btn-acao:active {
+          transform: scale(0.95);
+        }
         @media (min-width: 769px) {
           .carrinho-container {
             max-width: 1000px;
@@ -243,7 +267,7 @@ freightGratis,
                         marginTop: "10px"
                       }}
                     >
-                      <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                      <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                         <button 
                           className="carrinho-btn-acao"
                           onClick={() => item.quantidade > 1 ? diminuir(item.id) : remover(item.id)}
