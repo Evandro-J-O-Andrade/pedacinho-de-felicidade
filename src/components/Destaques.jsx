@@ -1,11 +1,23 @@
 import { produtos } from "../data/produtos";
+import { getEventoAtivo } from "../utils/sazonalUtils";
+import Image from "./Image";
+import { getImagemProduto } from "../utils/imagemUtils";
 
 const formatPreco = (preco, tipo) => `R$ ${preco.toFixed(2).replace(".", ",")} / ${tipo}`;
 
 export default function Destaques() {
-  const todos = produtos.flatMap((cat) => cat.itens);
+  const evento = getEventoAtivo();
+  
+  // Categorias fixas (não sazonais)
+  const categoriasFixas = ["Bolos", "Doces", "Salgados", "Bebidas", "Complementos"];
+  
+  // Filtra categorias: se não tem evento ativo, mostra só as fixas
+  const produtosFiltrados = evento 
+    ? produtos 
+    : produtos.filter(c => categoriasFixas.includes(c.categoria));
+  
+  const todos = produtosFiltrados.flatMap((cat) => cat.itens);
   const destaques = todos.filter((p) => p.destaque).slice(0, 5);
-  const maisPedidos = todos.filter((p) => p.maisPedido);
 
   return (
     <section
@@ -30,7 +42,7 @@ export default function Destaques() {
             boxShadow: "0 8px 18px rgba(0,0,0,0.08)",
             background: "#fff"
           }}>
-            <img src={item.imagem} alt={item.nome} style={{ width: "100%", height: "140px", objectFit: "cover" }} />
+            <Image src={getImagemProduto(item)} alt={item.nome} style={{ width: "100%", height: "140px", objectFit: "cover" }} />
             <div style={{ padding: "12px" }}>
               <h3 style={{ fontWeight: "bold", fontSize: "15px", color: "#ec4899", marginBottom: "4px" }}>{item.nome}</h3>
               <p style={{ color: "#16a34a", fontWeight: 700 }}>{formatPreco(item.preco, item.tipo)}</p>
@@ -54,28 +66,6 @@ export default function Destaques() {
       >
         Ver mais
       </a>
-
-      {maisPedidos.length > 0 && (
-        <div style={{ marginTop: "28px" }}>
-          <h3 style={{ fontSize: "22px", fontWeight: "bold", marginBottom: "16px", color: "#ec4899" }}>
-            Mais Pedidos 🔥
-          </h3>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-            gap: "14px",
-            maxWidth: "900px",
-            margin: "0 auto"
-          }}>
-            {maisPedidos.map((item) => (
-              <div key={item.id} style={{ background: "#fff7f9", padding: "12px", borderRadius: "12px" }}>
-                <p style={{ fontWeight: "bold", color: "#ec4899" }}>{item.nome}</p>
-                <p style={{ color: "#16a34a", fontWeight: 700 }}>{formatPreco(item.preco, item.tipo)}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </section>
   );
 }

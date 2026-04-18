@@ -1,5 +1,7 @@
 import { useCarrinho } from "../context/CarrinhoContext";
 import { useEffect, useState } from "react";
+import Image from "./Image";
+import { getImagemProduto } from "../utils/imagemUtils";
 
 export default function CarrinhoPage() {
 const {
@@ -226,8 +228,8 @@ freightGratis,
                     position: "relative"
                   }}
                 >
-                  <img
-                    src={item.imagem || "/img/produtos/bolo.png"}
+                  <Image
+                    src={getImagemProduto(item)}
                     alt={item.nome}
                     className="carrinho-item-img"
                     style={{

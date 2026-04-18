@@ -27,6 +27,7 @@ export function getEventoAtivo() {
   const hoje = new Date();
 
   return eventosSazonais.find(evento => {
+    // MUST be ativo first!
     if (!evento.ativo) return false;
 
     const inicio = new Date(evento.inicio);
@@ -53,6 +54,7 @@ export function getEventoDestaque() {
   const hoje = new Date();
 
   return eventosSazonais.find(evento => {
+    // MUST be ativo first!
     if (!evento.ativo) return false;
 
     const destaque = new Date(evento.destaqueInicio);

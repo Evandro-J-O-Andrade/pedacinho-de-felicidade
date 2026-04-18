@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#DA70D6"/>
+      <stop offset="100%" style="stop-color:#800080"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg)"/>
+  <text x="200" y="140" font-family="Arial" font-size="50" fill="white" text-anchor="middle" opacity="0.3">💜</text>
+  <text x="200" y="200" font-family="Arial" font-size="24" font-weight="bold" fill="white" text-anchor="middle">Dia das Mulheres</text>
+  <text x="200" y="240" font-family="Arial" font-size="14" fill="white" text-anchor="middle" opacity="0.8">Força e delicadeza</text>
+</svg>

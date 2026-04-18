@@ -2,7 +2,7 @@ export const eventosSazonais = [
   {
     id: "pascoa",
     nome: "Páscoa",
-    ativo: true,
+    ativo: false,
     inicio: "2026-03-20",
     fim: "2026-04-30",
     destaqueInicio: "2026-03-10",
@@ -16,7 +16,7 @@ export const eventosSazonais = [
   {
     id: "natal",
     nome: "Natal",
-    ativo: true,
+    ativo: false,
     inicio: "2026-11-15",
     fim: "2026-12-25",
     destaqueInicio: "2026-11-01",

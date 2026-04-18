@@ -3,6 +3,8 @@ import { produtos } from "../data/produtos";
 import { useCarrinho } from "../context/CarrinhoContext";
 import { getEventoAtivo } from "../utils/sazonalUtils";
 import Lightbox from "./Lightbox";
+import Image from "./Image";
+import { getImagemProduto } from "../utils/imagemUtils";
 
 export default function MonteSeuKit() {
   const { adicionar } = useCarrinho();
@@ -13,7 +15,16 @@ export default function MonteSeuKit() {
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
 
   const evento = getEventoAtivo();
-  const categorias = ["todos", ...produtos.map((c) => c.categoria)];
+  
+  // Categorias fixas (não sazonais)
+  const categoriasFixas = ["Bolos", "Doces", "Salgados", "Bebidas", "Complementos"];
+  
+  // Filtra categorias: se não tem evento ativo, mostra só as fixas
+  const produtosFiltrados = evento 
+    ? produtos 
+    : produtos.filter(c => categoriasFixas.includes(c.categoria));
+  
+  const categorias = ["todos", ...produtosFiltrados.map((c) => c.categoria)];
 
   // Filtra itens por busca
   const filtrarPorBusca = (itens) => {
@@ -23,8 +34,8 @@ export default function MonteSeuKit() {
 
   // Lista de categorias ativas para renderizar seções
   const categoriasAtivas = categoria === "todos" 
-    ? produtos 
-    : produtos.filter(c => c.categoria === categoria);
+    ? produtosFiltrados 
+    : produtosFiltrados.filter(c => c.categoria === categoria);
 
   function toggleItem(item) {
     setSelecionados((prev) => {
@@ -257,11 +268,11 @@ export default function MonteSeuKit() {
                       }}
                     >
                       <div style={{ width: "100%", height: "220px", overflow: "hidden", position: "relative" }}>
-                        <img
-                          src={item.imagem}
+                        <Image
+                          src={getImagemProduto(item)}
                           alt={item.nome}
                           style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
-                          onClick={(e) => { e.stopPropagation(); setImagemAmpliada(item.imagem); }}
+                          onClick={(e) => { e.stopPropagation(); setImagemAmpliada(getImagemProduto(item)); }}
                         />
                       </div>
 

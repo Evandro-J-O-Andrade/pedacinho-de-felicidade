@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Lightbox from "./Lightbox";
+import Image from "./Image";
 
 export default function Galeria({ embedded = false }) {
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
@@ -49,7 +50,7 @@ export default function Galeria({ embedded = false }) {
         <h2 style={titleStyle}>Momentos Especiais ✨</h2>
         <div style={gridStyle}>
           {imagens.map((src, idx) => (
-            <img
+            <Image
               key={idx}
               src={src}
               alt={`Evento ${idx + 1}`}

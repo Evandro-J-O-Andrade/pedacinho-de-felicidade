@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useMemo, useEffect, useCallback } from "react";
 import { fretes, fretesUf, FRETE_GRATIS_MINIMO } from "../data/fretes";
+import { getImagemProduto, IMAGEM_FALLBACK } from "../utils/imagemUtils";
 
 const CarrinhoContext = createContext();
 
@@ -121,7 +122,7 @@ export function CarrinhoProvider({ children }) {
           id: produto.id,
           nome: produto.nome,
           preco: produto.preco,
-          imagem: produto.imagem || "/img/produtos/bolo.png",
+          imagem: getImagemProduto(produto) || IMAGEM_FALLBACK,
           descricao: produto.descricao || "",
           quantidade: 1
         }

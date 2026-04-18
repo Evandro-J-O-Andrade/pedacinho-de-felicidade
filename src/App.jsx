@@ -15,9 +15,9 @@ import WhatsApp from "./components/WhatsApp";
 import BannerSazonal from "./components/BannerSazonal";
 import ProdutosPage from "./components/ProdutosPage";
 import CarrinhoPage from "./components/CarrinhoPage";
+import SazonalPage from "./components/SazonalPage";
 import ToastCarrinho from "./components/ToastCarrinho";
 import ToastLimparCarrinho from "./components/ToastLimparCarrinho";
-import SazonalPage from "./components/SazonalPage";
 
 export default function App() {
   const location = useLocation();

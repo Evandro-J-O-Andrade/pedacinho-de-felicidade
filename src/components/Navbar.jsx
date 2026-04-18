@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { produtos } from "../data/produtos";
+import Image from "./Image";
 
 export default function Navbar() {
   const [busca, setBusca] = useState("");
@@ -166,7 +167,7 @@ export default function Navbar() {
       <div className="nav-container" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
       {/* LOGO */}
         <div className="nav-row" style={{ display: "flex", alignItems: "center", gap: "0px" }}>
-          <img className="nav-logo-img" src="/img/logo.png" style={{ width: "150px", height: "150px", objectFit: "contain" }} alt="logo" />
+          <Image className="nav-logo-img" src="/img/logo.png" style={{ width: "150px", height: "150px", objectFit: "contain" }} alt="logo" />
           <span className="nav-logo-text"
             style={{
               fontSize: "38px",

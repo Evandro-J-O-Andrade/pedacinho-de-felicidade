@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useCarrinho } from "../context/CarrinhoContext";
 import Lightbox from "./Lightbox";
+import Image from "./Image";
+import { getImagemProduto } from "../utils/imagemUtils";
 
 export default function KitFesta() {
   const { adicionar } = useCarrinho();
@@ -58,11 +60,11 @@ export default function KitFesta() {
         {kitsProntos.map((kit) => (
           <div key={kit.id} style={{ background: "#fff", borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 12px rgba(0,0,0,0.08)", textAlign: "center" }}>
             <div style={{ width: "100%", height: "200px", overflow: "hidden" }}>
-              <img 
-                src={kit.imagem} 
+              <Image 
+                src={getImagemProduto(kit)} 
                 alt={kit.nome}
                 style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
-                onClick={() => setImagemAmpliada(kit.imagem)}
+                onClick={() => setImagemAmpliada(getImagemProduto(kit))}
               />
             </div>
             <div style={{ padding: "20px" }}>

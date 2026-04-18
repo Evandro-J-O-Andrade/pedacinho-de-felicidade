@@ -1,4 +1,14 @@
+# Robots.txt - Pedacinhos de Felicidade
+# Confeitaria Artesanal em São Paulo
+
 User-agent: *
 Allow: /
 
-Sitemap: https://pedacinhosdefelicidade.com.br/sitemap.xml
+# Allow sitemap
+Sitemap: https://pedacinhodefelicidade.com.br/sitemap.xml
+
+# Crawl-delay (opcional, para não sobrecarregar)
+Crawl-delay: 1
+
+# Host principal
+Host: https://pedacinhodefelicidade.com.br

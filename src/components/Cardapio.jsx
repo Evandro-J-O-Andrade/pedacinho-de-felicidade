@@ -1,13 +1,24 @@
 import { useState } from "react";
 import { produtos } from "../data/produtos";
+import { getEventoAtivo } from "../utils/sazonalUtils";
 import ProdutoCard from "./ProdutoCard";
 import Lightbox from "./Lightbox";
 
 export default function Cardapio() {
-  const [categoria, setCategoria] = useState(produtos[0].categoria);
+  const evento = getEventoAtivo();
+  
+  // Categorias fixas (não sazonais)
+  const categoriasFixas = ["Bolos", "Doces", "Salgados", "Bebidas", "Complementos"];
+  
+  // Filtra categorias: se não tem evento ativo, mostra só as fixas
+  const produtosFiltrados = evento 
+    ? produtos 
+    : produtos.filter(c => categoriasFixas.includes(c.categoria));
+  
+  const [categoria, setCategoria] = useState(produtosFiltrados[0]?.categoria || "Bolos");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
-  const atual = produtos.find((c) => c.categoria === categoria);
-  const produtosVisiveis = atual.itens.slice(0, 5);
+  const atual = produtosFiltrados.find((c) => c.categoria === categoria);
+  const produtosVisiveis = atual ? atual.itens.slice(0, 5) : [];
 
   return (
     <>
@@ -25,7 +36,7 @@ export default function Cardapio() {
         <div style={{ display: "flex", gap: "24px", flexDirection: "column", alignItems: "stretch", maxWidth: "1400px", margin: "0 auto" }}>
           {/* CATEGORIAS */}
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center", paddingBottom: "8px" }}>
-            {produtos.map((c) => (
+            {produtosFiltrados.map((c) => (
               <button
                 key={c.categoria}
                 onClick={() => setCategoria(c.categoria)}

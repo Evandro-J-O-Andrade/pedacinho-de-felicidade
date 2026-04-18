@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import Image from "./Image";
 
 export default function Lightbox({ src, onClose }) {
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function Lightbox({ src, onClose }) {
       <style>{`
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
       `}</style>
-      <img 
+      <Image 
         src={src} 
         alt="Ampliada"
         style={{ 

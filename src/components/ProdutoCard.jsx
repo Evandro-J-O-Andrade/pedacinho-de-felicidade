@@ -1,20 +1,27 @@
 import { useCarrinho } from "../context/CarrinhoContext";
+import Image from "./Image";
+import { getImagemProduto, handleImagemErro, criarSrcImagem } from "../utils/imagemUtils";
 
 export default function ProdutoCard({ item, onImageClick }) {
   const { adicionar } = useCarrinho();
 
+  const imgProps = criarSrcImagem(item);
+
   const handleImageClick = (e) => {
     if (onImageClick) {
       e.stopPropagation();
-      onImageClick(item.imagem);
+      onImageClick(getImagemProduto(item));
     }
   };
 
   return (
     <div style={{ backgroundColor: "white", borderRadius: "16px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)", overflow: "hidden", transition: "all 0.3s ease" }}>
       <div style={{ width: "100%", height: "220px", overflow: "hidden", position: "relative" }}>
-        <img 
-          src={item.imagem} 
+        <Image 
+          src={imgProps.src} 
+          alt={item.nome}
+          categoria={item.categoria?.toLowerCase().replace(/ /g, '')}
+          onError={handleImagemErro}
           style={{ 
             width: "100%", 
             height: "100%", 

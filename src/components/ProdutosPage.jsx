@@ -11,9 +11,17 @@ export default function ProdutosPage() {
   const [busca, setBusca] = useState("");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
 
-  const categorias = ["todos", ...produtos.map((c) => c.categoria)];
-
   const evento = getEventoAtivo();
+  
+  // Categorias fixas (não sazonais)
+  const categoriasFixas = ["Bolos", "Doces", "Salgados", "Bebidas", "Complementos"];
+  
+  // Filtra categorias: se não tem evento ativo, mostra só as fixas
+  const produtosFiltrados = evento 
+    ? produtos 
+    : produtos.filter(c => categoriasFixas.includes(c.categoria));
+  
+  const categorias = ["todos", ...produtosFiltrados.map((c) => c.categoria)];
 
   // Filtra itens por busca
   const filtrarPorBusca = (itens) => {
@@ -23,8 +31,8 @@ export default function ProdutosPage() {
 
   // Lista de categorias ativas para renderizar seções
   const categoriasAtivas = categoria === "todos" 
-    ? produtos 
-    : produtos.filter(c => c.categoria === categoria);
+    ? produtosFiltrados 
+    : produtosFiltrados.filter(c => c.categoria === categoria);
 
   function formatar(v) {
     return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -167,13 +175,8 @@ export default function ProdutosPage() {
 
         {/* GRID POR CATEGORIA */}
         {categoriasAtivas.map(cat => {
-          const itens = filtrarPorBusca(cat.itens);
+const itens = filtrarPorBusca(cat.itens);
           
-          // Se não tem evento ativo, esconde categorias Páscoa e Natal
-          if (!evento && (cat.categoria === "Páscoa" || cat.categoria === "Natal")) {
-            return null;
-          }
-
           if (itens.length === 0) return null;
 
           return (
