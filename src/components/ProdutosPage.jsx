@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCarrinho } from "../context/CarrinhoContext";
 import { produtos } from "../data/produtos";
 import { getEventoAtivo } from "../utils/sazonalUtils";
@@ -10,6 +10,15 @@ export default function ProdutosPage() {
   const [categoria, setCategoria] = useState("todos");
   const [busca, setBusca] = useState("");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
+
+  // Ler parametro de busca da URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const buscaParam = params.get("busca");
+    if (buscaParam) {
+      setBusca(buscaParam);
+    }
+  }, []);
 
   const evento = getEventoAtivo();
   

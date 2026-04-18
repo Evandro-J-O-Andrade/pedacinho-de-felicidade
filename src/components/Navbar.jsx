@@ -40,7 +40,7 @@ export default function Navbar() {
 
   function handleBuscaKeyDown(e) {
     if (e.key === "Enter" && busca.length > 0) {
-      window.location.href = "/#cardapio";
+      window.location.href = "/produtos?busca=" + encodeURIComponent(busca);
       setBusca("");
       setResultados([]);
     }
@@ -51,7 +51,7 @@ export default function Navbar() {
     setBusca("");
     setResultados([]);
     setTimeout(() => {
-      window.location.href = "/#cardapio";
+      window.location.href = "/produtos?busca=" + encodeURIComponent(item.nome);
     }, 100);
   }
 
