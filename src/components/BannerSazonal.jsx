@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getEventoDestaque } from "../utils/sazonalUtils";
+import Image from "./Image";
 
 export default function BannerSazonal() {
   const evento = getEventoDestaque();
@@ -78,7 +79,7 @@ export default function BannerSazonal() {
               }
             }
           `}</style>
-          <img
+          <Image
             src={evento.banner}
             alt={evento.titulo}
             className="banner-sazonal-img"

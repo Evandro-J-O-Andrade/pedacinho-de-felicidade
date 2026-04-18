@@ -5,6 +5,7 @@ import { getProdutosSazonais } from "../utils/produtoUtils";
 import { produtos } from "../data/produtos";
 import ProdutoCard from "./ProdutoCard";
 import Lightbox from "./Lightbox";
+import Image from "./Image";
 
 export default function SazonalPage() {
   const eventos = getTodosEventos();
@@ -63,7 +64,7 @@ export default function SazonalPage() {
           textAlign: "center",
           padding: "0"
         }}>
-          <img 
+          <Image 
             src="/img/sazonal/banners/bannertodoseventos.png" 
             alt="Em Breve"
             style={{ width: "100%", height: "250px", objectFit: "cover", display: "block" }}
