@@ -10,15 +10,25 @@ export default function Cardapio() {
   // Categorias fixas (não sazonais)
   const categoriasFixas = ["Bolos", "Doces", "Salgados", "Bebidas", "Complementos"];
   
-  // Filtra categorias: se não tem evento ativo, mostra só as fixas
-  const produtosFiltrados = evento 
-    ? produtos 
-    : produtos.filter(c => categoriasFixas.includes(c.categoria));
+  // Se tem evento ativo, pega só a categoria dele
+  const categoriaEvento = evento ? evento.nome : null;
   
-  const [categoria, setCategoria] = useState(produtosFiltrados[0]?.categoria || "Bolos");
+  // Filtra categorias: sempre mostra as fixas, + evento ativo se houver
+  const categoriasPermitidas = [...categoriasFixas];
+  if (categoriaEvento) {
+    categoriasPermitidas.push(categoriaEvento);
+  }
+  
+  const produtosFiltrados = produtos.filter(c => categoriasPermitidas.includes(c.categoria));
+  
+  const categorias = ["todos", ...produtosFiltrados.map((c) => c.categoria)];
+  
+  const [categoria, setCategoria] = useState("todos");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
-  const atual = produtosFiltrados.find((c) => c.categoria === categoria);
-  const produtosVisiveis = atual ? atual.itens.slice(0, 5) : [];
+  
+  const produtosVisiveis = categoria === "todos"
+    ? produtosFiltrados.flatMap((c) => c.itens)
+    : (produtosFiltrados.find((c) => c.categoria === categoria)?.itens || []);
 
   return (
     <>
@@ -36,22 +46,22 @@ export default function Cardapio() {
         <div style={{ display: "flex", gap: "24px", flexDirection: "column", alignItems: "stretch", maxWidth: "1400px", margin: "0 auto" }}>
           {/* CATEGORIAS */}
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center", paddingBottom: "8px" }}>
-            {produtosFiltrados.map((c) => (
+            {categorias.map((cat) => (
               <button
-                key={c.categoria}
-                onClick={() => setCategoria(c.categoria)}
+                key={cat}
+                onClick={() => setCategoria(cat)}
                 style={{
                   padding: "10px 16px",
                   borderRadius: "9999px",
                   border: "1px solid #e5e7eb",
-                  backgroundColor: categoria === c.categoria ? "#ec4899" : "#f4f4f5",
-                  color: categoria === c.categoria ? "#fff" : "#333",
+                  backgroundColor: categoria === cat ? "#ec4899" : "#f4f4f5",
+                  color: categoria === cat ? "#fff" : "#333",
                   cursor: "pointer",
                   whiteSpace: "nowrap",
                   fontWeight: 600
                 }}
               >
-                {c.categoria}
+                {cat === "todos" ? "Todos" : cat}
               </button>
             ))}
           </div>

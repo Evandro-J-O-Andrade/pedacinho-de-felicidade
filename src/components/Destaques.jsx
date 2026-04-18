@@ -11,10 +11,16 @@ export default function Destaques() {
   // Categorias fixas (não sazonais)
   const categoriasFixas = ["Bolos", "Doces", "Salgados", "Bebidas", "Complementos"];
   
-  // Filtra categorias: se não tem evento ativo, mostra só as fixas
-  const produtosFiltrados = evento 
-    ? produtos 
-    : produtos.filter(c => categoriasFixas.includes(c.categoria));
+  // Se tem evento ativo, pega só a categoria dele
+  const categoriaEvento = evento ? evento.nome : null;
+  
+  // Filtra categorias: sempre mostra as fixas, + evento ativo se houver
+  const categoriasPermitidas = [...categoriasFixas];
+  if (categoriaEvento) {
+    categoriasPermitidas.push(categoriaEvento);
+  }
+  
+  const produtosFiltrados = produtos.filter(c => categoriasPermitidas.includes(c.categoria));
   
   const todos = produtosFiltrados.flatMap((cat) => cat.itens);
   const destaques = todos.filter((p) => p.destaque).slice(0, 5);

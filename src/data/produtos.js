@@ -242,5 +242,20 @@ export const produtos = [
       { id: 1009, nome: "Bolo Rainbow", descricao: "Arco-íris de cores", preco: 120, tipo: "kg", imagem: "/img/sazonal/carnaval/bolorainbow.png", sazonal: "carnaval" },
       { id: 1010, nome: "Cesta Festiva", descricao: "Diversos doces", preco: 180, tipo: "kit", imagem: "/img/sazonal/carnaval/cestafestiva.png", sazonal: "carnaval" }
     ]
+  },
+  {
+    categoria: "Black Friday",
+    itens: [
+      { id: 1101, nome: "Kit Black Friday", descricao: "Mix de produtos com desconto", preco: 200, tipo: "kit", imagem: "/img/sazonal/blackfriday/kitbf.png", sazonal: "blackfriday", destaque: true },
+      { id: 1102, nome: "Ofertas Especiais", descricao: "Diversos sabores", preco: 80, tipo: "un", imagem: "/img/sazonal/blackfriday/ofertas.png", sazonal: "blackfriday" },
+      { id: 1103, nome: "Combo Família", descricao: "Para toda família", preco: 150, tipo: "kit", imagem: "/img/sazonal/blackfriday/combo.png", sazonal: "blackfriday" },
+      { id: 1104, nome: "Mini Ofertas", descricao: "Diversos mini doces", preco: 50, tipo: "kit", imagem: "/img/sazonal/blackfriday/miniofertas.png", sazonal: "blackfriday" },
+      { id: 1105, nome: "Bolo Promocional", descricao: "Escolha seu sabor", preco: 70, tipo: "kg", imagem: "/img/sazonal/blackfriday/bolopromo.png", sazonal: "blackfriday" },
+      { id: 1106, nome: "Doces Cento", descricao: "100 unidades", preco: 120, tipo: "cento", imagem: "/img/sazonal/blackfriday/docescento.png", sazonal: "blackfriday" },
+      { id: 1107, nome: "Salgados Cento", descricao: "100 unidades", preco: 130, tipo: "cento", imagem: "/img/sazonal/blackfriday/salgadoscento.png", sazonal: "blackfriday" },
+      { id: 1108, nome: "Combo Festas", descricao: "Para festas completas", preco: 300, tipo: "kit", imagem: "/img/sazonal/blackfriday/combofestas.png", sazonal: "blackfriday" },
+      { id: 1109, nome: "Presente Corporate", descricao: "Para empresas", preco: 250, tipo: "kit", imagem: "/img/sazonal/blackfriday/corporate.png", sazonal: "blackfriday" },
+      { id: 1110, nome: "Surpresa Black", descricao: "Escolha surpresa", preco: 100, tipo: "un", imagem: "/img/sazonal/blackfriday/surpresa.png", sazonal: "blackfriday" }
+    ]
   }
 ];
