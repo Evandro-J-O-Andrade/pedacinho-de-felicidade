@@ -19,16 +19,22 @@ function getFallbackCategoria(cat) {
   return FALLBACK_POR_CATEGORIA[key] || FALLBACK_ABSOLUTO;
 }
 
+function getSrcInicial(src, categoria) {
+  const fallbackCat = getFallbackCategoria(categoria);
+  if (src && src !== "undefined" && src !== "null" && src !== "") {
+    return src;
+  }
+  return categoria ? fallbackCat : FALLBACK_ABSOLUTO;
+}
+
 export default function Image({ src, alt, categoria, ...props }) {
-  const [fonteAtual, setFonteAtual] = useState(FALLBACK_ABSOLUTO);
-  const [tentouLoad, setTentouLoad] = useState(false);
+  const [fonteAtual, setFonteAtual] = useState(() => getSrcInicial(src, categoria));
 
   useEffect(() => {
     const fallbackCat = getFallbackCategoria(categoria);
     
     if (src && src !== "undefined" && src !== "null" && src !== "") {
       setFonteAtual(src);
-      setTentouLoad(true);
     } else if (categoria) {
       setFonteAtual(fallbackCat);
     } else {
