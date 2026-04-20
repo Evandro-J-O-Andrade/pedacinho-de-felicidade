@@ -6,114 +6,114 @@
   
   <!-- Página Inicial -->
   <url>
-    <loc>https://pedacinhodefelicidade.com.br/</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://pedacinhosdefelicidade.netlify.app/</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhodefelicidade.com.br/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhosdefelicidade.netlify.app/"/>
     <image:image>
-      <image:loc>https://pedacinhodefelicidade.com.br/img/logo.png</image:loc>
+      <image:loc>https://pedacinhosdefelicidade.netlify.app/img/logo.png</image:loc>
       <image:title>Pedacinhos de Felicidade - Confeitaria Artesanal São Paulo</image:title>
     </image:image>
   </url>
   
   <!-- Página Produtos -->
   <url>
-    <loc>https://pedacinhodefelicidade.com.br/produtos</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://pedacinhosdefelicidade.netlify.app/produtos</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhodefelicidade.com.br/produtos"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhosdefelicidade.netlify.app/produtos"/>
     <image:image>
-      <image:loc>https://pedacinhodefelicidade.com.br/img/produtos/bolo.png</image:loc>
+      <image:loc>https://pedacinhosdefelicidade.netlify.app/img/produtos/bolo.png</image:loc>
       <image:title>Bolos, Doces e Salgados Artesanais</image:title>
     </image:image>
   </url>
   
   <!-- Página Monte seu Kit -->
   <url>
-    <loc>https://pedacinhodefelicidade.com.br/monte-seu-kit</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://pedacinhosdefelicidade.netlify.app/monte-seu-kit</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhodefelicidade.com.br/monte-seu-kit"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhosdefelicidade.netlify.app/monte-seu-kit"/>
     <image:image>
-      <image:loc>https://pedacinhodefelicidade.com.br/img/produtos/bolo4.jpeg</image:loc>
+      <image:loc>https://pedacinhosdefelicidade.netlify.app/img/produtos/bolo4.jpeg</image:loc>
       <image:title>Kit Festa - Monte seu Kit</image:title>
     </image:image>
   </url>
   
   <!-- Página Sazonais -->
   <url>
-    <loc>https://pedacinhodefelicidade.com.br/sazonal</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://pedacinhosdefelicidade.netlify.app/sazonal</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhodefelicidade.com.br/sazonal"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhosdefelicidade.netlify.app/sazonal"/>
   </url>
   
   <!-- Página Páscoa -->
   <url>
-    <loc>https://pedacinhodefelicidade.com.br/kit-pascoa</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://pedacinhosdefelicidade.netlify.app/kit-pascoa</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhodefelicidade.com.br/kit-pascoa"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhosdefelicidade.netlify.app/kit-pascoa"/>
     <image:image>
-      <image:loc>https://pedacinhodefelicidade.com.br/img/sazonal/pascoa/ovogourmetleitcremoso.png</image:loc>
+      <image:loc>https://pedacinhosdefelicidade.netlify.app/img/sazonal/pascoa/ovogourmetleitcremoso.png</image:loc>
       <image:title>Ovo de Páscoa Gourmet - Confeitaria Artesanal</image:title>
     </image:image>
   </url>
   
   <!-- Página Natal -->
   <url>
-    <loc>https://pedacinhodefelicidade.com.br/kit-natal</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://pedacinhosdefelicidade.netlify.app/kit-natal</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhodefelicidade.com.br/kit-natal"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://pedacinhosdefelicidade.netlify.app/kit-natal"/>
     <image:image>
-      <image:loc>https://pedacinhodefelicidade.com.br/img/sazonal/natal/panetonetrufado.png</image:loc>
+      <image:loc>https://pedacinhosdefelicidade.netlify.app/img/sazonal/natal/panetonetrufado.png</image:loc>
       <image:title>Panetone Trufado - Natal Artesanal</image:title>
     </image:image>
   </url>
   
   <!-- Página Festa Junina -->
   <url>
-    <loc>https://pedacinhodefelicidade.com.br/festa-junina</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://pedacinhosdefelicidade.netlify.app/festa-junina</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <!-- Página Dia dos Namorados -->
   <url>
-    <loc>https://pedacinhodefelicidade.com.br/dia-dos-namorados</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://pedacinhosdefelicidade.netlify.app/dia-dos-namorados</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <!-- Página Dia dos Pais -->
   <url>
-    <loc>https://pedacinhodefelicidade.com.br/dia-dos-pais</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://pedacinhosdefelicidade.netlify.app/dia-dos-pais</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <!-- Página Dia das Mães -->
   <url>
-    <loc>https://pedacinhodefelicidade.com.br/dia-das-maes</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://pedacinhosdefelicidade.netlify.app/dia-das-maes</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <!-- Página Festa / Eventos -->
   <url>
-    <loc>https://pedacinhodefelicidade.com.br/festas</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://pedacinhosdefelicidade.netlify.app/festas</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
