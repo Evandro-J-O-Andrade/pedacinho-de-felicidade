@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useCarrinho } from "../context/CarrinhoContext";
+import { kits } from "../data/kits";
 import Lightbox from "./Lightbox";
 import Image from "./Image";
 import { getImagemProduto } from "../utils/imagemUtils";
@@ -7,33 +8,6 @@ import { getImagemProduto } from "../utils/imagemUtils";
 export default function KitFesta() {
   const { adicionar } = useCarrinho();
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
-
-  const kitsProntos = [
-    {
-      id: 1001,
-      nome: "Kit Festa Básico",
-      descricao: "Serve até 20 pessoas",
-      preco: 250,
-      imagem: "/img/produtos/bolo.png",
-      itens: ["Bolo 2kg", "50 doces", "50 salgados"]
-    },
-    {
-      id: 1002,
-      nome: "Kit Festa Médio",
-      descricao: "Serve até 50 pessoas",
-      preco: 450,
-      imagem: "/img/produtos/bolo3.png",
-      itens: ["Bolo 3kg", "100 doces", "100 salgados"]
-    },
-    {
-      id: 1003,
-      nome: "Kit Festa Premium",
-      descricao: "Serve até 100 pessoas",
-      preco: 850,
-      imagem: "/img/produtos/bolo4.jpeg",
-      itens: ["Bolo 5kg", "200 doces", "200 salgados", "Decoração"]
-    }
-  ];
 
   function formatar(v) {
     return v.toLocaleString("pt-BR", {
@@ -48,7 +22,7 @@ export default function KitFesta() {
       const termo = e.detail.termo.toLowerCase();
       
       // Verifica se tem nos Kits (por nome ou descrição)
-      const resultadosKits = kitsProntos.filter((kit) => 
+      const resultadosKits = kits.filter((kit) => 
         kit.nome.toLowerCase().includes(termo) || 
         kit.descricao.toLowerCase().includes(termo)
       );
@@ -83,7 +57,7 @@ export default function KitFesta() {
 
       {/* KITS PRONTOS */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px", marginBottom: "32px" }}>
-        {kitsProntos.map((kit) => (
+        {kits.map((kit) => (
           <div key={kit.id} style={{ background: "#fff", borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 12px rgba(0,0,0,0.08)", textAlign: "center" }}>
             <div style={{ width: "100%", height: "200px", overflow: "hidden" }}>
               <Image 

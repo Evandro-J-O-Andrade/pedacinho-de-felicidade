@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#fff7f9"/>
+  <rect x="80" y="60" width="240" height="180" rx="20" fill="#ec4899" opacity="0.3"/>
+  <text x="200" y="150" text-anchor="middle" font-family="Arial" font-size="24" fill="#ec4899" font-weight="bold">🎉</text>
+  <text x="200" y="190" text-anchor="middle" font-family="Arial" font-size="18" fill="#ec4899">Kit Festa</text>
+  <text x="200" y="215" text-anchor="middle" font-family="Arial" font-size="14" fill="#666">Médio</text>
+</svg>

@@ -11,6 +11,7 @@ const FALLBACK_POR_CATEGORIA = {
   'galeria': '/img/galeria/galeria-generico.svg',
   'eventos': '/img/eventos/evento-generico.svg',
   'depoimentos': '/img/depoimentos/depoimento-generico.svg',
+  'kitfesta': '/img/kits/kit-basico.svg',
 };
 
 function getFallbackCategoria(cat) {
