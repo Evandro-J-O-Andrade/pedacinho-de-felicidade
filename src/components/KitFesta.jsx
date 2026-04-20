@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCarrinho } from "../context/CarrinhoContext";
 import Lightbox from "./Lightbox";
 import Image from "./Image";
@@ -41,6 +41,32 @@ export default function KitFesta() {
       currency: "BRL"
     });
   }
+
+  // Escutar evento global de busca
+  useEffect(() => {
+    function handleBuscaGlobal(e) {
+      const termo = e.detail.termo.toLowerCase();
+      
+      // Verifica se tem nos Kits (por nome ou descrição)
+      const resultadosKits = kitsProntos.filter((kit) => 
+        kit.nome.toLowerCase().includes(termo) || 
+        kit.descricao.toLowerCase().includes(termo)
+      );
+      
+      // Se encontrou nos Kits ou tem palavra-chave de kit, vai para esta seção
+      const palavrasKit = ["kit", "festa", "básico", "basico", "médio", "medio", "premium", "20", "50", "100"];
+      const temPalavraKit = palavrasKit.some(palavra => termo.includes(palavra));
+      
+      if (resultadosKits.length > 0 || temPalavraKit) {
+        setTimeout(() => {
+          document.getElementById("kit-festa")?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+
+    window.addEventListener("busca-global", handleBuscaGlobal);
+    return () => window.removeEventListener("busca-global", handleBuscaGlobal);
+  }, []);
 
   return (
     <section id="kit-festa" style={{ padding: "60px 20px", backgroundColor: "#fff7f9" }}>

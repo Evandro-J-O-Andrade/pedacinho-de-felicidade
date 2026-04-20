@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { produtos } from "../data/produtos";
 import { getEventoAtivo } from "../utils/sazonalUtils";
 import ProdutoCard from "./ProdutoCard";
@@ -23,12 +23,64 @@ export default function Cardapio() {
   
   const categorias = ["todos", ...produtosFiltrados.map((c) => c.categoria)];
   
-  const [categoria, setCategoria] = useState("todos");
+const [categoria, setCategoria] = useState("todos");
+  const [busca, setBusca] = useState("");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
-  
+
   const produtosVisiveis = categoria === "todos"
-    ? produtosFiltrados.flatMap((c) => c.itens)
-    : (produtosFiltrados.find((c) => c.categoria === categoria)?.itens || []);
+    ? produtosFiltrados.flatMap((c) => c.itens).filter(item => 
+        busca ? item.nome.toLowerCase().includes(busca.toLowerCase()) : true
+      )
+    : (produtosFiltrados.find((c) => c.categoria === categoria)?.itens || []).filter(item => 
+        busca ? item.nome.toLowerCase().includes(busca.toLowerCase()) : true
+      );
+  
+  // Escutar evento global de busca
+  useEffect(() => {
+    function handleBuscaGlobal(e) {
+      const termo = e.detail.termo.toLowerCase();
+      
+      // Verifica se tem no cardápio
+      const todosProdutos = produtosFiltrados.flatMap((c) => c.itens);
+      const resultados = todosProdutos.filter((item) => {
+        return item.nome.toLowerCase().includes(termo);
+      });
+      
+      if (resultados.length > 0) {
+        // Detectar qual categoria tem mais resultados ou pegar a primeira
+        const categoriasEncontradas = [...new Set(resultados.map(item => {
+          const cat = produtosFiltrados.find(c => c.itens.some(i => i.id === item.id));
+          return cat ? cat.categoria : null;
+        }).filter(Boolean))];
+        
+        // Se só tem produtos de uma categoria, vai pra ela. Senão fica em "todos"
+        const categoriaAlvo = categoriasEncontradas.length === 1 ? categoriasEncontradas[0] : "todos";
+        
+        setBusca(termo);
+        setCategoria(categoriaAlvo);
+        setTimeout(() => {
+          document.getElementById("cardapio")?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+        return;
+      }
+      
+      // Verifica se o termo tem a ver com Kit Festa
+      const palavrasKit = ["kit", "festa", "básico", "basico", "médio", "medio", "premium", "20", "50", "100", "pessoas"];
+      const temPalavraKit = palavrasKit.some(palavra => termo.includes(palavra));
+      
+      if (temPalavraKit) {
+        // Volta para a seção Kit Festa na home
+        window.location.hash = "kit-festa";
+        return;
+      }
+      
+      // Não encontrou no cardápio, vai para Monte Seu Kit
+      window.location.href = "/monte-seu-kit";
+    }
+
+    window.addEventListener("busca-global", handleBuscaGlobal);
+    return () => window.removeEventListener("busca-global", handleBuscaGlobal);
+}, [produtosFiltrados]);
 
   return (
     <>
@@ -49,7 +101,10 @@ export default function Cardapio() {
             {categorias.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setCategoria(cat)}
+                onClick={() => {
+                  setCategoria(cat);
+                  setBusca("");
+                }}
                 style={{
                   padding: "10px 16px",
                   borderRadius: "9999px",

@@ -20,6 +20,17 @@ export default function ProdutosPage() {
     }
   }, []);
 
+  // Escutar evento global de busca
+  useEffect(() => {
+    function handleBuscaGlobal(e) {
+      setBusca(e.detail.termo);
+      setCategoria("todos");
+    }
+
+    window.addEventListener("busca-global", handleBuscaGlobal);
+    return () => window.removeEventListener("busca-global", handleBuscaGlobal);
+  }, []);
+
   const evento = getEventoAtivo();
   
   // Categorias fixas (não sazonais)
@@ -170,7 +181,10 @@ export default function ProdutosPage() {
             {categorias.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setCategoria(cat)}
+                onClick={() => {
+                  setCategoria(cat);
+                  setBusca("");
+                }}
                 style={{
                   padding: "10px 20px",
                   borderRadius: "25px",

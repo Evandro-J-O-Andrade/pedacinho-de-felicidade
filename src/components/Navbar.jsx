@@ -38,9 +38,17 @@ export default function Navbar() {
     }
   }
 
+  function disparaBuscaGlobal(valor) {
+    window.dispatchEvent(new CustomEvent("busca-global", {
+      detail: { termo: valor, tipo: "termo" }
+    }));
+  }
+
   function handleBuscaKeyDown(e) {
     if (e.key === "Enter" && busca.length > 0) {
-      window.location.href = "/produtos?busca=" + encodeURIComponent(busca);
+      // Sempre dispara o evento global primeiro
+      // Cada página verifica se tem o produto e filtra localmente
+      disparaBuscaGlobal(busca);
       setBusca("");
       setResultados([]);
     }
@@ -48,11 +56,11 @@ export default function Navbar() {
 
   function handleResultadoClick(e, item) {
     e.preventDefault();
+    // Sempre dispara o evento global primeiro
+    // A página atual verifica se tem o produto
+    disparaBuscaGlobal(item.nome);
     setBusca("");
     setResultados([]);
-    setTimeout(() => {
-      window.location.href = "/produtos?busca=" + encodeURIComponent(item.nome);
-    }, 100);
   }
 
   function handleInputBlur() {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { produtos } from "../data/produtos";
 import { useCarrinho } from "../context/CarrinhoContext";
 import { getEventoAtivo } from "../utils/sazonalUtils";
@@ -13,7 +13,7 @@ export default function MonteSeuKit() {
   const [busca, setBusca] = useState("");
   const [categoria, setCategoria] = useState("todos");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
-
+  
   const evento = getEventoAtivo();
   
   // Categorias fixas (não sazonais)
@@ -29,6 +29,30 @@ export default function MonteSeuKit() {
   }
   
   const produtosFiltrados = produtos.filter(c => categoriasPermitidas.includes(c.categoria));
+
+  // Escutar evento global de busca
+  useEffect(() => {
+    function handleBuscaGlobal(e) {
+      const termo = e.detail.termo;
+      
+      // Verifica se tem nos produtos filtrados
+      const todosProdutos = produtosFiltrados.flatMap((c) => c.itens);
+      const resultados = todosProdutos.filter((item) => 
+        item.nome.toLowerCase().includes(termo.toLowerCase())
+      );
+      
+      if (resultados.length > 0) {
+        setBusca(termo);
+        setCategoria("todos");
+      } else {
+        // Não encontrou, vai para página de produtos
+        window.location.href = "/produtos?busca=" + encodeURIComponent(termo);
+      }
+    }
+
+    window.addEventListener("busca-global", handleBuscaGlobal);
+    return () => window.removeEventListener("busca-global", handleBuscaGlobal);
+  }, [produtosFiltrados]);
   
   const categorias = ["todos", ...produtosFiltrados.map((c) => c.categoria)];
 
@@ -195,7 +219,10 @@ export default function MonteSeuKit() {
             {categorias.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setCategoria(cat)}
+                onClick={() => {
+                  setCategoria(cat);
+                  setBusca("");
+                }}
                 style={{
                   padding: "10px 16px",
                   borderRadius: "9999px",

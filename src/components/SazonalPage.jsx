@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTodosEventos, getNomeSazonal, getProximoEvento, getDiasAteEvento } from "../utils/sazonalUtils";
 import { getProdutosSazonais } from "../utils/produtoUtils";
@@ -13,6 +13,17 @@ export default function SazonalPage() {
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
   const [eventoSelecionado, setEventoSelecionado] = useState("todos");
   const [busca, setBusca] = useState("");
+
+  // Escutar evento global de busca
+  useEffect(() => {
+    function handleBuscaGlobal(e) {
+      setBusca(e.detail.termo);
+      setEventoSelecionado("todos");
+    }
+
+    window.addEventListener("busca-global", handleBuscaGlobal);
+    return () => window.removeEventListener("busca-global", handleBuscaGlobal);
+  }, []);
 
   const proximoEvento = getProximoEvento();
   const diasAte = getDiasAteEvento(proximoEvento);
@@ -197,7 +208,10 @@ export default function SazonalPage() {
           {opcoesEvento.map(opcao => (
             <button
               key={opcao}
-              onClick={() => setEventoSelecionado(opcao)}
+              onClick={() => {
+                setEventoSelecionado(opcao);
+                setBusca("");
+              }}
               style={{
                 padding: "12px 24px",
                 borderRadius: "25px",
