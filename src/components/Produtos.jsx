@@ -11,7 +11,9 @@ export default function Produtos() {
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
   const [itemSelecionado, setItemSelecionado] = useState(null);
   
-  const todos = produtos.flatMap((c) => c.itens);
+  const categoriasFixas = ["Bolos", "Doces", "Salgados", "Bebidas", "Complementos"];
+  const produtosFiltrados = produtos.filter(c => categoriasFixas.includes(c.categoria));
+  const todos = produtosFiltrados.flatMap((c) => c.itens);
   const Destaques = todos.filter((p) => p.destaque);
 
   useEffect(() => {

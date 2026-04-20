@@ -8,6 +8,7 @@ import { getImagemProduto } from "../utils/imagemUtils";
 export default function KitFesta() {
   const { adicionar } = useCarrinho();
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
+  const [itemSelecionado, setItemSelecionado] = useState(null);
 
   function formatar(v) {
     return v.toLocaleString("pt-BR", {
@@ -64,7 +65,10 @@ export default function KitFesta() {
                 src={getImagemProduto(kit)} 
                 alt={kit.nome}
                 style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
-                onClick={() => setImagemAmpliada(getImagemProduto(kit))}
+                onClick={() => {
+                  setImagemAmpliada(getImagemProduto(kit));
+                  setItemSelecionado(kit);
+                }}
               />
             </div>
             <div style={{ padding: "20px" }}>
@@ -77,16 +81,7 @@ export default function KitFesta() {
               </ul>
               <p style={{ fontSize: "24px", fontWeight: "bold", color: "#ec4899", marginBottom: "12px" }}>{formatar(kit.preco)}</p>
               <button
-                onClick={() =>
-                  adicionar({
-                    id: kit.id,
-                    nome: kit.nome,
-                    descricao: `${kit.descricao} - ${kit.itens.join(", ")}`,
-                    preco: kit.preco,
-                    imagem: kit.imagem,
-                    tipo: "un"
-                  })
-                }
+                onClick={() => adicionarAoCarrinho(kit)}
                 style={{
                   width: "100%",
                   padding: "12px",
@@ -115,7 +110,7 @@ export default function KitFesta() {
       </div>
 
       {imagemAmpliada && (
-        <Lightbox src={imagemAmpliada} onClose={() => setImagemAmpliada(null)} />
+        <Lightbox src={imagemAmpliada} item={itemSelecionado} onClose={() => { setImagemAmpliada(null); setItemSelecionado(null); }} />
       )}
     </section>
   );

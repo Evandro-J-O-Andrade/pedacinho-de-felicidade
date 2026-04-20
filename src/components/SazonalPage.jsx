@@ -11,6 +11,7 @@ export default function SazonalPage() {
   const eventos = getTodosEventos();
   const navigate = useNavigate();
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
+  const [itemSelecionado, setItemSelecionado] = useState(null);
   const [eventoSelecionado, setEventoSelecionado] = useState("todos");
   const [busca, setBusca] = useState("");
 
@@ -245,7 +246,7 @@ export default function SazonalPage() {
                   <ProdutoCard
                     key={item.id}
                     item={item}
-                    onImageClick={(img) => setImagemAmpliada(img)}
+                    onImageClick={(img) => { setImagemAmpliada(img); setItemSelecionado(item); }}
                   />
                 ))}
               </div>
@@ -264,7 +265,8 @@ export default function SazonalPage() {
       {imagemAmpliada && (
         <Lightbox
           src={imagemAmpliada}
-          onClose={() => setImagemAmpliada(null)}
+          item={itemSelecionado}
+          onClose={() => { setImagemAmpliada(null); setItemSelecionado(null); }}
         />
       )}
     </>

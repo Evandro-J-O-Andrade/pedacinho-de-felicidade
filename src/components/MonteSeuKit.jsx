@@ -13,6 +13,7 @@ export default function MonteSeuKit() {
   const [busca, setBusca] = useState("");
   const [categoria, setCategoria] = useState("todos");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
+  const [itemSelecionado, setItemSelecionado] = useState(null);
   
   const evento = getEventoAtivo();
   
@@ -305,7 +306,7 @@ export default function MonteSeuKit() {
                           src={getImagemProduto(item)}
                           alt={item.nome}
                           style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
-                          onClick={(e) => { e.stopPropagation(); setImagemAmpliada(getImagemProduto(item)); }}
+                          onClick={(e) => { e.stopPropagation(); setImagemAmpliada(getImagemProduto(item)); setItemSelecionado(item); }}
                         />
                       </div>
 
@@ -390,7 +391,7 @@ export default function MonteSeuKit() {
         </div>
 
         {imagemAmpliada && (
-          <Lightbox src={imagemAmpliada} onClose={() => setImagemAmpliada(null)} />
+          <Lightbox src={imagemAmpliada} item={itemSelecionado} showAddButton={false} onClose={() => { setImagemAmpliada(null); setItemSelecionado(null); }} />
         )}
 
       </section>

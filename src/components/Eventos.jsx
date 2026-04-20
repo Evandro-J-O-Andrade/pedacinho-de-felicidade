@@ -1,8 +1,49 @@
+import { useState } from "react";
 import Galeria from "./Galeria";
 
 export default function Eventos() {
   const numero = "5511971914833";
   const nome = "Esmeralda";
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const categories = [
+    {
+      id: "aniversarios",
+      icon: "🎈",
+      label: "Aniversários",
+      description: "Decorações temáticas e deliciosos sabores",
+      images: [
+        "/img/Gemini_Generated_Image_l4ap8ql4ap8ql4ap.png",
+        "/img/Gemini_Generated_Image_f8hzg2f8hzg2f8hz.png",
+        "/img/Gemini_Generated_Image_1oyb7b1oyb7b1oyb.png"
+      ]
+    },
+    {
+      id: "casamentos",
+      icon: "💒",
+      label: "Casamentos",
+      description: "Doces gourmet e bolo perfeito",
+      images: [
+        "/img/Gemini_Generated_Image_f8hzg2f8hzg2f8hz.png",
+        "/img/Gemini_Generated_Image_1oyb7b1oyb7b1oyb.png",
+        "/img/Gemini_Generated_Image_9l2i459l2i459l2i.png"
+      ]
+    },
+    {
+      id: "formaturas",
+      icon: "🎓",
+      label: "Formaturas",
+      description: "Kit completo para sua festa",
+      images: [
+        "/img/Gemini_Generated_Image_1oyb7b1oyb7b1oyb.png",
+        "/img/Gemini_Generated_Image_9l2i459l2i459l2i.png",
+        "/img/Gemini_Generated_Image_l4ap8ql4ap8ql4ap.png"
+      ]
+    }
+  ];
+
+  const selectedImages = selectedCategory ? selectedCategory.images : null;
+  const galleryTitle = selectedCategory ? `Momentos ${selectedCategory.label}` : "Momentos Especiais ✨";
 
   return (
     <section
@@ -62,41 +103,31 @@ export default function Eventos() {
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", 
           gap: "20px",
           maxWidth: "700px",
-          margin: "0 auto 32px"
+          margin: "0 auto 20px"
         }}>
-          <div style={{ 
-            backgroundColor: "white", 
-            padding: "20px", 
-            borderRadius: "16px",
-            boxShadow: "0 4px 15px rgba(236,72,153,0.1)"
-          }}>
-            <span style={{ fontSize: "32px", display: "block", marginBottom: "8px" }}>🎈</span>
-            <h3 style={{ color: "#ec4899", fontSize: "16px", margin: "0 0 8px" }}>Aniversários</h3>
-            <p style={{ color: "#666", fontSize: "14px", margin: 0 }}>Decorações temáticas e deliciosos sabores</p>
-          </div>
-
-          <div style={{ 
-            backgroundColor: "white", 
-            padding: "20px", 
-            borderRadius: "16px",
-            boxShadow: "0 4px 15px rgba(236,72,153,0.1)"
-          }}>
-            <span style={{ fontSize: "32px", display: "block", marginBottom: "8px" }}>💒</span>
-            <h3 style={{ color: "#ec4899", fontSize: "16px", margin: "0 0 8px" }}>Casamentos</h3>
-            <p style={{ color: "#666", fontSize: "14px", margin: 0 }}>Doces gourmet e bolo perfeito</p>
-          </div>
-
-          <div style={{ 
-            backgroundColor: "white", 
-            padding: "20px", 
-            borderRadius: "16px",
-            boxShadow: "0 4px 15px rgba(236,72,153,0.1)"
-          }}>
-            <span style={{ fontSize: "32px", display: "block", marginBottom: "8px" }}>🎓</span>
-            <h3 style={{ color: "#ec4899", fontSize: "16px", margin: "0 0 8px" }}>Formaturas</h3>
-            <p style={{ color: "#666", fontSize: "14px", margin: 0 }}>Kit completo para sua festa</p>
-          </div>
+          {categories.map((category) => (
+            <div
+              key={category.id}
+              onClick={() => setSelectedCategory(category)}
+              style={{ 
+                backgroundColor: selectedCategory?.id === category.id ? "#fdf2f8" : "white",
+                padding: "20px", 
+                borderRadius: "16px",
+                boxShadow: selectedCategory?.id === category.id ? "0 8px 30px rgba(236,72,153,0.18)" : "0 4px 15px rgba(236,72,153,0.1)",
+                cursor: "pointer",
+                transition: "all 0.25s ease"
+              }}
+            >
+              <span style={{ fontSize: "32px", display: "block", marginBottom: "8px" }}>{category.icon}</span>
+              <h3 style={{ color: "#ec4899", fontSize: "16px", margin: "0 0 8px" }}>{category.label}</h3>
+              <p style={{ color: "#666", fontSize: "14px", margin: 0 }}>{category.description}</p>
+            </div>
+          ))}
         </div>
+
+        <p style={{ marginBottom: "28px", color: "#666", fontSize: "15px" }}>
+          Clique em um tema para abrir o carrossel de imagens desse tipo de evento.
+        </p>
 
         <a
           href={`https://wa.me/${numero}?text=Olá ${nome}, gostaria de fazer um orçamento para meu evento!`}
@@ -118,7 +149,7 @@ export default function Eventos() {
       </div>
 
       <div style={{ marginTop: "40px" }}>
-        <Galeria embedded />
+        <Galeria embedded images={selectedImages} title={galleryTitle} />
       </div>
     </section>
   );

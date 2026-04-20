@@ -10,6 +10,7 @@ export default function ProdutosPage() {
   const [categoria, setCategoria] = useState("todos");
   const [busca, setBusca] = useState("");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
+  const [itemSelecionado, setItemSelecionado] = useState(null);
 
   // Ler parametro de busca da URL
   useEffect(() => {
@@ -213,7 +214,7 @@ const itens = filtrarPorBusca(cat.itens);
               <h2 className="sessao-titulo">{cat.categoria}</h2>
               <div className="produtos-grid">
                 {itens.map(item => (
-                  <ProdutoCard key={item.id} item={item} onImageClick={setImagemAmpliada} />
+                  <ProdutoCard key={item.id} item={item} onImageClick={(img) => { setImagemAmpliada(img); setItemSelecionado(item); }} />
                 ))}
               </div>
             </div>
@@ -231,7 +232,8 @@ const itens = filtrarPorBusca(cat.itens);
       {imagemAmpliada && (
         <Lightbox
           src={imagemAmpliada}
-          onClose={() => setImagemAmpliada(null)}
+          item={itemSelecionado}
+          onClose={() => { setImagemAmpliada(null); setItemSelecionado(null); }}
         />
       )}
     </>

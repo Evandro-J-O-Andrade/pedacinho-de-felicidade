@@ -26,6 +26,7 @@ export default function Cardapio() {
 const [categoria, setCategoria] = useState("todos");
   const [busca, setBusca] = useState("");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
+  const [itemSelecionado, setItemSelecionado] = useState(null);
 
   const produtosVisiveis = categoria === "todos"
     ? produtosFiltrados.flatMap((c) => c.itens).filter(item => 
@@ -142,10 +143,10 @@ const [categoria, setCategoria] = useState("todos");
               }
             `}</style>
 {produtosVisiveis.map((item) => (
-              <ProdutoCard 
+            <ProdutoCard 
                 key={item.id} 
                 item={item}
-                onImageClick={setImagemAmpliada}
+                onImageClick={(img) => { setImagemAmpliada(img); setItemSelecionado(item); }}
               />
             ))}
           </div>
@@ -172,7 +173,7 @@ const [categoria, setCategoria] = useState("todos");
       </section>
 
       {imagemAmpliada && (
-        <Lightbox src={imagemAmpliada} onClose={() => setImagemAmpliada(null)} />
+        <Lightbox src={imagemAmpliada} item={itemSelecionado} onClose={() => { setImagemAmpliada(null); setItemSelecionado(null); }} />
       )}
     </>
   );

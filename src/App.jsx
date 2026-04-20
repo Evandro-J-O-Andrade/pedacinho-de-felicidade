@@ -1,5 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Produtos from "./components/Produtos";
@@ -20,17 +19,6 @@ import ToastCarrinho from "./components/ToastCarrinho";
 import ToastLimparCarrinho from "./components/ToastLimparCarrinho";
 
 export default function App() {
-  const location = useLocation();
-  const isPaginaCarrinho = location.pathname === "/carrinho";
-
-  useEffect(() => {
-    if (isPaginaCarrinho) {
-      document.body.classList.add("sem-marca-dagua");
-    } else {
-      document.body.classList.remove("sem-marca-dagua");
-    }
-  }, [isPaginaCarrinho]);
-
   return (
     <>
       <style>{`body { background-color: #fef2f5; margin: 0; }`}</style>

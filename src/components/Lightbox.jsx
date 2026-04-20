@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useCarrinho } from "../context/CarrinhoContext";
 import Image from "./Image";
 
-export default function Lightbox({ src, item, onClose }) {
+export default function Lightbox({ src, item, onClose, showAddButton = true }) {
   const { adicionar } = useCarrinho();
   useEffect(() => {
     function handleKey(e) {
@@ -71,24 +71,31 @@ export default function Lightbox({ src, item, onClose }) {
           <p style={{ fontSize: "22px", fontWeight: "bold", color: "#22c55e", marginBottom: "16px" }}>
             R$ {item.preco.toFixed(2).replace(".", ",")} / {item.tipo}
           </p>
-          <button
-            onClick={() => {
-              adicionar(item);
-              onClose();
-            }}
-            style={{
-              backgroundColor: "#ec4899",
-              color: "white",
-              padding: "14px 28px",
-              borderRadius: "10px",
-              border: "none",
-              cursor: "pointer",
-              fontWeight: "bold",
-              fontSize: "16px"
-            }}
-          >
-            Adicionar ao Carrinho 🛒
-          </button>
+          {!showAddButton && (
+            <p style={{ fontSize: "15px", color: "#f9a8d4", marginBottom: "16px", lineHeight: 1.6 }}>
+              Esse é um preview do item. Para montar o kit completo, finalize sua seleção no fim da página e use o botão principal para adicionar o kit ao carrinho.
+            </p>
+          )}
+          {showAddButton && (
+            <button
+              onClick={() => {
+                adicionar(item);
+                onClose();
+              }}
+              style={{
+                backgroundColor: "#ec4899",
+                color: "white",
+                padding: "14px 28px",
+                borderRadius: "10px",
+                border: "none",
+                cursor: "pointer",
+                fontWeight: "bold",
+                fontSize: "16px"
+              }}
+            >
+              Adicionar ao Carrinho 🛒
+            </button>
+          )}
         </div>
       )}
       

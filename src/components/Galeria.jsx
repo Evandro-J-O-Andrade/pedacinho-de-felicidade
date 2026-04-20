@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Lightbox from "./Lightbox";
+import Carrossel3D from "./Carrossel3D";
 import Image from "./Image";
 
-export default function Galeria({ embedded = false }) {
+export default function Galeria({ embedded = false, images = null, title = "Momentos Especiais ✨" }) {
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
   
   const Wrapper = embedded ? "div" : "section";
@@ -18,48 +19,45 @@ export default function Galeria({ embedded = false }) {
     textAlign: "center"
   };
 
-  const gridStyle = {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-    gap: "12px",
-    maxWidth: "1000px",
-    margin: "0 auto",
-    padding: embedded ? "0" : "0 12px"
-  };
-
   const imgStyle = {
     width: "100%",
-    height: "140px",
+    height: "320px",
     objectFit: "cover",
-    borderRadius: "14px",
-    boxShadow: "0 6px 14px rgba(0,0,0,0.08)",
+    borderRadius: "16px",
+    boxShadow: "0 6px 18px rgba(0,0,0,0.12)",
     transition: "transform 0.2s ease",
     cursor: "pointer"
   };
 
-  const imagens = [
+  const defaultImages = [
     "/img/Gemini_Generated_Image_l4ap8ql4ap8ql4ap.png",
     "/img/Gemini_Generated_Image_f8hzg2f8hzg2f8hz.png",
     "/img/Gemini_Generated_Image_1oyb7b1oyb7b1oyb.png",
     "/img/Gemini_Generated_Image_9l2i459l2i459l2i.png"
   ];
 
+  const imagens = images && images.length > 0 ? images : defaultImages;
+
+  const renderItem = (src, index) => (
+    <div style={{ borderRadius: "20px", overflow: "hidden", background: "#fff", boxShadow: "0 14px 28px rgba(0,0,0,0.12)", cursor: "pointer" }}>
+      <Image
+        key={index}
+        src={src}
+        alt={`Evento ${index + 1}`}
+        style={imgStyle}
+        onClick={() => setImagemAmpliada(src)}
+        onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+      />
+    </div>
+  );
+
   return (
     <>
       <Wrapper style={wrapperStyle}>
-        <h2 style={titleStyle}>Momentos Especiais ✨</h2>
-        <div style={gridStyle}>
-          {imagens.map((src, idx) => (
-            <Image
-              key={idx}
-              src={src}
-              alt={`Evento ${idx + 1}`}
-              style={imgStyle}
-              onClick={() => setImagemAmpliada(src)}
-              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.04)")}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-            />
-          ))}
+        <h2 style={titleStyle}>{title}</h2>
+        <div style={{ padding: embedded ? "0" : "0 20px" }}>
+          <Carrossel3D items={imagens} renderItem={renderItem} autoPlay={true} interval={5000} />
         </div>
       </Wrapper>
 

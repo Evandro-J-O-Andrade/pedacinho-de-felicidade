@@ -1,5 +1,4 @@
 import { produtos } from "../data/produtos";
-import { getEventoAtivo } from "../utils/sazonalUtils";
 import Image from "./Image";
 import { getImagemProduto } from "../utils/imagemUtils";
 import Carrossel3D from "./Carrossel3D";
@@ -7,18 +6,9 @@ import Carrossel3D from "./Carrossel3D";
 const formatPreco = (preco, tipo) => `R$ ${preco.toFixed(2).replace(".", ",")} / ${tipo}`;
 
 export default function Destaques() {
-  const evento = getEventoAtivo();
-  
   const categoriasFixas = ["Bolos", "Doces", "Salgados", "Bebidas", "Complementos"];
   
-  const categoriaEvento = evento ? evento.nome : null;
-  
-  const categoriasPermitidas = [...categoriasFixas];
-  if (categoriaEvento) {
-    categoriasPermitidas.push(categoriaEvento);
-  }
-  
-  const produtosFiltrados = produtos.filter(c => categoriasPermitidas.includes(c.categoria));
+  const produtosFiltrados = produtos.filter(c => categoriasFixas.includes(c.categoria));
   
   const todos = produtosFiltrados.flatMap((cat) => cat.itens);
   const highlights = todos.filter((p) => p.destaque).slice(0, 7);
@@ -33,7 +23,7 @@ export default function Destaques() {
       <Image 
         src={getImagemProduto(item)} 
         alt={item.nome} 
-        style={{ width: "100%", height: "200px", objectFit: "cover" }} 
+        style={{ width: "100%", height: "250px", objectFit: "cover" }} 
       />
       <div style={{ padding: "16px", textAlign: "center" }}>
         <h3 style={{ fontWeight: "bold", fontSize: "16px", color: "#ec4899", marginBottom: "6px" }}>
