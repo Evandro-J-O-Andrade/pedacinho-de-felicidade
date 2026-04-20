@@ -1,0 +1,20 @@
+{
+  "worktrees": {
+    "wt-1776672900862-1": {
+      "branch": "flax-travel",
+      "path": "d:\\pedacinho-de-felicidade\\.kilo\\worktrees\\flax-travel",
+      "parentBranch": "main",
+      "createdAt": "2026-04-20T08:15:00.862Z",
+      "remote": "origin"
+    }
+  },
+  "sessions": {
+    "ses_2560af39effegubJLMT3InNQqN": {
+      "worktreeId": "wt-1776672900862-1",
+      "createdAt": "2026-04-20T08:15:04.701Z"
+    }
+  },
+  "worktreeOrder": [
+    "wt-1776672900862-1"
+  ]
+}
