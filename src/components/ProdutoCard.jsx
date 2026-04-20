@@ -36,12 +36,12 @@ export default function ProdutoCard({ item, onImageClick }) {
       </div>
 
       <div style={{ padding: "16px" }}>
-        <h3 style={{ fontWeight: "bold", fontSize: "16px" }}>{item.nome}</h3>
-        <p style={{ fontSize: "14px", color: "#666", marginTop: "4px" }}>{item.descricao}</p>
+        <h3 style={{ fontWeight: "bold", fontSize: "16px", color: "#ec4899" }}>{item.nome}</h3>
+        <p style={{ fontSize: "14px", color: "#666", marginTop: "4px", marginBottom: "12px" }}>{item.descricao}</p>
 
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "12px" }}>
-          <span style={{ color: "#22c55e", fontWeight: "bold", fontSize: "16px" }}>
-            R$ {item.preco} / {item.tipo}
+        <div style={{ textAlign: "center" }}>
+          <span style={{ color: "#16a34a", fontWeight: "bold", fontSize: "18px", display: "block", marginBottom: "12px" }}>
+            R$ {item.preco.toFixed(2).replace(".", ",")} / {item.tipo}
           </span>
 
           <button
@@ -49,9 +49,20 @@ export default function ProdutoCard({ item, onImageClick }) {
               e.stopPropagation();
               adicionar(item);
             }}
-            style={{ backgroundColor: "#ec4899", color: "white", padding: "8px 16px", borderRadius: "9999px", border: "none", cursor: "pointer", fontWeight: "600", transition: "all 0.3s ease" }}
+            style={{ 
+              backgroundColor: "#ec4899", 
+              color: "white", 
+              padding: "12px 20px", 
+              borderRadius: "10px", 
+              border: "none", 
+              cursor: "pointer", 
+              fontWeight: "bold",
+              fontSize: "14px",
+              width: "100%",
+              transition: "all 0.3s ease"
+            }}
           >
-            + Adicionar
+            Adicionar ao Carrinho 🛒
           </button>
         </div>
       </div>

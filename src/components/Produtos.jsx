@@ -9,6 +9,7 @@ import { getImagemProduto } from "../utils/imagemUtils";
 export default function Produtos() {
   const { adicionar } = useCarrinho();
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
+  const [itemSelecionado, setItemSelecionado] = useState(null);
   
   const todos = produtos.flatMap((c) => c.itens);
   const Destaques = todos.filter((p) => p.destaque);
@@ -69,14 +70,20 @@ export default function Produtos() {
       <Image 
         src={getImagemProduto(item)} 
         alt={item.nome} 
-        style={{ width: "100%", height: "200px", objectFit: "cover" }}
-        onClick={() => setImagemAmpliada(getImagemProduto(item))}
+        style={{ width: "100%", height: "220px", objectFit: "cover" }}
+        onClick={() => {
+            setImagemAmpliada(getImagemProduto(item));
+            setItemSelecionado(item);
+          }}
       />
       <div style={{ padding: "16px", textAlign: "center" }}>
-        <h3 style={{ fontWeight: "bold", fontSize: "16px", color: "#ec4899", marginBottom: "6px" }}>
+        <h3 style={{ fontWeight: "bold", fontSize: "18px", color: "#ec4899", marginBottom: "4px" }}>
           {item.nome}
         </h3>
-        <p style={{ color: "#16a34a", fontWeight: 700, fontSize: "18px", marginBottom: "12px" }}>
+        <p style={{ fontSize: "14px", color: "#666", marginBottom: "10px", minHeight: "36px" }}>
+          {item.descricao}
+        </p>
+        <p style={{ color: "#16a34a", fontWeight: 700, fontSize: "20px", marginBottom: "12px" }}>
           {formatPreco(item.preco, item.tipo)}
         </p>
         <button
@@ -89,10 +96,11 @@ export default function Produtos() {
             border: "none",
             borderRadius: "10px",
             fontWeight: "bold",
+            fontSize: "14px",
             cursor: "pointer"
           }}
         >
-          Adicionar 🛒
+          Adicionar ao Carrinho 🛒
         </button>
       </div>
     </div>
@@ -119,7 +127,7 @@ return (
       </section>
 
       {imagemAmpliada && (
-        <Lightbox src={imagemAmpliada} onClose={() => setImagemAmpliada(null)} />
+        <Lightbox src={imagemAmpliada} item={itemSelecionado} onClose={() => { setImagemAmpliada(null); setItemSelecionado(null); }} />
       )}
     </>
   );

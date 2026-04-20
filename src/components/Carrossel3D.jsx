@@ -45,8 +45,8 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
       style={{ 
         perspective: "1500px", 
         width: "100%", 
-        maxWidth: "1100px", 
-        height: "480px", 
+        maxWidth: "1200px", 
+        height: "520px", 
         margin: "0 auto", 
         position: "relative",
         overflow: "visible"
@@ -55,11 +55,11 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
       <style>{`
         .carrossel-3d-wrapper .carrossel-3d-item {
           position: absolute;
-          width: 350px;
+          width: 380px;
           left: 50%;
           top: 50%;
-          margin-left: -175px;
-          margin-top: -200px;
+          margin-left: -190px;
+          margin-top: -210px;
           transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
           opacity: 0;
           pointer-events: none;
@@ -74,20 +74,20 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
         .carrossel-3d-wrapper .carrossel-3d-item.prev {
           opacity: 0.5;
           z-index: 5;
-          transform: translateX(-150px) rotateY(15deg) scale(0.85) !important;
+          transform: translateX(-180px) rotateY(15deg) scale(0.85) !important;
         }
         .carrossel-3d-wrapper .carrossel-3d-item.next {
           opacity: 0.5;
           z-index: 5;
-          transform: translateX(150px) rotateY(-15deg) scale(0.85) !important;
+          transform: translateX(180px) rotateY(-15deg) scale(0.85) !important;
         }
         .carrossel-3d-wrapper .carrossel-3d-item.prev-2 {
           opacity: 0.15;
-          transform: translateX(-200px) rotateY(30deg) scale(0.7) !important;
+          transform: translateX(-260px) rotateY(30deg) scale(0.7) !important;
         }
         .carrossel-3d-wrapper .carrossel-3d-item.next-2 {
           opacity: 0.15;
-          transform: translateX(200px) rotateY(-30deg) scale(0.7) !important;
+          transform: translateX(260px) rotateY(-30deg) scale(0.7) !important;
         }
         .carrossel-3d-nav {
           position: absolute;
@@ -116,13 +116,13 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
-          width: 50px;
-          height: 50px;
+          width: 60px;
+          height: 60px;
           border-radius: 50%;
           background: #fff;
           border: 3px solid #ec4899;
           color: #ec4899;
-          font-size: 28px;
+          font-size: 32px;
           font-weight: bold;
           cursor: pointer;
           transition: all 0.3s ease;
@@ -130,7 +130,7 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
           align-items: center;
           justify-content: center;
           z-index: 20;
-          box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);
+          box-shadow: 0 4px 20px rgba(236, 72, 153, 0.3);
         }
         .carrossel-3d-arrow:hover {
           background: #ec4899;
@@ -138,10 +138,10 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
           transform: translateY(-50%) scale(1.1);
         }
         @media (max-width: 768px) {
-          .carrossel-3d-wrapper .carrossel-3d-item { width: 200px !important; margin-left: -100px; }
-          .carrossel-3d-wrapper .carrossel-3d-item.prev { transform: translateX(-60px) rotateY(15deg) scale(0.8) !important; }
-          .carrossel-3d-wrapper .carrossel-3d-item.next { transform: translateX(60px) rotateY(-15deg) scale(0.8) !important; }
-          .carrossel-3d-arrow { width: 40px; height: 40px; font-size: 20px; }
+          .carrossel-3d-wrapper .carrossel-3d-item { width: 240px !important; margin-left: -120px; }
+          .carrossel-3d-wrapper .carrossel-3d-item.prev { transform: translateX(-80px) rotateY(15deg) scale(0.8) !important; }
+          .carrossel-3d-wrapper .carrossel-3d-item.next { transform: translateX(80px) rotateY(-15deg) scale(0.8) !important; }
+          .carrossel-3d-arrow { width: 45px; height: 45px; font-size: 22px; }
           .carrossel-3d-arrow.prev { left: 5px !important; }
           .carrossel-3d-arrow.next { right: 5px !important; }
         }
@@ -151,7 +151,7 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
         <div 
           key={index} 
           className={`carrossel-3d-item ${getItemClass(index)}`}
-          style={{ width: "280px" }}
+          style={{ width: "380px" }}
         >
           {renderItem(item, index)}
         </div>
@@ -161,7 +161,7 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
       <button 
         className="carrossel-3d-arrow prev" 
         onClick={prev}
-        style={{ left: "-70px" }}
+        style={{ left: "-80px" }}
         aria-label="Anterior"
       >
         ‹
@@ -169,7 +169,7 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
       <button 
         className="carrossel-3d-arrow next" 
         onClick={next}
-        style={{ right: "-70px" }}
+        style={{ right: "-80px" }}
         aria-label="Próximo"
       >
         ›

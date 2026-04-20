@@ -1,7 +1,9 @@
 import { useEffect } from "react";
+import { useCarrinho } from "../context/CarrinhoContext";
 import Image from "./Image";
 
-export default function Lightbox({ src, onClose }) {
+export default function Lightbox({ src, item, onClose }) {
+  const { adicionar } = useCarrinho();
   useEffect(() => {
     function handleKey(e) {
       if (e.key === "Escape") onClose();
@@ -20,39 +22,87 @@ export default function Lightbox({ src, onClose }) {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(0,0,0,0.9)",
+        backgroundColor: "rgba(0,0,0,0.92)",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         zIndex: 9999,
         cursor: "pointer",
-        animation: "fadeIn 0.3s ease"
+        animation: "fadeIn 0.3s ease",
+        padding: "20px"
       }}
       onClick={onClose}
     >
       <style>{`
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
       `}</style>
+      
       <Image 
         src={src} 
-        alt="Ampliada"
+        alt={item?.nome || "Ampliada"}
         style={{ 
-          maxWidth: "90%", 
-          maxHeight: "90%", 
+          maxWidth: "100%", 
+          maxHeight: "60vh", 
           objectFit: "contain",
           borderRadius: "16px",
           boxShadow: "0 0 40px rgba(236,72,153,0.6)"
         }}
       />
-      <span style={{
-        position: "absolute",
-        top: "20px",
-        right: "30px",
-        color: "#fff",
-        fontSize: "32px",
-        fontWeight: "bold",
-        cursor: "pointer"
-      }}>✕</span>
+      
+      {item && (
+        <div 
+          style={{ 
+            textAlign: "center", 
+            marginTop: "20px",
+            color: "#fff",
+            maxWidth: "600px"
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h3 style={{ fontSize: "24px", fontWeight: "bold", color: "#ec4899", marginBottom: "8px" }}>
+            {item.nome}
+          </h3>
+          {item.descricao && (
+            <p style={{ fontSize: "16px", color: "#ddd", marginBottom: "12px" }}>
+              {item.descricao}
+            </p>
+          )}
+          <p style={{ fontSize: "22px", fontWeight: "bold", color: "#22c55e", marginBottom: "16px" }}>
+            R$ {item.preco.toFixed(2).replace(".", ",")} / {item.tipo}
+          </p>
+          <button
+            onClick={() => {
+              adicionar(item);
+              onClose();
+            }}
+            style={{
+              backgroundColor: "#ec4899",
+              color: "white",
+              padding: "14px 28px",
+              borderRadius: "10px",
+              border: "none",
+              cursor: "pointer",
+              fontWeight: "bold",
+              fontSize: "16px"
+            }}
+          >
+            Adicionar ao Carrinho 🛒
+          </button>
+        </div>
+      )}
+      
+      <span 
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "30px",
+          color: "#fff",
+          fontSize: "32px",
+          fontWeight: "bold",
+          cursor: "pointer"
+        }}
+      >✕</span>
     </div>
   );
 }
