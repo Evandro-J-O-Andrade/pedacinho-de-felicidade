@@ -81,7 +81,7 @@ export default function KitFesta() {
               </ul>
               <p style={{ fontSize: "24px", fontWeight: "bold", color: "#ec4899", marginBottom: "12px" }}>{formatar(kit.preco)}</p>
               <button
-                onClick={() => adicionarAoCarrinho(kit)}
+                onClick={() => adicionar(kit)}
                 style={{
                   width: "100%",
                   padding: "12px",

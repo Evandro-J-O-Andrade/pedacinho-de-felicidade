@@ -1,8 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 export default function Carrossel3D({ items, renderItem, autoPlay = true, interval = 5000 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [currentX, setCurrentX] = useState(0);
+  const carrosselRef = useRef(null);
 
   const next = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % items.length);
@@ -13,6 +17,67 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
   }, [items.length]);
 
   const goTo = (index) => setActiveIndex(index);
+
+  // Funções para drag/touch
+  const handleStart = useCallback((clientX) => {
+    setIsDragging(true);
+    setStartX(clientX);
+    setCurrentX(clientX);
+    setIsPaused(true);
+  }, []);
+
+  const handleMove = useCallback((clientX) => {
+    if (!isDragging) return;
+    setCurrentX(clientX);
+  }, [isDragging]);
+
+  const handleEnd = useCallback(() => {
+    if (!isDragging) return;
+    const diff = startX - currentX;
+    const threshold = 50; // pixels para considerar swipe
+
+    if (Math.abs(diff) > threshold) {
+      if (diff > 0) {
+        next();
+      } else {
+        prev();
+      }
+    }
+    setIsDragging(false);
+    setIsPaused(false);
+  }, [isDragging, startX, currentX, next, prev]);
+
+  // Touch events
+  const handleTouchStart = (e) => {
+    handleStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    handleMove(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    handleEnd();
+  };
+
+  // Mouse events
+  const handleMouseDown = (e) => {
+    handleStart(e.clientX);
+  };
+
+  const handleMouseMove = (e) => {
+    handleMove(e.clientX);
+  };
+
+  const handleMouseUp = () => {
+    handleEnd();
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      handleEnd();
+    }
+  };
 
   useEffect(() => {
     if (!autoPlay || isPaused || items.length === 0) return;
@@ -39,9 +104,16 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
 
   return (
     <div 
+      ref={carrosselRef}
       className="carrossel-3d-wrapper"
       onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseLeave={() => { setIsPaused(false); handleMouseLeave(); }}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       style={{ 
         perspective: "1500px", 
         width: "100%", 
@@ -53,7 +125,8 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
         background: "linear-gradient(135deg, #fff7f9 0%, #fef3f7 50%, #fdf2f8 100%)",
         borderRadius: "20px",
         boxShadow: "0 20px 40px rgba(236, 72, 153, 0.1)",
-        padding: "40px 0"
+        padding: "40px 0",
+        userSelect: "none"
       }}
     >
       <style>{`

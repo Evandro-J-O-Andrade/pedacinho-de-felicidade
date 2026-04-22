@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCarrinho } from "../context/CarrinhoContext";
 import Image from "./Image";
 
 export default function Lightbox({ src, item, onClose, showAddButton = true }) {
   const { adicionar } = useCarrinho();
+  const [adicionado, setAdicionado] = useState(false);
+
   useEffect(() => {
     function handleKey(e) {
       if (e.key === "Escape") onClose();
@@ -11,6 +13,14 @@ export default function Lightbox({ src, item, onClose, showAddButton = true }) {
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
   }, [onClose]);
+
+  const handleAdicionar = () => {
+    adicionar(item);
+    setAdicionado(true);
+    setTimeout(() => {
+      onClose();
+    }, 3000); // Fecha após 3 segundos
+  };
 
   if (!src) return null;
 
@@ -36,6 +46,11 @@ export default function Lightbox({ src, item, onClose, showAddButton = true }) {
     >
       <style>{`
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes successPulse {
+          0% { transform: scale(0.9); opacity: 0; }
+          50% { transform: scale(1.05); }
+          100% { transform: scale(1); opacity: 1; }
+        }
       `}</style>
       
       <Image 
@@ -76,12 +91,9 @@ export default function Lightbox({ src, item, onClose, showAddButton = true }) {
               Esse é um preview do item. Para montar o kit completo, finalize sua seleção no fim da página e use o botão principal para adicionar o kit ao carrinho.
             </p>
           )}
-          {showAddButton && (
+          {showAddButton && !adicionado && (
             <button
-              onClick={() => {
-                adicionar(item);
-                onClose();
-              }}
+              onClick={handleAdicionar}
               style={{
                 backgroundColor: "#ec4899",
                 color: "white",
@@ -95,6 +107,19 @@ export default function Lightbox({ src, item, onClose, showAddButton = true }) {
             >
               Adicionar ao Carrinho 🛒
             </button>
+          )}
+          {adicionado && (
+            <div style={{
+              backgroundColor: "#22c55e",
+              color: "white",
+              padding: "14px 28px",
+              borderRadius: "10px",
+              fontWeight: "bold",
+              fontSize: "16px",
+              animation: "successPulse 0.5s ease"
+            }}>
+              ✅ Adicionado com sucesso ao carrinho!
+            </div>
           )}
         </div>
       )}
