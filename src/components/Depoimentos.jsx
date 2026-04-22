@@ -1,10 +1,6 @@
-import { useState } from "react";
 import Image from "./Image";
-import Lightbox from "./Lightbox";
 
 export default function Depoimentos() {
-  const [imagemAmpliada, setImagemAmpliada] = useState(null);
-
   const cards = [
     { texto: "Melhor bolo que já pedi! Minha festa ficou perfeita!", autor: "Cliente Satisfeita", imagem: "/img/depoimentos/cliente1.svg" },
     { texto: "Doces maravilhosos e atendimento incrível!", autor: "Maria Silva", imagem: "/img/depoimentos/cliente2.svg" },
@@ -45,13 +41,12 @@ export default function Depoimentos() {
                   src={c.imagem}
                   alt={c.autor}
                   categoria="depoimentos"
-                  onClick={() => setImagemAmpliada(c.imagem)}
                   style={{
                     width: "100px",
                     height: "100px",
                     borderRadius: "50%",
                     objectFit: "cover",
-                    cursor: "pointer",
+                    objectPosition: "center",
                     border: "3px solid #ec4899"
                   }}
                 />
@@ -66,10 +61,6 @@ export default function Depoimentos() {
           </div>
         </div>
       </section>
-
-      {imagemAmpliada && (
-        <Lightbox src={imagemAmpliada} onClose={() => setImagemAmpliada(null)} />
-      )}
     </>
   );
 }

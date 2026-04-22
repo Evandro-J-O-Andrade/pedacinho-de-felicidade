@@ -254,7 +254,9 @@ freightGratis,
                           backgroundColor: "#fef3c7",
                           padding: "8px 12px",
                           borderRadius: "6px",
-                          border: "1px dashed #f59e0b"
+                          border: "1px dashed #f59e0b",
+                          whiteSpace: "pre-wrap",
+                          wordBreak: "break-word"
                         }}>
                           📝 {item.descricao}
                         </p>

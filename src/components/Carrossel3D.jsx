@@ -114,13 +114,16 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       style={{ 
         width: "100%", 
         background: "linear-gradient(135deg, rgba(255, 182, 193, 0.6) 0%, rgba(255, 218, 221, 0.7) 50%, rgba(255, 240, 245, 0.8) 100%)",
         borderRadius: "20px",
         boxShadow: "0 20px 40px rgba(236, 72, 153, 0.1)",
         padding: "40px 0",
-        userSelect: "none"
+        userSelect: "none",
+        touchAction: "pan-y",
+        cursor: isDragging ? "grabbing" : "grab"
       }}
     >
       <style>{`

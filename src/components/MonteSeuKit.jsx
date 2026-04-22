@@ -122,7 +122,21 @@ export default function MonteSeuKit() {
   }
 
   return (
-    <div style={{ paddingTop: "150px", minHeight: "100vh", backgroundColor: "#fff7f9" }}>
+    <div style={{ paddingTop: "176px", minHeight: "100vh", backgroundColor: "#fff7f9" }}>
+      {/* BANNER */}
+      <div style={{ marginBottom: "26px" }}>
+        <Image 
+          src="/img/monteseukit/bannermonteseukit.png" 
+          alt="Monte Seu Kit"
+          style={{ 
+            width: "100%", 
+            height: "auto", 
+            objectFit: "contain", 
+            objectPosition: "center center", 
+            display: "block"
+          }}
+        />
+      </div>
       <style>{`
         .monte-kit-container {
           padding-top: 20px;

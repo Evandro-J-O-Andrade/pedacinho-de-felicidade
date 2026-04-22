@@ -46,6 +46,14 @@ export default function SazonalPage() {
     return lista;
   };
 
+  const getBannerAtual = () => {
+    if (eventoSelecionado === "todos") {
+      return "/img/sazonal/banners/bannertodoseventos.png";
+    }
+    const evento = eventos.find(e => e.id === eventoSelecionado);
+    return evento ? evento.banner : "/img/sazonal/banners/bannertodoseventos.png";
+  };
+
   if (!eventos || eventos.length === 0) {
     const todosEventos = getTodosEventos();
     
@@ -145,6 +153,21 @@ export default function SazonalPage() {
           backgroundColor: "#fff7f9"
         }}
       >
+        {/* BANNER */}
+        <div style={{ marginBottom: "26px" }}>
+          <Image 
+            src="/img/sazonal/banner-sazonal/bannersazonal.png" 
+            alt="Eventos Sazonais"
+            style={{ 
+              width: "100%", 
+              height: "auto", 
+              objectFit: "contain", 
+              objectPosition: "center center", 
+              display: "block"
+            }}
+          />
+        </div>
+
         <style>{`
           @media only screen and (min-width: 350px) and (max-width: 1024px) {
             .produtos-page { paddingTop: 130px !important; }

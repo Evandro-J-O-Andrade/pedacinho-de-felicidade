@@ -4,6 +4,7 @@ import { produtos } from "../data/produtos";
 import { getEventoAtivo } from "../utils/sazonalUtils";
 import ProdutoCard from "./ProdutoCard";
 import Lightbox from "./Lightbox";
+import Image from "./Image";
 
 export default function ProdutosPage() {
   const { adicionar } = useCarrinho();
@@ -75,6 +76,21 @@ export default function ProdutosPage() {
           backgroundColor: "#fff7f9"
         }}
       >
+        {/* BANNER */}
+        <div style={{ marginBottom: "26px" }}>
+          <Image 
+            src="/img/produtos/bannerprodutos/bannerprodutos.png" 
+            alt="Nossos Produtos"
+            style={{ 
+              width: "100%", 
+              height: "auto", 
+              objectFit: "contain", 
+              objectPosition: "center center", 
+              display: "block"
+            }}
+          />
+        </div>
+
         <style>{`
           @media only screen and (min-width: 350px) and (max-width: 1024px) {
             .produtos-page { paddingTop: 130px !important; }

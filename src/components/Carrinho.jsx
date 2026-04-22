@@ -218,13 +218,16 @@ export default function Carrinho() {
               }}>
                 <div style={{ display: "flex", gap: "12px" }}>
                   
-                  <div style={{ position: "relative" }}>
+                  <div
+                    onClick={() => setItemAberto(abertoItem ? null : item.id)}
+                    style={{ position: "relative", cursor: "pointer" }}
+                  >
                     <Image
                       src={getImagemProduto(item)}
                       alt={item.nome}
                       style={{
-                        width: "65px",
-                        height: "65px",
+                        width: "82px",
+                        height: "82px",
                         borderRadius: "12px",
                         objectFit: "cover",
                         border: "2px solid #fce7f3"
@@ -232,14 +235,14 @@ export default function Carrinho() {
                     />
                     <div style={{
                       position: "absolute",
-                      top: "-6px",
-                      right: "-6px",
+                      top: "-7px",
+                      right: "-7px",
                       backgroundColor: "#ec4899",
                       color: "white",
                       borderRadius: "50%",
-                      width: "20px",
-                      height: "20px",
-                      fontSize: "11px",
+                      width: "22px",
+                      height: "22px",
+                      fontSize: "12px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -252,7 +255,7 @@ export default function Carrinho() {
                   <div style={{ flex: 1 }}>
                     <div
                       onClick={() => setItemAberto(abertoItem ? null : item.id)}
-                      style={{ fontWeight: "600", cursor: "pointer", color: "#4b5563" }}
+                      style={{ fontWeight: "600", color: "#4b5563", cursor: "pointer" }}
                     >
                       {item.nome}
                     </div>
@@ -275,7 +278,7 @@ export default function Carrinho() {
                   </div>
                 </div>
 
-                {abertoItem && (
+                {item.descricao && abertoItem && (
                   <div style={{ 
                     fontSize: "13px", 
                     color: "#6b7280", 
@@ -285,7 +288,9 @@ export default function Carrinho() {
                     borderRadius: "8px",
                     border: "1px dashed #f59e0b",
                     fontWeight: 500,
-                    lineHeight: 1.4
+                    lineHeight: 1.4,
+                    whiteSpace: "pre-wrap",
+                    wordBreak: "break-word"
                   }}>
                     📝 {item.descricao}
                   </div>

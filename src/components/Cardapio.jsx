@@ -28,13 +28,19 @@ const [categoria, setCategoria] = useState("Bolos");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
   const [itemSelecionado, setItemSelecionado] = useState(null);
 
-  const produtosVisiveis = categoria === "todos"
-    ? produtosFiltrados.flatMap((c) => c.itens).filter(item => 
-        busca ? item.nome.toLowerCase().includes(busca.toLowerCase()) : true
-      )
-    : (produtosFiltrados.find((c) => c.categoria === categoria)?.itens || []).filter(item => 
-        busca ? item.nome.toLowerCase().includes(busca.toLowerCase()) : true
-      );
+  function filtrarPorBusca(itens) {
+    return itens.filter((item) =>
+      busca ? item.nome.toLowerCase().includes(busca.toLowerCase()) : true
+    );
+  }
+
+  const categoriasAtivas = categoria === "todos"
+    ? produtosFiltrados
+    : produtosFiltrados.filter((c) => c.categoria === categoria);
+
+  const categoriasComItensVisiveis = categoriasAtivas
+    .map((c) => ({ ...c, itensVisiveis: filtrarPorBusca(c.itens) }))
+    .filter((c) => c.itensVisiveis.length > 0);
   
   // Escutar evento global de busca
   useEffect(() => {
@@ -122,16 +128,22 @@ const [categoria, setCategoria] = useState("Bolos");
             ))}
           </div>
 
-          {/* PRODUTOS - 5 POR LINHA */}
-          <div className="cardapio-grid" style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: "24px",
-            maxWidth: "1400px",
-            margin: "0 auto",
-            width: "100%"
-          }}>
+          {/* PRODUTOS */}
+          <div style={{ maxWidth: "1400px", margin: "0 auto", width: "100%" }}>
             <style>{`
+              .cardapio-grid {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 24px;
+                width: 100%;
+              }
+              .sessao-titulo {
+                font-size: 28px;
+                color: #ec4899;
+                text-align: center;
+                margin: 30px 0 15px;
+                padding: 0 20px;
+              }
               @media (max-width: 1200px) {
                 .cardapio-grid { grid-template-columns: repeat(3, 1fr) !important; }
               }
@@ -142,13 +154,32 @@ const [categoria, setCategoria] = useState("Bolos");
                 .cardapio-grid { grid-template-columns: 1fr !important; }
               }
             `}</style>
-{produtosVisiveis.map((item) => (
-            <ProdutoCard 
-                key={item.id} 
-                item={item}
-                onImageClick={(img) => { setImagemAmpliada(img); setItemSelecionado(item); }}
-              />
+
+            {categoriasComItensVisiveis.map((cat) => (
+              <div key={cat.categoria} style={{ marginBottom: categoria === "todos" ? "32px" : 0 }}>
+                {categoria === "todos" && (
+                  <h3 className="sessao-titulo">
+                    {cat.categoria}
+                  </h3>
+                )}
+
+                <div className="cardapio-grid">
+                  {cat.itensVisiveis.map((item) => (
+                    <ProdutoCard
+                      key={item.id}
+                      item={item}
+                      onImageClick={(img) => { setImagemAmpliada(img); setItemSelecionado(item); }}
+                    />
+                  ))}
+                </div>
+              </div>
             ))}
+
+            {categoriasComItensVisiveis.length === 0 && (
+              <p style={{ textAlign: "center", color: "#6b7280", fontSize: "16px", margin: "12px 0 0" }}>
+                Nenhum produto encontrado.
+              </p>
+            )}
           </div>
 
           {/* VER MAIS */}

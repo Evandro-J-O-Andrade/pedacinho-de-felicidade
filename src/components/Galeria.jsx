@@ -44,8 +44,11 @@ export default function Galeria({ embedded = false, images = null, title = "Mome
         key={index}
         src={src}
         alt={`Evento ${index + 1}`}
+        categoria="galeria"
+        draggable={false}
         style={imgStyle}
         onClick={() => setImagemAmpliada(src)}
+        onDragStart={(e) => e.preventDefault()}
         onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
         onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
       />
