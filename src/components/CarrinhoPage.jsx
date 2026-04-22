@@ -104,7 +104,7 @@ freightGratis,
 
   return (
     <div style={{ 
-      paddingTop: `${navHeight}px`,
+      paddingTop: "185px",
       paddingLeft: "20px",
       paddingRight: "20px",
       paddingBottom: "120px",
@@ -114,6 +114,20 @@ freightGratis,
       background: "linear-gradient(180deg, #fff0f5 0%, #fff 100%)",
       position: "relative"
     }}>
+      {/* Banner */}
+      <div style={{ marginBottom: "26px" }}>
+        <Image 
+          src="/img/carrinhopagina/bannercarrinho.png"
+          alt="Carrinho"
+          style={{
+            width: "100%",
+            height: "auto",
+            objectFit: "contain",
+            objectPosition: "center center",
+            display: "block"
+          }}
+        />
+      </div>
       <img 
         src="/img/logo.png" 
         alt=""

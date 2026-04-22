@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useCarrinho } from "../context/CarrinhoContext";
 import { produtos } from "../data/produtos";
 import { getEventoAtivo } from "../utils/sazonalUtils";
 import ProdutoCard from "./ProdutoCard";
 import Lightbox from "./Lightbox";
 import Image from "./Image";
+import { buscarProdutos } from "../utils/buscaUtils";
 
 export default function ProdutosPage() {
   const { adicionar } = useCarrinho();
@@ -12,6 +13,28 @@ export default function ProdutosPage() {
   const [busca, setBusca] = useState("");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
   const [itemSelecionado, setItemSelecionado] = useState(null);
+
+  const evento = getEventoAtivo();
+  
+  const categoriasFixas = ["Bolos", "Doces", "Salgados", "Bebidas", "Complementos"];
+  const categoriaEvento = evento ? evento.nome : null;
+  const categoriasPermitidas = useMemo(() => {
+    const permitidas = [...categoriasFixas];
+    if (categoriaEvento) {
+      permitidas.push(categoriaEvento);
+    }
+    return permitidas;
+  }, [categoriaEvento]);
+  
+  const produtosFiltrados = useMemo(() => 
+    produtos.filter(c => categoriasPermitidas.includes(c.categoria)),
+    [categoriasPermitidas]
+  );
+  
+  const categorias = useMemo(() => 
+    ["todos", "Bolos", ...produtosFiltrados.map((c) => c.categoria).filter(c => c !== "Bolos")],
+    [produtosFiltrados]
+  );
 
   // Ler parametro de busca da URL
   useEffect(() => {
@@ -25,36 +48,48 @@ export default function ProdutosPage() {
   // Escutar evento global de busca
   useEffect(() => {
     function handleBuscaGlobal(e) {
-      setBusca(e.detail.termo);
+      const termo = e.detail.termo;
+      
+      const resultados = buscarProdutos(produtos, termo);
+      
+      if (resultados.length > 0) {
+        const categoriasEncontradas = [...new Set(resultados.map(item => {
+          const cat = produtosFiltrados.find(c => c.itens.some(i => i.id === item.id));
+          return cat ? cat.categoria : null;
+        }).filter(Boolean))];
+        
+        const categoriaAlvo = categoriasEncontradas.length === 1 ? categoriasEncontradas[0] : "todos";
+        
+        setBusca(termo);
+        setCategoria(categoriaAlvo);
+        
+        setTimeout(() => {
+          const elemento = document.getElementById("produtos-grid");
+          if (elemento) {
+            elemento.scrollIntoView({ behavior: "smooth", block: "start" });
+          } else {
+            window.scrollTo({ top: 300, behavior: "smooth" });
+          }
+        }, 100);
+        return;
+      }
+      
+      setBusca("");
       setCategoria("todos");
     }
 
     window.addEventListener("busca-global", handleBuscaGlobal);
     return () => window.removeEventListener("busca-global", handleBuscaGlobal);
-  }, []);
-
-  const evento = getEventoAtivo();
-  
-  // Categorias fixas (não sazonais)
-  const categoriasFixas = ["Bolos", "Doces", "Salgados", "Bebidas", "Complementos"];
-  
-  // Se tem evento ativo, pega só a categoria dele
-  const categoriaEvento = evento ? evento.nome : null;
-  
-  // Filtra categorias: sempre mostra as fixas, + evento ativo se houver
-  const categoriasPermitidas = [...categoriasFixas];
-  if (categoriaEvento) {
-    categoriasPermitidas.push(categoriaEvento);
-  }
-  
-  const produtosFiltrados = produtos.filter(c => categoriasPermitidas.includes(c.categoria));
-  
-  const categorias = ["todos", "Bolos", ...produtosFiltrados.map((c) => c.categoria).filter(c => c !== "Bolos")];
+  }, [produtosFiltrados]);
 
   // Filtra itens por busca
   const filtrarPorBusca = (itens) => {
     if (!busca) return itens;
-    return itens.filter(item => item.nome.toLowerCase().includes(busca.toLowerCase()));
+    const termoNormalizado = busca.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return itens.filter(item => {
+      const nomeNormalizado = item.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return nomeNormalizado.includes(termoNormalizado);
+    });
   };
 
   // Lista de categorias ativas para renderizar seções
@@ -227,7 +262,7 @@ const itens = filtrarPorBusca(cat.itens);
 
           return (
             <div key={cat.categoria}>
-              <h2 className="sessao-titulo">{cat.categoria}</h2>
+              <h2 className="sessao-titulo" id="produtos-grid">{cat.categoria}</h2>
               <div className="produtos-grid">
                 {itens.map(item => (
                   <ProdutoCard key={item.id} item={item} onImageClick={(img) => { setImagemAmpliada(img); setItemSelecionado(item); }} />

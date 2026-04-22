@@ -5,6 +5,7 @@ import { getEventoAtivo } from "../utils/sazonalUtils";
 import Lightbox from "./Lightbox";
 import Image from "./Image";
 import { getImagemProduto } from "../utils/imagemUtils";
+import { buscarProdutos } from "../utils/buscaUtils";
 
 export default function MonteSeuKit() {
   const { adicionar } = useCarrinho();
@@ -36,17 +37,18 @@ export default function MonteSeuKit() {
     function handleBuscaGlobal(e) {
       const termo = e.detail.termo;
       
-      // Verifica se tem nos produtos filtrados
-      const todosProdutos = produtosFiltrados.flatMap((c) => c.itens);
-      const resultados = todosProdutos.filter((item) => 
-        item.nome.toLowerCase().includes(termo.toLowerCase())
+      const resultados = buscarProdutos(produtos, termo);
+      const resultadosFiltrados = resultados.filter(item => 
+        produtosFiltrados.some(c => c.itens.some(i => i.id === item.id))
       );
       
-      if (resultados.length > 0) {
+      if (resultadosFiltrados.length > 0) {
         setBusca(termo);
         setCategoria("todos");
+        setTimeout(() => {
+          window.scrollTo({ top: 800, behavior: "smooth" });
+        }, 100);
       } else {
-        // Não encontrou, vai para página de produtos
         window.location.href = "/produtos?busca=" + encodeURIComponent(termo);
       }
     }
@@ -60,7 +62,11 @@ export default function MonteSeuKit() {
   // Filtra itens por busca
   const filtrarPorBusca = (itens) => {
     if (!busca) return itens;
-    return itens.filter(item => item.nome.toLowerCase().includes(busca.toLowerCase()));
+    const termoNormalizado = busca.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return itens.filter(item => {
+      const nomeNormalizado = item.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return nomeNormalizado.includes(termoNormalizado);
+    });
   };
 
   // Lista de categorias ativas para renderizar seções

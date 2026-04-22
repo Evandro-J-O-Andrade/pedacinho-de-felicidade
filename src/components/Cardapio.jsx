@@ -3,6 +3,7 @@ import { produtos } from "../data/produtos";
 import { getEventoAtivo } from "../utils/sazonalUtils";
 import ProdutoCard from "./ProdutoCard";
 import Lightbox from "./Lightbox";
+import { buscarProdutos } from "../utils/buscaUtils";
 
 export default function Cardapio() {
   const evento = getEventoAtivo();
@@ -28,10 +29,13 @@ const [categoria, setCategoria] = useState("Bolos");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
   const [itemSelecionado, setItemSelecionado] = useState(null);
 
-  function filtrarPorBusca(itens) {
-    return itens.filter((item) =>
-      busca ? item.nome.toLowerCase().includes(busca.toLowerCase()) : true
-    );
+function filtrarPorBusca(itens) {
+    if (!busca) return itens;
+    const termoNormalizado = busca.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return itens.filter((item) => {
+      const nomeNormalizado = item.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return nomeNormalizado.includes(termoNormalizado);
+    });
   }
 
   const categoriasAtivas = categoria === "todos"
@@ -42,25 +46,19 @@ const [categoria, setCategoria] = useState("Bolos");
     .map((c) => ({ ...c, itensVisiveis: filtrarPorBusca(c.itens) }))
     .filter((c) => c.itensVisiveis.length > 0);
   
-  // Escutar evento global de busca
+// Escutar evento global de busca
   useEffect(() => {
     function handleBuscaGlobal(e) {
-      const termo = e.detail.termo.toLowerCase();
+      const termo = e.detail.termo;
       
-      // Verifica se tem no cardápio
-      const todosProdutos = produtosFiltrados.flatMap((c) => c.itens);
-      const resultados = todosProdutos.filter((item) => {
-        return item.nome.toLowerCase().includes(termo);
-      });
+      const resultados = buscarProdutos(produtos, termo);
       
       if (resultados.length > 0) {
-        // Detectar qual categoria tem mais resultados ou pegar a primeira
         const categoriasEncontradas = [...new Set(resultados.map(item => {
           const cat = produtosFiltrados.find(c => c.itens.some(i => i.id === item.id));
           return cat ? cat.categoria : null;
         }).filter(Boolean))];
         
-        // Se só tem produtos de uma categoria, vai pra ela. Senão fica em "todos"
         const categoriaAlvo = categoriasEncontradas.length === 1 ? categoriasEncontradas[0] : "todos";
         
         setBusca(termo);
@@ -73,10 +71,9 @@ const [categoria, setCategoria] = useState("Bolos");
       
       // Verifica se o termo tem a ver com Kit Festa
       const palavrasKit = ["kit", "festa", "básico", "basico", "médio", "medio", "premium", "20", "50", "100", "pessoas"];
-      const temPalavraKit = palavrasKit.some(palavra => termo.includes(palavra));
+      const temPalavraKit = palavrasKit.some(palavra => termo.toLowerCase().includes(palavra));
       
       if (temPalavraKit) {
-        // Volta para a seção Kit Festa na home
         window.location.hash = "kit-festa";
         return;
       }
@@ -87,7 +84,7 @@ const [categoria, setCategoria] = useState("Bolos");
 
     window.addEventListener("busca-global", handleBuscaGlobal);
     return () => window.removeEventListener("busca-global", handleBuscaGlobal);
-}, [produtosFiltrados]);
+  }, [produtosFiltrados]);
 
   return (
     <>
@@ -155,8 +152,13 @@ const [categoria, setCategoria] = useState("Bolos");
               }
             `}</style>
 
-            {categoriasComItensVisiveis.map((cat) => (
+{categoriasComItensVisiveis.map((cat) => (
               <div key={cat.categoria} style={{ marginBottom: categoria === "todos" ? "32px" : 0 }}>
+                {categoria !== "todos" && (
+                  <h3 className="sessao-titulo">
+                    {cat.categoria}
+                  </h3>
+                )}
                 {categoria === "todos" && (
                   <h3 className="sessao-titulo">
                     {cat.categoria}

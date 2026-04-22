@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { produtos } from "../data/produtos";
 import Image from "./Image";
+import { buscarProdutos } from "../utils/buscaUtils";
 
 export default function Navbar() {
   const [busca, setBusca] = useState("");
@@ -10,6 +11,7 @@ export default function Navbar() {
   const menuRef = useRef();
   const toggleRef = useRef();
   const todos = useMemo(() => produtos.flatMap((c) => c.itens), []);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
     setPaginaAtiva(window.location.pathname + window.location.hash);
@@ -22,17 +24,21 @@ export default function Navbar() {
       }
     }
     document.addEventListener("mousedown", handleClickFora);
-    return () => document.removeEventListener("mousedown", handleClickFora);
+    return () => {
+      document.removeEventListener("mousedown", handleClickFora);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
 
   function handleBusca(e) {
     const valor = e.target.value;
     setBusca(valor);
-    if (valor.length > 0) {
-      const filtro = todos.filter((item) =>
-        item.nome.toLowerCase().includes(valor.toLowerCase())
-      );
-      setResultados(filtro.slice(0, 42));
+    
+    if (valor.length > 1) {
+      const resultado = buscarProdutos(produtos, valor);
+      setResultados(resultado);
     } else {
       setResultados([]);
     }
@@ -245,7 +251,9 @@ export default function Navbar() {
               position: "absolute",
               top: "100%",
               marginTop: "4px",
-              width: "300px",
+              width: "320px",
+              maxHeight: "400px",
+              overflowY: "auto",
               backgroundColor: "#4a3728",
               boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
               borderRadius: "8px",
@@ -256,9 +264,18 @@ export default function Navbar() {
                   key={item.id} 
                   href="#cardapio" 
                   onClick={(e) => handleResultadoClick(e, item)}
-                  style={{ display: "block", padding: "12px", borderBottom: "1px solid rgba(255,255,255,0.2)", color: "#e8dcc8", textDecoration: "none", cursor: "pointer" }}
+                  style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px", borderBottom: "1px solid rgba(255,255,255,0.2)", color: "#e8dcc8", textDecoration: "none", cursor: "pointer" }}
                 >
-                  {item.nome}
+                  <img 
+                    src={item.imagem || "/img/produtos/default.svg"} 
+                    alt=""
+                    onError={(e) => { e.target.src = "/img/produtos/default.svg"; }}
+                    style={{ width: "40px", height: "40px", objectFit: "cover", borderRadius: "6px", flexShrink: 0 }}
+                  />
+                  <div style={{ flex: 1, overflow: "hidden" }}>
+                    <div style={{ fontWeight: 600, fontSize: "14px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.nome}</div>
+                    {item.descricao && <div style={{ fontSize: "12px", opacity: 0.8, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.descricao}</div>}
+                  </div>
                 </a>
               ))}
             </div>
