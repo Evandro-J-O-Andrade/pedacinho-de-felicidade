@@ -174,7 +174,13 @@ export default function Navbar() {
 
       <div className="nav-container" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
       {/* LOGO */}
-        <div className="nav-row" style={{ display: "flex", alignItems: "center", gap: "0px" }}>
+        <div 
+          className="nav-row" 
+          style={{ display: "flex", alignItems: "center", gap: "0px", cursor: "pointer" }}
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
           <Image className="nav-logo-img" src="/img/logo.png" style={{ width: "150px", height: "150px", objectFit: "contain" }} alt="logo" />
           <span className="nav-logo-text"
             style={{
@@ -185,7 +191,6 @@ export default function Navbar() {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
-              textShadow: "none"
             }}
           >
             Pedacinhos de Felicidade

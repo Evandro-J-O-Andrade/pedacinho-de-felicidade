@@ -115,14 +115,8 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       style={{ 
-        perspective: "1500px", 
         width: "100%", 
-        maxWidth: "1400px", 
-        height: "600px", 
-        margin: "0 auto", 
-        position: "relative",
-        overflow: "visible",
-        background: "linear-gradient(135deg, #fff7f9 0%, #fef3f7 50%, #fdf2f8 100%)",
+        background: "linear-gradient(135deg, rgba(255, 182, 193, 0.6) 0%, rgba(255, 218, 221, 0.7) 50%, rgba(255, 240, 245, 0.8) 100%)",
         borderRadius: "20px",
         boxShadow: "0 20px 40px rgba(236, 72, 153, 0.1)",
         padding: "40px 0",
@@ -145,26 +139,26 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
         .carrossel-3d-wrapper .carrossel-3d-item.active {
           opacity: 1;
           pointer-events: auto;
-          z-index: 10;
-          transform: translateX(0) rotateY(0deg) !important;
+          z-index: 15;
+          transform: translateX(0) translateY(-30px) rotateY(0deg) scale(1.2) !important;
         }
         .carrossel-3d-wrapper .carrossel-3d-item.prev {
           opacity: 0.5;
           z-index: 5;
-          transform: translateX(-220px) rotateY(15deg) scale(0.85) !important;
+          transform: translateX(-280px) rotateY(20deg) scale(0.8) !important;
         }
         .carrossel-3d-wrapper .carrossel-3d-item.next {
           opacity: 0.5;
           z-index: 5;
-          transform: translateX(220px) rotateY(-15deg) scale(0.85) !important;
+          transform: translateX(280px) rotateY(-20deg) scale(0.8) !important;
         }
         .carrossel-3d-wrapper .carrossel-3d-item.prev-2 {
           opacity: 0.15;
-          transform: translateX(-300px) rotateY(30deg) scale(0.7) !important;
+          transform: translateX(-360px) rotateY(35deg) scale(0.6) !important;
         }
         .carrossel-3d-wrapper .carrossel-3d-item.next-2 {
           opacity: 0.15;
-          transform: translateX(300px) rotateY(-30deg) scale(0.7) !important;
+          transform: translateX(360px) rotateY(-35deg) scale(0.6) !important;
         }
         .carrossel-3d-nav {
           position: absolute;
@@ -222,50 +216,55 @@ export default function Carrossel3D({ items, renderItem, autoPlay = true, interv
         }
         @media (max-width: 768px) {
           .carrossel-3d-wrapper .carrossel-3d-item { width: 280px !important; margin-left: -140px; margin-top: -200px; }
-          .carrossel-3d-wrapper .carrossel-3d-item.prev { transform: translateX(-100px) rotateY(15deg) scale(0.8) !important; }
-          .carrossel-3d-wrapper .carrossel-3d-item.next { transform: translateX(100px) rotateY(-15deg) scale(0.8) !important; }
+          .carrossel-3d-wrapper .carrossel-3d-item.active { transform: translateX(0) translateY(-20px) rotateY(0deg) scale(1.1) !important; }
+          .carrossel-3d-wrapper .carrossel-3d-item.prev { transform: translateX(-120px) rotateY(20deg) scale(0.75) !important; }
+          .carrossel-3d-wrapper .carrossel-3d-item.next { transform: translateX(120px) rotateY(-20deg) scale(0.75) !important; }
+          .carrossel-3d-wrapper .carrossel-3d-item.prev-2 { transform: translateX(-180px) rotateY(35deg) scale(0.5) !important; }
+          .carrossel-3d-wrapper .carrossel-3d-item.next-2 { transform: translateX(180px) rotateY(-35deg) scale(0.5) !important; }
           .carrossel-3d-arrow { width: 50px; height: 50px; font-size: 24px; bottom: 10px; }
           .carrossel-3d-arrow.prev { left: 10px !important; }
           .carrossel-3d-arrow.next { right: 10px !important; }
         }
       `}</style>
 
-      {items.map((item, index) => (
-        <div 
-          key={index} 
-          className={`carrossel-3d-item ${getItemClass(index)}`}
-          style={{ width: "380px" }}
-        >
-          {renderItem(item, index)}
-        </div>
-      ))}
-
-      {/* Navigation Arrows */}
-      <button 
-        className="carrossel-3d-arrow prev" 
-        onClick={prev}
-        aria-label="Anterior"
-      >
-        ‹
-      </button>
-      <button 
-        className="carrossel-3d-arrow next" 
-        onClick={next}
-        aria-label="Próximo"
-      >
-        ›
-      </button>
-
-      {/* Dots Navigation */}
-      <div className="carrossel-3d-nav">
-        {items.map((_, index) => (
-          <button
-            key={index}
-            className={`carrossel-3d-dot ${index === activeIndex ? 'active' : ''}`}
-            onClick={() => goTo(index)}
-            aria-label={`Ver item ${index + 1}`}
-          />
+      <div style={{ perspective: "1500px", maxWidth: "1400px", height: "600px", margin: "0 auto", position: "relative", overflow: "visible" }}>
+        {items.map((item, index) => (
+          <div 
+            key={index} 
+            className={`carrossel-3d-item ${getItemClass(index)}`}
+            style={{ width: "380px" }}
+          >
+            {renderItem(item, index)}
+          </div>
         ))}
+
+        {/* Navigation Arrows */}
+        <button 
+          className="carrossel-3d-arrow prev" 
+          onClick={prev}
+          aria-label="Anterior"
+        >
+          ‹
+        </button>
+        <button 
+          className="carrossel-3d-arrow next" 
+          onClick={next}
+          aria-label="Próximo"
+        >
+          ›
+        </button>
+
+        {/* Dots Navigation */}
+        <div className="carrossel-3d-nav">
+          {items.map((_, index) => (
+            <button
+              key={index}
+              className={`carrossel-3d-dot ${index === activeIndex ? 'active' : ''}`}
+              onClick={() => goTo(index)}
+              aria-label={`Ver item ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

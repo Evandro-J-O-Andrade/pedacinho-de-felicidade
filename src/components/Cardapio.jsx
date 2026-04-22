@@ -21,9 +21,9 @@ export default function Cardapio() {
   
   const produtosFiltrados = produtos.filter(c => categoriasPermitidas.includes(c.categoria));
   
-  const categorias = ["todos", ...produtosFiltrados.map((c) => c.categoria)];
+  const categorias = ["todos", "Bolos", ...produtosFiltrados.map((c) => c.categoria).filter(c => c !== "Bolos")];
   
-const [categoria, setCategoria] = useState("todos");
+const [categoria, setCategoria] = useState("Bolos");
   const [busca, setBusca] = useState("");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
   const [itemSelecionado, setItemSelecionado] = useState(null);

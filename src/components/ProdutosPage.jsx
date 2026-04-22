@@ -7,7 +7,7 @@ import Lightbox from "./Lightbox";
 
 export default function ProdutosPage() {
   const { adicionar } = useCarrinho();
-  const [categoria, setCategoria] = useState("todos");
+  const [categoria, setCategoria] = useState("Bolos");
   const [busca, setBusca] = useState("");
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
   const [itemSelecionado, setItemSelecionado] = useState(null);
@@ -48,7 +48,7 @@ export default function ProdutosPage() {
   
   const produtosFiltrados = produtos.filter(c => categoriasPermitidas.includes(c.categoria));
   
-  const categorias = ["todos", ...produtosFiltrados.map((c) => c.categoria)];
+  const categorias = ["todos", "Bolos", ...produtosFiltrados.map((c) => c.categoria).filter(c => c !== "Bolos")];
 
   // Filtra itens por busca
   const filtrarPorBusca = (itens) => {
