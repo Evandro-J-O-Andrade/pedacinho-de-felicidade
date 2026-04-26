@@ -28,7 +28,7 @@ function getSrcInicial(src, categoria) {
   return categoria ? fallbackCat : FALLBACK_ABSOLUTO;
 }
 
-export default function Image({ src, alt, categoria, ...props }) {
+export default function Image({ src, alt, categoria, loading = "lazy", style, ...props }) {
   const [fonteAtual, setFonteAtual] = useState(() => getSrcInicial(src, categoria));
 
   useEffect(() => {
@@ -48,11 +48,19 @@ export default function Image({ src, alt, categoria, ...props }) {
     setFonteAtual(fallbackCat);
   };
 
+  const defaultImageStyles = {
+    display: "block",
+    maxWidth: "100%",
+    height: "auto",
+  };
+
   return (
     <img
       src={fonteAtual}
       alt={alt}
+      loading={loading}
       onError={handleError}
+      style={{ ...defaultImageStyles, ...style }}
       {...props}
     />
   );

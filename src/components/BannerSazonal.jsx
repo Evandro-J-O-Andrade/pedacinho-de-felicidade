@@ -9,8 +9,6 @@ export default function BannerSazonal() {
   const [visivel, setVisivel] = useState(true);
 
   useEffect(() => {
-    setVisivel(true);
-    
     const timer = setTimeout(() => {
       setVisivel(false);
     }, 30000);
@@ -31,61 +29,94 @@ export default function BannerSazonal() {
   return (
     <div 
       onClick={handleFechar}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "rgba(0,0,0,0.6)",
-        backdropFilter: "blur(5px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 9999,
-        padding: "20px",
-        animation: "fadeIn 0.5s ease",
-        cursor: "pointer"
-      }}
+      className="banner-sazonal-overlay"
     >
       <style>{`
+        .banner-sazonal-overlay {
+          position: fixed;
+          inset: 0;
+          background-color: rgba(0,0,0,0.6);
+          backdrop-filter: blur(5px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          padding: 20px;
+          cursor: pointer;
+          animation: fadeIn 0.5s ease;
+        }
+
+        .banner-sazonal-modal {
+          position: relative;
+          max-width: min(620px, calc(100vw - 32px));
+          width: 100%;
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+          background: #fff;
+          animation: slideUp 0.5s ease;
+          cursor: auto;
+        }
+
+        .banner-sazonal-image-wrapper {
+          position: relative;
+          width: 100%;
+          overflow: hidden;
+        }
+
+        .banner-sazonal-img {
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+          object-position: center;
+          display: block;
+        }
+
+        .banner-sazonal-close {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          background: rgba(255,255,255,0.95);
+          border: none;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          font-size: 18px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
         @keyframes fadeIn {
           from { opacity: 0; transform: scale(0.9); }
           to { opacity: 1; transform: scale(1); }
         }
-      `}</style>
-      <div style={{
-        position: "relative",
-        maxWidth: "620px",
-        width: "100%",
-        borderRadius: "20px",
-        overflow: "hidden",
-        boxShadow: "0 25px 80px rgba(0,0,0,0.4)",
-        background: "#fff",
-        animation: "slideUp 0.5s ease"
-      }}>
-        <style>{`
-          @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+          .banner-sazonal-img {
+            object-fit: contain;
           }
-        `}</style>
-        
-<div style={{ position: "relative" }}>
-          <style>{`
-            @media (max-width: 480px) {
-              .banner-sazonal-img {
-                height: 220px !important;
-              }
-            }
-          `}</style>
+          .banner-sazonal-modal {
+            max-height: calc(100vh - 60px);
+          }
+        }
+      `}</style>
+      <div className="banner-sazonal-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="banner-sazonal-image-wrapper">
           <Image
             src={evento.banner}
             alt={evento.titulo}
             className="banner-sazonal-img"
             style={{
               width: "100%",
-              height: "380px",
+              height: "auto",
               objectFit: "cover",
               objectPosition: "center"
             }}
@@ -93,22 +124,7 @@ export default function BannerSazonal() {
           
           <button
             onClick={handleFechar}
-            style={{
-              position: "absolute",
-              top: "12px",
-              right: "12px",
-              background: "rgba(255,255,255,0.95)",
-              border: "none",
-              width: "36px",
-              height: "36px",
-              borderRadius: "50%",
-              fontSize: "18px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 2px 10px rgba(0,0,0,0.15)"
-            }}
+            className="banner-sazonal-close"
           >
             ✕
           </button>

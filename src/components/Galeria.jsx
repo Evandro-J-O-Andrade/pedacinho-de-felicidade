@@ -39,11 +39,11 @@ export default function Galeria({ embedded = false, images = null, title = "Mome
   const imagens = images && images.length > 0 ? images : defaultImages;
 
   const renderItem = (src, index) => (
-    <div style={{ borderRadius: "20px", overflow: "hidden", background: "#fff", boxShadow: "0 14px 28px rgba(0,0,0,0.12)", cursor: "pointer" }}>
+    <figure style={{ borderRadius: "20px", overflow: "hidden", background: "#fff", boxShadow: "0 14px 28px rgba(0,0,0,0.12)", cursor: "pointer", margin: 0 }}>
       <Image
         key={index}
         src={src}
-        alt={`Evento ${index + 1}`}
+        alt={`Imagem de evento especial ${index + 1} - Momentos felizes e doces`}
         categoria="galeria"
         draggable={false}
         style={imgStyle}
@@ -52,7 +52,10 @@ export default function Galeria({ embedded = false, images = null, title = "Mome
         onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
         onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
       />
-    </div>
+      <figcaption style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)", color: "#fff", padding: "12px", fontSize: "14px", fontWeight: "500", borderRadius: "0 0 20px 20px" }}>
+        Momento Especial #{index + 1}
+      </figcaption>
+    </figure>
   );
 
   return (

@@ -17,7 +17,9 @@ export default function Hero() {
       backgroundImage: "url('/img/banner.png')",
       backgroundSize: "cover",
       backgroundPosition: "center top",
-      backgroundRepeat: "no-repeat"
+      backgroundRepeat: "no-repeat",
+      width: "100%",
+      overflow: "hidden"
     }}>
       <style>{`
         #home {
@@ -30,11 +32,13 @@ export default function Hero() {
             background-size: cover !important;
             background-position: center center !important;
             margin-top: 175px !important;
+            overflow: hidden !important;
           }
         }
         @media only screen and (min-width: 1025px) {
           #home {
             margin-top: 185px !important;
+            overflow: hidden !important;
           }
         }
       `}</style>

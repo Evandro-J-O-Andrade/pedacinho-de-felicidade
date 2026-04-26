@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import "./Carrossel3D.css";
 
 export default function Carrossel3D({ items = [], renderItem, autoPlay = true, interval = 5000 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const dragState = useRef({ active: false, startX: 0, currentX: 0 });
   const wrapperRef = useRef(null);
 
@@ -58,11 +60,22 @@ export default function Carrossel3D({ items = [], renderItem, autoPlay = true, i
     setIsPaused(false);
   }, [next, prev]);
 
+  const handleKeyDown = useCallback(
+    (event) => {
+      if (event.key === "ArrowLeft") {
+        prev();
+      } else if (event.key === "ArrowRight") {
+        next();
+      }
+    },
+    [next, prev]
+  );
+
   useEffect(() => {
-    if (itemCount === 0 || !autoPlay || isPaused) return;
+    if (itemCount === 0 || !autoPlay || isPaused || isFocused) return;
     const timer = setInterval(next, interval);
     return () => clearInterval(timer);
-  }, [autoPlay, interval, isPaused, itemCount, next]);
+  }, [autoPlay, interval, isPaused, isFocused, itemCount, next]);
 
   useEffect(() => {
     if (activeIndex >= itemCount && itemCount > 0) {
@@ -90,7 +103,14 @@ export default function Carrossel3D({ items = [], renderItem, autoPlay = true, i
   return (
     <div
       ref={wrapperRef}
-      className="carrossel-3d-wrapper"
+      className={`carrossel-3d-wrapper ${dragState.current.active ? "carrossel-3d-grabbing" : ""}`}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Carrossel de imagens"
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onPointerDown={(e) => {
@@ -103,190 +123,35 @@ export default function Carrossel3D({ items = [], renderItem, autoPlay = true, i
       onPointerCancel={endDrag}
       style={{
         width: "100%",
-        background: "linear-gradient(135deg, rgba(255, 182, 193, 0.6) 0%, rgba(255, 218, 221, 0.7) 50%, rgba(255, 240, 245, 0.8) 100%)",
-        borderRadius: "20px",
-        boxShadow: "0 20px 40px rgba(236, 72, 153, 0.1)",
-        padding: "40px 0",
-        userSelect: "none",
-        touchAction: "pan-y",
         cursor: dragState.current.active ? "grabbing" : "grab",
+        outline: "none"
       }}
     >
-      <style>{`
-        .carrossel-3d-wrapper {
-          position: relative;
-        }
-
-        .carrossel-3d-wrapper .carrossel-3d-item {
-          position: absolute;
-          width: 450px;
-          left: 50%;
-          top: 50%;
-          margin-left: -225px;
-          margin-top: -240px;
-          transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-          opacity: 0;
-          pointer-events: none;
-          transform-style: preserve-3d;
-        }
-
-        .carrossel-3d-wrapper .carrossel-3d-item.active {
-          opacity: 1;
-          pointer-events: auto;
-          z-index: 15;
-          transform: translateX(0) translateY(-30px) rotateY(0deg) scale(1.2);
-        }
-
-        .carrossel-3d-wrapper .carrossel-3d-item.prev {
-          opacity: 0.5;
-          z-index: 5;
-          transform: translateX(-280px) rotateY(20deg) scale(0.8);
-        }
-
-        .carrossel-3d-wrapper .carrossel-3d-item.next {
-          opacity: 0.5;
-          z-index: 5;
-          transform: translateX(280px) rotateY(-20deg) scale(0.8);
-        }
-
-        .carrossel-3d-wrapper .carrossel-3d-item.prev-2,
-        .carrossel-3d-wrapper .carrossel-3d-item.next-2 {
-          opacity: 0.15;
-        }
-
-        .carrossel-3d-wrapper .carrossel-3d-item.prev-2 {
-          transform: translateX(-360px) rotateY(35deg) scale(0.6);
-        }
-
-        .carrossel-3d-wrapper .carrossel-3d-item.next-2 {
-          transform: translateX(360px) rotateY(-35deg) scale(0.6);
-        }
-
-        .carrossel-3d-nav {
-          position: absolute;
-          bottom: -30px;
-          left: 50%;
-          transform: translateX(-50%);
-          display: flex;
-          gap: 10px;
-          z-index: 20;
-        }
-
-        .carrossel-3d-dot {
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background: #e5e7eb;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          border: none;
-          padding: 0;
-        }
-
-        .carrossel-3d-dot.active {
-          background: #ec4899;
-          transform: scale(1.4);
-        }
-
-        .carrossel-3d-arrow {
-          position: absolute;
-          bottom: 20px;
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          background: #fff;
-          border: 3px solid #ec4899;
-          color: #ec4899;
-          font-size: 32px;
-          font-weight: bold;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 20;
-          box-shadow: 0 4px 20px rgba(236, 72, 153, 0.3);
-        }
-
-        .carrossel-3d-arrow:hover {
-          background: #ec4899;
-          color: #fff;
-          transform: scale(1.1);
-        }
-
-        .carrossel-3d-arrow.prev {
-          left: 20px;
-        }
-
-        .carrossel-3d-arrow.next {
-          right: 20px;
-        }
-
-        @media (max-width: 768px) {
-          .carrossel-3d-wrapper .carrossel-3d-item {
-            width: 280px;
-            margin-left: -140px;
-            margin-top: -200px;
-          }
-
-          .carrossel-3d-wrapper .carrossel-3d-item.active {
-            transform: translateX(0) translateY(-20px) rotateY(0deg) scale(1.1);
-          }
-
-          .carrossel-3d-wrapper .carrossel-3d-item.prev {
-            transform: translateX(-120px) rotateY(20deg) scale(0.75);
-          }
-
-          .carrossel-3d-wrapper .carrossel-3d-item.next {
-            transform: translateX(120px) rotateY(-20deg) scale(0.75);
-          }
-
-          .carrossel-3d-wrapper .carrossel-3d-item.prev-2 {
-            transform: translateX(-180px) rotateY(35deg) scale(0.5);
-          }
-
-          .carrossel-3d-wrapper .carrossel-3d-item.next-2 {
-            transform: translateX(180px) rotateY(-35deg) scale(0.5);
-          }
-
-          .carrossel-3d-arrow {
-            width: 50px;
-            height: 50px;
-            font-size: 24px;
-            bottom: 10px;
-          }
-
-          .carrossel-3d-arrow.prev {
-            left: 10px;
-          }
-
-          .carrossel-3d-arrow.next {
-            right: 10px;
-          }
-        }
-      `}</style>
 
       <div style={{ perspective: "1500px", maxWidth: "1400px", height: "600px", margin: "0 auto", position: "relative", overflow: "visible" }}>
+        <div className="sr-only" aria-live="polite">Slide {activeIndex + 1} de {itemCount}</div>
         {items.map((item, index) => (
           <div key={index} className={`carrossel-3d-item ${getItemClass(index)}`}>
             {renderItem(item, index)}
           </div>
         ))}
 
-        <button className="carrossel-3d-arrow prev" onClick={prev} aria-label="Anterior">
+        <button type="button" className="carrossel-3d-arrow prev" onClick={prev} aria-label="Anterior">
           ‹
         </button>
-        <button className="carrossel-3d-arrow next" onClick={next} aria-label="Próximo">
+        <button type="button" className="carrossel-3d-arrow next" onClick={next} aria-label="Próximo">
           ›
         </button>
 
-        <div className="carrossel-3d-nav">
+        <div className="carrossel-3d-nav" role="tablist" aria-label="Navegação do carrossel">
           {items.map((_, index) => (
             <button
+              type="button"
               key={index}
               className={`carrossel-3d-dot ${index === activeIndex ? "active" : ""}`}
               onClick={() => goTo(index)}
               aria-label={`Ver item ${index + 1}`}
+              aria-pressed={index === activeIndex}
             />
           ))}
         </div>
