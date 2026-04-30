@@ -154,10 +154,11 @@ export default function SazonalPage() {
         }}
       >
         {/* BANNER */}
-        <div style={{ marginBottom: "26px" }}>
+        <div className="page-banner" style={{ "--banner-ratio": "1536 / 688" }}>
           <Image 
             src="/img/sazonal/banner-sazonal/bannersazonal.png" 
             alt="Eventos Sazonais"
+            className="page-banner-img"
             style={{ 
               width: "100%", 
               height: "auto", 

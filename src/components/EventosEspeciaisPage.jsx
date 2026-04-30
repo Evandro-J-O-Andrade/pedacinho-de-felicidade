@@ -46,8 +46,9 @@ export default function EventosEspeciaisPage() {
         .eventos-banner-principal {
           width: 100%;
           height: auto;
-          overflow: visible;
+          overflow: hidden;
           margin-bottom: 26px;
+          aspect-ratio: auto;
         }
         .eventos-banner-principal-img {
           width: 100%;
@@ -70,13 +71,14 @@ export default function EventosEspeciaisPage() {
             padding-top: 170px !important;
           }
           .eventos-banner-principal {
-            height: 300px;
+            height: auto;
+            aspect-ratio: 1376 / 768;
             margin-bottom: 20px;
             overflow: hidden;
           }
           .eventos-banner-principal-img {
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             object-position: center top;
           }
           .eventos-especiais-head h1 {
@@ -86,10 +88,10 @@ export default function EventosEspeciaisPage() {
         @media only screen and (max-width: 600px) {
           .eventos-banner-principal {
             height: auto;
+            aspect-ratio: 1376 / 768;
           }
           .eventos-banner-principal-img {
-            height: auto;
-            aspect-ratio: 16/9;
+            height: 100%;
           }
           .eventos-especiais-watermark img {
             width: min(520px, 88vw);

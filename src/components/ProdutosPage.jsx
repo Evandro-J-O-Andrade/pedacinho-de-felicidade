@@ -112,10 +112,11 @@ export default function ProdutosPage() {
         }}
       >
         {/* BANNER */}
-        <div style={{ marginBottom: "26px" }}>
+        <div className="page-banner" style={{ "--banner-ratio": "1504 / 704" }}>
           <Image 
             src="/img/produtos/bannerprodutos/bannerprodutos.png" 
             alt="Nossos Produtos"
+            className="page-banner-img"
             style={{ 
               width: "100%", 
               height: "auto", 

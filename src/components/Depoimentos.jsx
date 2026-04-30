@@ -68,6 +68,7 @@ export default function Depoimentos() {
           src={imagemAmpliada}
           item={itemSelecionado}
           showAddButton={false}
+          showPreviewNote={false}
           onClose={() => {
             setImagemAmpliada(null);
             setItemSelecionado(null);

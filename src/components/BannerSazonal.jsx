@@ -44,12 +44,14 @@ export default function BannerSazonal() {
           padding: 20px;
           cursor: pointer;
           animation: fadeIn 0.5s ease;
+          overflow-y: auto;
         }
 
         .banner-sazonal-modal {
           position: relative;
           max-width: min(620px, calc(100vw - 32px));
           width: 100%;
+          max-height: calc(100dvh - 40px);
           border-radius: 20px;
           overflow: hidden;
           box-shadow: 0 25px 80px rgba(0,0,0,0.4);
@@ -100,11 +102,36 @@ export default function BannerSazonal() {
         }
 
         @media (max-width: 600px) {
+          .banner-sazonal-overlay {
+            align-items: flex-start;
+            padding: 12px;
+          }
+
+          .banner-sazonal-modal {
+            max-width: 100%;
+            max-height: calc(100dvh - 24px);
+            overflow-y: auto;
+            border-radius: 16px;
+          }
+
           .banner-sazonal-img {
+            width: 100%;
+            max-height: 42dvh;
             object-fit: contain;
           }
+        }
+
+        @media (max-width: 380px) {
+          .banner-sazonal-overlay {
+            padding: 8px;
+          }
+
           .banner-sazonal-modal {
-            max-height: calc(100vh - 60px);
+            max-height: calc(100dvh - 16px);
+          }
+
+          .banner-sazonal-img {
+            max-height: 36dvh;
           }
         }
       `}</style>

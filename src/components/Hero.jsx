@@ -28,9 +28,11 @@ export default function Hero() {
         }
         @media only screen and (max-width: 1024px) {
           #home {
-            min-height: 50vh !important;
-            background-size: cover !important;
-            background-position: center center !important;
+            min-height: 0 !important;
+            height: auto !important;
+            aspect-ratio: 1688 / 709;
+            background-size: contain !important;
+            background-position: center top !important;
             margin-top: 175px !important;
             overflow: hidden !important;
           }

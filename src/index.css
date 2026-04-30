@@ -116,6 +116,35 @@ html {
 }
 
 /* =========================
+   BANNERS DE PÁGINA
+========================= */
+.page-banner {
+  width: 100%;
+  margin-bottom: 26px;
+  overflow: hidden;
+}
+
+.page-banner-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center top;
+  display: block;
+}
+
+@media only screen and (max-width: 1024px) {
+  .page-banner {
+    aspect-ratio: var(--banner-ratio);
+  }
+
+  .page-banner-img {
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center top !important;
+  }
+}
+
+/* =========================
    SCROLLBAR
 ========================= */
 ::-webkit-scrollbar {

@@ -7,62 +7,127 @@
   justify-content: center;
   z-index: 9999;
   cursor: pointer;
-  padding: 20px;
+  padding: 28px;
   animation: lightboxFadeIn 0.3s ease;
+  overflow-y: auto;
 }
 
 .lightbox-content {
   position: relative;
-  max-width: 100%;
-  width: 100%;
-  max-width: 820px;
+  width: min(100%, 1060px);
+  max-height: calc(100vh - 56px);
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  gap: 0;
+  background: rgba(18, 18, 24, 0.36);
+  border: 1px solid rgba(249, 168, 212, 0.42);
+  border-radius: 18px;
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.58),
+    0 0 58px rgba(236, 72, 153, 0.42),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 0 28px rgba(249, 168, 212, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  overflow: hidden;
   cursor: auto;
+}
+
+.lightbox-content::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.38), transparent 18%),
+    linear-gradient(315deg, rgba(249, 168, 212, 0.32), transparent 24%);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  padding: 1px;
+}
+
+.lightbox-content::before {
+  content: "";
+  position: absolute;
+  inset: -28px;
+  z-index: -1;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 28% 50%, rgba(236, 72, 153, 0.5), transparent 42%),
+    radial-gradient(circle at 72% 45%, rgba(249, 168, 212, 0.24), transparent 38%);
+  filter: blur(28px);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.lightbox-image-panel {
+  flex: 0 1 58%;
+  min-width: 0;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(236, 72, 153, 0.24), transparent 46%),
+    rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(14px, 2.2vw, 28px);
 }
 
 .lightbox-image {
   width: 100%;
-  max-height: 60vh;
+  height: min(72vh, 660px);
   display: block;
   object-fit: contain;
-  border-radius: 16px;
-  box-shadow: 0 0 40px rgba(236, 72, 153, 0.6);
+  border-radius: 14px;
+  box-shadow: 0 0 38px rgba(236, 72, 153, 0.42);
 }
 
 .lightbox-details {
-  width: 100%;
-  text-align: center;
-  margin-top: 20px;
+  flex: 0 0 42%;
+  min-width: 290px;
+  text-align: left;
   color: #fff;
-  max-width: 600px;
+  padding: clamp(22px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-wrap: anywhere;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
 }
 
 .lightbox-title {
-  font-size: 24px;
+  font-size: clamp(22px, 2.3vw, 30px);
+  line-height: 1.15;
   font-weight: bold;
-  color: #ec4899;
-  margin-bottom: 8px;
+  color: #f9a8d4;
+  margin: 0 0 12px;
+  text-shadow: 0 2px 18px rgba(236, 72, 153, 0.35);
 }
 
 .lightbox-description {
   font-size: 16px;
-  color: #ddd;
-  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.86);
+  margin: 0 0 14px;
+  line-height: 1.65;
 }
 
 .lightbox-price {
   font-size: 22px;
   font-weight: bold;
   color: #22c55e;
-  margin-bottom: 16px;
+  margin: 0 0 18px;
 }
 
 .lightbox-note {
   font-size: 15px;
-  color: #f9a8d4;
-  margin-bottom: 16px;
+  color: #fbcfe8;
+  background-color: rgba(236, 72, 153, 0.12);
+  border: 1px solid rgba(236, 72, 153, 0.28);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 0 0 16px;
   line-height: 1.6;
 }
 
@@ -75,6 +140,17 @@
   cursor: pointer;
   font-weight: bold;
   font-size: 16px;
+  width: fit-content;
+  max-width: 100%;
+  line-height: 1.2;
+  box-shadow: 0 14px 30px rgba(236, 72, 153, 0.3);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lightbox-add-button:hover {
+  background-color: #db2777;
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px rgba(236, 72, 153, 0.38);
 }
 
 .lightbox-success {
@@ -84,6 +160,9 @@
   border-radius: 10px;
   font-weight: bold;
   font-size: 16px;
+  width: fit-content;
+  max-width: 100%;
+  line-height: 1.35;
   animation: lightboxSuccessPulse 0.5s ease;
 }
 
@@ -95,6 +174,97 @@
   font-size: 32px;
   font-weight: bold;
   cursor: pointer;
+}
+
+@media (max-width: 920px) {
+  .lightbox-overlay {
+    align-items: flex-start;
+    padding: 22px 16px;
+  }
+
+  .lightbox-content {
+    width: min(100%, 640px);
+    max-height: none;
+    flex-direction: column;
+    margin: auto 0;
+  }
+
+  .lightbox-image-panel {
+    flex: none;
+    padding: 14px;
+  }
+
+  .lightbox-image {
+    height: auto;
+    max-height: 54vh;
+  }
+
+  .lightbox-details {
+    flex: none;
+    min-width: 0;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .lightbox-description {
+    max-width: 58ch;
+  }
+
+  .lightbox-add-button,
+  .lightbox-success {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .lightbox-overlay {
+    padding: 14px 10px;
+  }
+
+  .lightbox-content {
+    border-radius: 14px;
+  }
+
+  .lightbox-image-panel {
+    padding: 10px;
+  }
+
+  .lightbox-image {
+    max-height: 46vh;
+    border-radius: 12px;
+  }
+
+  .lightbox-details {
+    padding: 16px;
+  }
+
+  .lightbox-title {
+    font-size: 21px;
+  }
+
+  .lightbox-description,
+  .lightbox-note {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .lightbox-price {
+    font-size: 20px;
+  }
+
+  .lightbox-add-button,
+  .lightbox-success {
+    padding: 13px 16px;
+    font-size: 15px;
+  }
+
+  .lightbox-close {
+    top: 10px;
+    right: 16px;
+    font-size: 28px;
+  }
 }
 
 @keyframes lightboxFadeIn {

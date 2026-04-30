@@ -130,10 +130,11 @@ export default function MonteSeuKit() {
   return (
     <div style={{ paddingTop: "176px", minHeight: "100vh", backgroundColor: "#fff7f9" }}>
       {/* BANNER */}
-      <div style={{ marginBottom: "26px" }}>
+      <div className="page-banner" style={{ "--banner-ratio": "1536 / 688" }}>
         <Image 
           src="/img/monteseukit/bannermonteseukit.png" 
           alt="Monte Seu Kit"
+          className="page-banner-img"
           style={{ 
             width: "100%", 
             height: "auto", 

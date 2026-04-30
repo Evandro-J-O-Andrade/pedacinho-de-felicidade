@@ -115,10 +115,11 @@ freightGratis,
       position: "relative"
     }}>
       {/* Banner */}
-      <div style={{ marginBottom: "26px" }}>
+      <div className="page-banner" style={{ "--banner-ratio": "1840 / 576" }}>
         <Image 
           src="/img/carrinhopagina/bannercarrinho.png"
           alt="Carrinho"
+          className="page-banner-img"
           style={{
             width: "100%",
             height: "auto",
