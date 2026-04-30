@@ -47,7 +47,7 @@ export default function SobreNos() {
         .sobre-title {
           margin: 18px 0 16px;
           font-size: clamp(34px, 5vw, 58px);
-          line-height: 1.04;
+          line-height: 1.08;
           color: #ec4899;
           font-weight: 900;
         }
@@ -293,56 +293,68 @@ export default function SobreNos() {
       <div className="sobre-wrap">
         <section className="sobre-hero">
           <div>
-            <span className="sobre-kicker">Feito por pessoas, para pessoas</span>
-            <h1 className="sobre-title">Sobre Nós</h1>
+            <span className="sobre-kicker">
+              Doces personalizados em Poá SP • Feito por pessoas, para pessoas
+            </span>
+
+            <h1 className="sobre-title">
+              Doces Personalizados e Bolos Sob Encomenda em Poá SP
+            </h1>
+
             <p className="sobre-lead">
-              A Pedacinhos de Felicidade nasceu do cuidado em transformar encomendas em lembranças. Cada pedido passa por conversa, atenção aos detalhes e preparo artesanal, porque por trás de cada bolo, doce ou kit existe uma comemoração importante.
+              A <strong>Pedacinhos de Felicidade</strong> transforma momentos especiais em experiências inesquecíveis através de <strong>doces personalizados, bolos sob encomenda e kits para festas em Poá e região leste de São Paulo</strong>.
+              <br />
+              <br />
+              Cada pedido é feito com cuidado artesanal, atenção aos detalhes e foco total em encantar — no sabor, na apresentação e na experiência.
+              <br />
+              <br />
+              Aqui, não vendemos apenas doces. Criamos lembranças que fazem parte de momentos importantes da sua vida.
             </p>
 
             <div className="sobre-actions">
               <a className="sobre-btn sobre-btn-primary" href={`https://wa.me/${numero}`}>
-                Conversar no WhatsApp
+                👉 Fazer pedido no WhatsApp agora
               </a>
               <a className="sobre-btn sobre-btn-secondary" href="/produtos">
-                Ver nossos produtos
+                Ver doces e bolos disponíveis
               </a>
             </div>
           </div>
 
           <div className="sobre-photo" aria-hidden="true">
             <div className="sobre-logo-card">
-              <Image src="/img/logo.png" alt="" />
+              <Image src="/img/logo.png" alt="Confeitaria artesanal em Poá SP com doces personalizados e bolos sob encomenda" />
             </div>
           </div>
         </section>
 
         <section aria-labelledby="sobre-especialistas">
           <h2 id="sobre-especialistas" className="sobre-section-title">
-            Especialistas no doce e no atendimento
+            Por que escolher a Pedacinhos de Felicidade
           </h2>
 
           <div className="sobre-grid">
             <article className="sobre-card">
               <div className="sobre-card-icon">👩‍🍳</div>
-              <h3>Produção com experiência</h3>
+              <h3>Produção artesanal com qualidade</h3>
               <p>
-                Trabalhamos com encomendas planejadas, sabores equilibrados e acabamento pensado para valorizar aniversários, festas, presentes e eventos.
+                Trabalhamos com <strong>doces personalizados e bolos sob encomenda em Poá SP</strong>, sempre com sabores equilibrados e acabamento pensado para impressionar em qualquer evento.
               </p>
             </article>
 
             <article className="sobre-card">
               <div className="sobre-card-icon">💬</div>
-              <h3>Atendimento próximo</h3>
+              <h3>Atendimento rápido e direto</h3>
               <p>
-                O cliente conversa com gente de verdade. Tiramos dúvidas, orientamos quantidades e ajudamos a escolher opções que fazem sentido para cada ocasião.
+                Fale com a gente no WhatsApp e resolva tudo rápido. Orientamos quantidades, combinações e ajudamos você a escolher o melhor para sua festa.
               </p>
             </article>
 
             <article className="sobre-card">
               <div className="sobre-card-icon">🎀</div>
-              <h3>Cuidado nos detalhes</h3>
+              <h3>Cuidado em cada detalhe</h3>
               <p>
-                Do preparo à apresentação, cada item recebe atenção para chegar bonito, fresco e com aquele carinho que faz diferença na mesa.
+                Cada pedido é preparado para chegar bonito, fresco e pronto para encantar — do sabor à apresentação final.
               </p>
             </article>
           </div>
@@ -350,33 +362,39 @@ export default function SobreNos() {
 
         <section className="sobre-process" aria-labelledby="sobre-como-fazemos">
           <h2 id="sobre-como-fazemos" className="sobre-section-title">
-            Como cuidamos do seu pedido
+            Como funciona seu pedido
           </h2>
 
           <div className="sobre-steps">
             <div className="sobre-step">
-              <strong>1. Conversa</strong>
-              <p>Entendemos o evento, a quantidade de pessoas e o que você quer transmitir.</p>
+              <strong>1. Chamada rápida</strong>
+              <p>Você entra em contato pelo WhatsApp e explica o que precisa.</p>
             </div>
             <div className="sobre-step">
               <strong>2. Orientação</strong>
-              <p>Indicamos produtos, combinações e formatos adequados para sua comemoração.</p>
+              <p>Sugerimos os melhores doces, bolos e kits personalizados para sua ocasião.</p>
             </div>
             <div className="sobre-step">
-              <strong>3. Produção</strong>
-              <p>Preparamos tudo sob encomenda, com organização e atenção ao acabamento.</p>
+              <strong>3. Produção artesanal</strong>
+              <p>Preparamos tudo sob encomenda, com qualidade e atenção aos detalhes.</p>
             </div>
             <div className="sobre-step">
               <strong>4. Entrega</strong>
-              <p>Combinamos os detalhes para seu pedido chegar pronto para encantar.</p>
+              <p>Seu pedido chega pronto para encantar sua comemoração.</p>
             </div>
           </div>
         </section>
 
         <section className="sobre-final">
-          <h2 className="sobre-section-title">Nosso jeito de trabalhar</h2>
+          <h2 className="sobre-section-title">Mais do que doces, criamos experiências</h2>
           <p>
-            A gente acredita que comida de festa precisa ter sabor, beleza e confiança. Por isso tratamos cada cliente com escuta, clareza e responsabilidade, como quem entende que aquele pedido faz parte de uma história.
+            Acreditamos que uma boa confeitaria vai além do sabor. Por isso, unimos <strong>qualidade, apresentação e atendimento próximo</strong>, garantindo confiança em cada pedido.
+            <br />
+            <br />
+            Atendemos <strong>Poá (SP)</strong> e toda a <strong>região leste de São Paulo</strong>, levando doces que fazem parte de momentos especiais.
+            <br />
+            <br />
+            Cada cliente é único, e cada encomenda também.
           </p>
         </section>
       </div>

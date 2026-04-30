@@ -132,6 +132,7 @@ freightGratis,
       <img 
         src="/img/logo.png" 
         alt=""
+        aria-hidden="true"
         style={{
           position: "fixed",
           top: "50%",
@@ -458,6 +459,67 @@ freightGratis,
             </div>
           </div>
 
+          <div style={{ 
+            backgroundColor: "white", 
+            borderRadius: "16px", 
+            padding: "20px",
+            marginBottom: "20px",
+            boxShadow: "0 4px 15px rgba(236,72,153,0.08)",
+            border: "1px solid #fce7f3"
+          }}>
+            <h3 style={{ color: "#ec4899", fontWeight: "700", marginBottom: "10px", fontSize: "18px" }}>
+              💳 Formas de Pagamento
+            </h3>
+            <p style={{ color: "#6b7280", fontSize: "14px", lineHeight: 1.6, margin: "0 0 14px" }}>
+              A forma de pagamento é combinada no WhatsApp após o envio do pedido.
+            </p>
+
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+              gap: "10px"
+            }}>
+              {[
+                { icon: "⚡", titulo: "Pix", texto: "Chave, link ou QR Code pelo WhatsApp" },
+                { icon: "💳", titulo: "Cartão", texto: "Débito ou crédito via link/maquininha" },
+                { icon: "🏦", titulo: "Transferência", texto: "Dados enviados com segurança" },
+                { icon: "💵", titulo: "Dinheiro", texto: "Em espécie na entrega ou retirada" }
+              ].map((forma) => (
+                <div
+                  key={forma.titulo}
+                  style={{
+                    background: "#fff7f9",
+                    border: "1px solid #fbcfe8",
+                    borderRadius: "12px",
+                    padding: "12px",
+                    minHeight: "104px"
+                  }}
+                >
+                  <div style={{ fontSize: "22px", marginBottom: "6px" }}>{forma.icon}</div>
+                  <strong style={{ display: "block", color: "#9d174d", fontSize: "14px", marginBottom: "4px" }}>
+                    {forma.titulo}
+                  </strong>
+                  <span style={{ color: "#6b7280", fontSize: "12px", lineHeight: 1.45 }}>
+                    {forma.texto}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{
+              marginTop: "14px",
+              padding: "12px",
+              borderRadius: "10px",
+              backgroundColor: "#ecfdf5",
+              border: "1px solid #bbf7d0",
+              color: "#15803d",
+              fontSize: "13px",
+              lineHeight: 1.55
+            }}>
+              🔒 Para sua segurança, links de pagamento e QR Code Pix são enviados somente na conversa do WhatsApp da Pedacinhos de Felicidade.
+            </div>
+          </div>
+
           <div style={{ display: "flex", gap: "12px", marginBottom: "12px" }}>
             {carrinho.length > 0 && (
               <button 
@@ -529,7 +591,7 @@ freightGratis,
             <h3 style={{ color: "#d97706", fontSize: "16px", marginBottom: "12px" }}>❓ Perguntas Frequentes</h3>
             <div style={{ color: "#92400e", fontSize: "13px", lineHeight: 1.8 }}>
               <p><strong>Qual o prazo?</strong><br/>48h de antecedência</p>
-              <p style={{ marginTop: "8px" }}><strong>Como pago?</strong><br/>Pix ou transferência</p>
+              <p style={{ marginTop: "8px" }}><strong>Como pago?</strong><br/>Pix com QR Code/link, transferência, cartão de débito/crédito ou dinheiro em espécie</p>
               <p style={{ marginTop: "8px" }}><strong>Posso personalizar?</strong><br/>Sim! Escreva no pedido</p>
               <p style={{ marginTop: "8px" }}><strong>Vocês entregam?</strong><br/>Sim, em Poá e região</p>
               <p style={{ marginTop: "8px" }}><strong>Posso buscar?</strong><br/>Sim, sem custo</p>

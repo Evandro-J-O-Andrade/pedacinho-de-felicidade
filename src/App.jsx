@@ -19,11 +19,13 @@ import EventosEspeciaisPage from "./components/EventosEspeciaisPage";
 import SobreNos from "./components/SobreNos";
 import ToastCarrinho from "./components/ToastCarrinho";
 import ToastLimparCarrinho from "./components/ToastLimparCarrinho";
+import SEO from "./components/SEO";
 
 export default function App() {
   return (
     <>
       <style>{`body { background-color: #fef2f5; margin: 0; }`}</style>
+      <SEO />
       <Navbar />
       <ToastCarrinho />
       <ToastLimparCarrinho />

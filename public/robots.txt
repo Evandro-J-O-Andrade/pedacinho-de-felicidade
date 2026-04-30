@@ -1,14 +1,9 @@
 # Robots.txt - Pedacinhos de Felicidade
-# Confeitaria Artesanal em São Paulo
+# Confeitaria artesanal em Poá, São Paulo e região
 
 User-agent: *
 Allow: /
 
-# Allow sitemap
-Sitemap: https://pedacinhodefelicidade.com.br/sitemap.xml
+Sitemap: https://pedacinhosdefelicidade.netlify.app/sitemap.xml
 
-# Crawl-delay (opcional, para não sobrecarregar)
-Crawl-delay: 1
-
-# Host principal
-Host: https://pedacinhodefelicidade.com.br
+Host: https://pedacinhosdefelicidade.netlify.app

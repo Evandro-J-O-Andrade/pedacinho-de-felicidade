@@ -152,6 +152,7 @@ export default function Carrinho() {
           <img 
             src="/img/logo.png" 
             alt="" 
+            aria-hidden="true"
             style={{ width: "380px", height: "380px", objectFit: "contain" }}
           />
         </div>

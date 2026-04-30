@@ -105,6 +105,24 @@ export default function Navbar() {
           font-weight: 600;
           font-size: 15px;
         }
+        .nav-logo-text {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 9px;
+          font-family: 'Poppins', sans-serif;
+          font-size: 36px;
+          font-weight: 900;
+          letter-spacing: 0.2px;
+          line-height: 1;
+          white-space: nowrap;
+          text-shadow: 0 3px 8px rgba(0,0,0,0.32);
+        }
+        .nav-logo-main {
+          color: #fff7ed;
+        }
+        .nav-logo-accent {
+          color: #f9a8d4;
+        }
         .nav-more {
           position: relative;
         }
@@ -171,6 +189,7 @@ export default function Navbar() {
           }
           .navbar .nav-logo-text {
             font-size: 18px !important;
+            gap: 5px;
           }
           .nav-links a {
             color: #f5f5f5 !important;
@@ -244,19 +263,10 @@ export default function Navbar() {
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         >
-          <Image className="nav-logo-img" src="/img/logo.png" style={{ width: "150px", height: "150px", objectFit: "contain" }} alt="logo" />
-          <span className="nav-logo-text"
-            style={{
-              fontSize: "38px",
-              fontWeight: 900,
-              letterSpacing: "0.8px",
-              background: "linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff, #5f27cd)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            Pedacinhos de Felicidade
+          <Image className="nav-logo-img" src="/img/logo.png" style={{ width: "150px", height: "150px", objectFit: "contain" }} alt="Logo da Pedacinhos de Felicidade, confeitaria artesanal de bolos, doces e salgados" />
+          <span className="nav-logo-text">
+            <span className="nav-logo-main">Pedacinhos</span>
+            <span className="nav-logo-accent">de Felicidade</span>
           </span>
           <button
             ref={toggleRef}
@@ -326,7 +336,7 @@ export default function Navbar() {
                 >
                   <img 
                     src={item.imagem || "/img/produtos/default.svg"} 
-                    alt=""
+                    alt={`${item.nome} - ${item.descricao || "produto artesanal da Pedacinhos de Felicidade"}`}
                     onError={(e) => { e.target.src = "/img/produtos/default.svg"; }}
                     style={{ width: "40px", height: "40px", objectFit: "cover", borderRadius: "6px", flexShrink: 0 }}
                   />
@@ -344,9 +354,9 @@ export default function Navbar() {
         <div ref={menuRef} className={`nav-links ${menuAberto ? "open" : ""}`} style={{ gap: "18px", fontSize: "16px", fontWeight: "600", marginTop: menuAberto ? "8px" : "0" }}>
           <a href="/" className={paginaAtiva === "/" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/"); }}>Home</a>
           <a href="/#cardapio" className={paginaAtiva.includes("cardapio") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#cardapio"); }}>Cardápio</a>
+          <a href="/#kit-festa" className={paginaAtiva.includes("kit-festa") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#kit-festa"); }}>Kit-Pronto</a>
           <a href="/produtos" className={paginaAtiva === "/produtos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/produtos"); }}>Produtos</a>
-          <a href="/monte-seu-kit" className={paginaAtiva === "/monte-seu-kit" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/monte-seu-kit"); }}>Monte seu kit</a>
-          <a href="/sazonal" className={paginaAtiva === "/sazonal" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/sazonal"); }}>Temporada</a>
+          <a href="/monte-seu-kit" className={paginaAtiva === "/monte-seu-kit" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/monte-seu-kit"); }}>Personalize Seu Kit</a>
           <div className={`nav-more ${maisAberto ? "open" : ""}`}>
             <button
               type="button"
@@ -360,7 +370,7 @@ export default function Navbar() {
             </button>
             <div className="nav-more-menu">
               <a href="/sobre-nos" className={paginaAtiva === "/sobre-nos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/sobre-nos"); }}>Sobre Nós</a>
-              <a href="/#kit-festa" className={paginaAtiva.includes("kit-festa") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#kit-festa"); }}>Kit Festa Rápido</a>
+              <a href="/sazonal" className={paginaAtiva === "/sazonal" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/sazonal"); }}>Temporada</a>
               <a href="/#eventos" className={paginaAtiva.includes("eventos") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#eventos"); }}>Eventos</a>
               <a href="/#contato" className={paginaAtiva.includes("contato") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#contato"); }}>Contato</a>
             </div>

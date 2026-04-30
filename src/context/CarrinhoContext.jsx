@@ -104,6 +104,9 @@ export function CarrinhoProvider({ children }) {
     const timestamp = Date.now();
     setTimestampAdicao(timestamp);
     setUltimoItemAdicionado(produto.nome);
+    const descricaoCompleta = produto.itens?.length
+      ? `${produto.descricao || ""}${produto.descricao ? "\n" : ""}Inclui: ${produto.itens.join(", ")}`
+      : produto.descricao || "";
 
     setCarrinho((prev) => {
       const existe = prev.find((item) => item.id === produto.id);
@@ -111,7 +114,12 @@ export function CarrinhoProvider({ children }) {
       if (existe) {
         return prev.map((item) =>
           item.id === produto.id
-            ? { ...item, quantidade: item.quantidade + 1 }
+            ? {
+                ...item,
+                quantidade: item.quantidade + 1,
+                descricao: descricaoCompleta || item.descricao,
+                itens: produto.itens || item.itens || []
+              }
             : item
         );
       }
@@ -123,7 +131,8 @@ export function CarrinhoProvider({ children }) {
           nome: produto.nome,
           preco: produto.preco,
           imagem: getImagemProduto(produto) || IMAGEM_FALLBACK,
-          descricao: produto.descricao || "",
+          descricao: descricaoCompleta,
+          itens: produto.itens || [],
           quantidade: 1
         }
       ];
@@ -231,6 +240,15 @@ ${cidade} - CEP: ${cep}
 ${textoFrete}
 
 💵 *Total do seu pedido:* R$ ${totalComFrete.toFixed(2).replace(".", ",")}
+
+💳 *Formas de pagamento disponíveis:*
+• Pix com chave, link ou QR Code enviado pelo WhatsApp
+• Transferência bancária
+• Cartão de débito
+• Cartão de crédito
+• Dinheiro em espécie na entrega ou retirada
+
+📌 _A forma de pagamento pode ser combinada por aqui. Se escolher Pix ou cartão, enviamos os dados/link com segurança pelo WhatsApp._
 
 💖 _Seu pedido foi recebido com muito carinho!_
 👩‍🍳 _Já vamos começar a preparar tudo fresquinho pra você._

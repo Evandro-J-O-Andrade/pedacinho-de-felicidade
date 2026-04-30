@@ -4,17 +4,39 @@ import { kits } from "../data/kits";
 import Lightbox from "./Lightbox";
 import Image from "./Image";
 import { getImagemProduto } from "../utils/imagemUtils";
+import ConfigurarKit from "./ConfigurarKit";
 
 export default function KitFesta() {
   const { adicionar } = useCarrinho();
   const [imagemAmpliada, setImagemAmpliada] = useState(null);
   const [itemSelecionado, setItemSelecionado] = useState(null);
+  const [kitConfigurando, setKitConfigurando] = useState(null);
 
   function formatar(v) {
     return v.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL"
     });
+  }
+
+  function descricaoCompletaKit(kit) {
+    return `${kit.descricao}\nInclui: ${kit.itens.join(", ")}`;
+  }
+
+  function confirmarKit(kit, selecoes) {
+    const detalhesSelecao = kit.configuracoes
+      .map((cfg) => `• ${cfg.titulo}${cfg.quantidade ? ` (${cfg.quantidade})` : ""}: ${(selecoes[cfg.tipo] || []).join(", ")}`)
+      .join("\n");
+
+    adicionar({
+      ...kit,
+      id: `${kit.id}-${Date.now()}`,
+      kitBaseId: kit.id,
+      selecoes,
+      descricao: `${descricaoCompletaKit(kit)}\n\nEscolhas do kit:\n${detalhesSelecao}`
+    });
+
+    setKitConfigurando(null);
   }
 
   // Escutar evento global de busca
@@ -67,7 +89,7 @@ export default function KitFesta() {
                 style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer" }}
                 onClick={() => {
                   setImagemAmpliada(getImagemProduto(kit));
-                  setItemSelecionado(kit);
+                  setItemSelecionado({ ...kit, descricao: descricaoCompletaKit(kit) });
                 }}
               />
             </div>
@@ -81,7 +103,7 @@ export default function KitFesta() {
               </ul>
               <p style={{ fontSize: "24px", fontWeight: "bold", color: "#ec4899", marginBottom: "12px" }}>{formatar(kit.preco)}</p>
               <button
-                onClick={() => adicionar(kit)}
+                onClick={() => setKitConfigurando(kit)}
                 style={{
                   width: "100%",
                   padding: "12px",
@@ -93,7 +115,7 @@ export default function KitFesta() {
                   cursor: "pointer"
                 }}
               >
-                Adicionar ao Carrinho
+                Configurar e adicionar
               </button>
             </div>
           </div>
@@ -110,7 +132,23 @@ export default function KitFesta() {
       </div>
 
       {imagemAmpliada && (
-        <Lightbox src={imagemAmpliada} item={itemSelecionado} onClose={() => { setImagemAmpliada(null); setItemSelecionado(null); }} />
+        <Lightbox
+          src={imagemAmpliada}
+          item={itemSelecionado}
+          showAddButton={true}
+          showPreviewNote={false}
+          addButtonLabel="Configurar e adicionar 🛒"
+          onAddClick={() => setKitConfigurando(itemSelecionado)}
+          onClose={() => { setImagemAmpliada(null); setItemSelecionado(null); }}
+        />
+      )}
+
+      {kitConfigurando && (
+        <ConfigurarKit
+          kit={kitConfigurando}
+          onConfirmar={(selecoes) => confirmarKit(kitConfigurando, selecoes)}
+          onFechar={() => setKitConfigurando(null)}
+        />
       )}
     </section>
   );

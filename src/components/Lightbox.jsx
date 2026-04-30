@@ -3,7 +3,15 @@ import { useCarrinho } from "../context/CarrinhoContext";
 import Image from "./Image";
 import "./Lightbox.css";
 
-export default function Lightbox({ src, item, onClose, showAddButton = true, showPreviewNote = true }) {
+export default function Lightbox({
+  src,
+  item,
+  onClose,
+  showAddButton = true,
+  showPreviewNote = true,
+  addButtonLabel = "Adicionar ao Carrinho 🛒",
+  onAddClick
+}) {
   const { adicionar } = useCarrinho();
   const [adicionado, setAdicionado] = useState(false);
 
@@ -16,6 +24,12 @@ export default function Lightbox({ src, item, onClose, showAddButton = true, sho
   }, [onClose]);
 
   const handleAdicionar = () => {
+    if (onAddClick) {
+      onAddClick(item);
+      onClose();
+      return;
+    }
+
     adicionar(item);
     setAdicionado(true);
     setTimeout(() => {
@@ -52,7 +66,7 @@ export default function Lightbox({ src, item, onClose, showAddButton = true, sho
             )}
             {showAddButton && !adicionado && (
               <button className="lightbox-add-button" onClick={handleAdicionar}>
-                Adicionar ao Carrinho 🛒
+                {addButtonLabel}
               </button>
             )}
             {adicionado && <div className="lightbox-success">✅ Adicionado com sucesso ao carrinho!</div>}
