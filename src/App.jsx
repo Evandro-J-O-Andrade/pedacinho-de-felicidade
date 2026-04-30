@@ -16,6 +16,7 @@ import ProdutosPage from "./components/ProdutosPage";
 import CarrinhoPage from "./components/CarrinhoPage";
 import SazonalPage from "./components/SazonalPage";
 import EventosEspeciaisPage from "./components/EventosEspeciaisPage";
+import SobreNos from "./components/SobreNos";
 import ToastCarrinho from "./components/ToastCarrinho";
 import ToastLimparCarrinho from "./components/ToastLimparCarrinho";
 
@@ -72,6 +73,13 @@ export default function App() {
           <>
             <EventosEspeciaisPage />
             <WhatsApp />
+          </>
+        } />
+        <Route path="/sobre-nos" element={
+          <>
+            <SobreNos />
+            <WhatsApp />
+            <Carrinho />
           </>
         } />
       </Routes>
