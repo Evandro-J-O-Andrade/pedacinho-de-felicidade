@@ -25,3 +25,8 @@ dist-ssr
 
 # Kilo worktrees
 .kilo/worktrees/
+
+# Environment files
+.env
+.env.local
+.env.*.local
