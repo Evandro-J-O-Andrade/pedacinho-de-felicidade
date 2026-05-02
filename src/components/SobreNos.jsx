@@ -7,7 +7,7 @@ export default function SobreNos() {
     <main className="sobre-page">
       <style>{`
         .sobre-page {
-          padding: 185px 20px 70px;
+          padding: 186px 0px 70px;
           min-height: 100vh;
           background:
             radial-gradient(circle at 8% 18%, rgba(236, 72, 153, 0.14), transparent 28%),
@@ -17,16 +17,31 @@ export default function SobreNos() {
           overflow: hidden;
         }
 
+        .sobre-page > .page-banner {
+          aspect-ratio: var(--banner-ratio);
+          margin-bottom: 0px;
+          overflow: hidden;
+        }
+
+        .sobre-page > .page-banner .page-banner-img {
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
+        }
+
         .sobre-wrap {
           width: min(1120px, 100%);
           margin: 0 auto;
         }
+
+
 
         .sobre-hero {
           display: grid;
           grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
           gap: 36px;
           align-items: center;
+          margin-top: -20px;
           margin-bottom: 42px;
         }
 
@@ -236,6 +251,7 @@ export default function SobreNos() {
           .sobre-hero {
             grid-template-columns: 1fr;
             text-align: center;
+            margin-top: 24px;
           }
 
           .sobre-lead {
@@ -254,11 +270,12 @@ export default function SobreNos() {
 
         @media (max-width: 640px) {
           .sobre-page {
-            padding: 150px 14px 56px;
+            padding: 170px 0px 56px;
           }
 
           .sobre-hero {
             gap: 24px;
+            margin-top: 16px;
           }
 
           .sobre-lead {
@@ -289,6 +306,21 @@ export default function SobreNos() {
           }
         }
       `}</style>
+
+       {/* BANNER HERO - padrão page-banner */}
+       <div className="page-banner" style={{ "--banner-ratio": "1600 / 600" }}>
+           <picture>
+             <source 
+               media="(max-width: 768px)" 
+               srcSet="/img/sobre/bannersobremobile.png" 
+             />
+             <Image 
+               src="/img/sobre/bannersobredesktop.png"
+               alt="Sobre Nós"
+               className="page-banner-img"
+             />
+           </picture>
+       </div>
 
       <div className="sobre-wrap">
         <section className="sobre-hero">
