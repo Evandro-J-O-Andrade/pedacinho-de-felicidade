@@ -1,0 +1,842 @@
+[
+  {
+    "categoria": "salgados",
+    "nome": "coxinha-frango",
+    "descricao": "coxinha dourada com recheio cremoso",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "salgados",
+    "nome": "quibe-catupiry",
+    "descricao": "quibe com recheio de catupiry derretido",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "salgados",
+    "nome": "quibe-tradicional",
+    "descricao": "quibe frito com carne temperada",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "salgados",
+    "nome": "bolinha-queijo",
+    "descricao": "bolinha frita com queijo derretido",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "salgados",
+    "nome": "esfiha-carne",
+    "descricao": "esfiha aberta com carne temperada",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "salgados",
+    "nome": "esfiha-queijo",
+    "descricao": "esfiha com queijo derretido",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "salgados",
+    "nome": "torta-alema",
+    "descricao": "fatia de torta com creme e base crocante",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "salgados",
+    "nome": "mini-pizza",
+    "descricao": "mini pizza com queijo e pepperoni",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "salgados",
+    "nome": "croquete",
+    "descricao": "croquete crocante de carne",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "salgados",
+    "nome": "rissole",
+    "descricao": "rissole com presunto e queijo",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "salgados",
+    "nome": "empadinha",
+    "descricao": "empadinha com recheio visível",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "salgados",
+    "nome": "pastel-forno",
+    "descricao": "pastel assado com massa dourada",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-chocolate",
+    "descricao": "fatia de bolo de chocolate com ganache 70%, textura macia e brilho intenso",
+    "pagina": "home, produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-red-velvet",
+    "descricao": "bolo red velvet com cream cheese, cor vermelha vibrante e contraste branco",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-prestigio",
+    "descricao": "bolo prestígio com coco e chocolate meio amargo, cobertura escura com flocos de coco",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-morango",
+    "descricao": "fatia de bolo de morango com creme chantilly e morangos frescos decorando",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-ninho",
+    "descricao": "bolo ninho com mousse de chocolate branco, cor cremosa e delicada",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-cookies",
+    "descricao": "bolo com pedaços de cookie chocolateado integrados na massa",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-floresta-negra",
+    "descricao": "bolo floresta negra com chocolate, cerejas e chantilly, decoração clássica",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-cenoura",
+    "descricao": "fatia de bolo de cenoura com cobertura de chocolate brigadeiro",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-limao",
+    "descricao": "bolo de limão com creme de limão e merengue torrado no topo",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-milho",
+    "descricao": "bolo de milho tradicional com coco ralado por cima, cor amarela vibrante",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-formigueiro",
+    "descricao": "bolo formigueiro com pedaços de chocolate e coco ralado espalhados",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bolos",
+    "nome": "bolo-sensor",
+    "descricao": "bolo sensor com recheio de mousse de chocolate escuro",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "brigadeiro-gourmet",
+    "descricao": "brigadeiro gourmet de chocolate belga em forminhas decoradas com brilho",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "beijinho-tradicional",
+    "descricao": "beijinho tradicional de coco com cravo, formato de cocada branca",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "camafeu-nozes",
+    "descricao": "camafeu de nozes com cobertura fondant branca e castanha no centro",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "brigadeiro-branco",
+    "descricao": "brigadeiro branco de chocolate branco e coco em forminhas delicadas",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "olho-sogra",
+    "descricao": "olho de sogra com ameixa doce coberta por doce de leite e coco",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "trufado",
+    "descricao": "trufa de chocolate meio amargo com cacau em pó e formato perfeito",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "sonho",
+    "descricao": "sonho de massa leve com creme amarelo e cobertura de chocolate derretida",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "pe-de-moca",
+    "descricao": "pé de moça de doce de leite com amendoim, formato losango com brilho",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "bombom-morango",
+    "descricao": "bombom de morango fresco banhado em chocolate ao leite",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "cocada-queimada",
+    "descricao": "cocada queimada com caramelo e coco torrado, cor âmbar dourada",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "brigadeiro-copinho",
+    "descricao": "brigadeiro de copinho individual de chocolate cremoso",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "doces",
+    "nome": "quindim",
+    "descricao": "quindim de gema de ovo e açúcar com cor amarela dourada brilhante",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "suco-natural",
+    "descricao": "suco natural de laranja fresco em garrafa de vidro com pedaços de fruta",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "refrigerante-2l",
+    "descricao": "refrigerante de 2 litros com bolhas efervescentes e rótulo colorido",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "agua-coco",
+    "descricao": "água de coco natural em caixinha com imagem de coqueiro tropical",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "cha-gelado",
+    "descricao": "chá gelado de limão em garrafa com gelo flutuante e rodelas de limão",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "cafe-coado",
+    "descricao": "café coado gourmet em garrafa térmica escura e fumegante",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "milk-shake",
+    "descricao": "milk shake cremoso em copo alto com canudo gordo e espuma branca",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "vitaminas",
+    "descricao": "vitamina de frutas variadas em copo com camadas coloridas e pedaços",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "caipirinha",
+    "descricao": "caipirinha em copo baixo com gelo triturado e rodelas de limão",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "suco-detox",
+    "descricao": "suco detox verde em copo com folha verde e pedaços de frutas",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "refri-lata",
+    "descricao": "refrigerante em lata gelada com condensação de suor na lata",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "suco-polpa",
+    "descricao": "suco de polpa com frutas tropicais e pedaços grossos de polpa",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "bebidas",
+    "nome": "chocomel",
+    "descricao": "chocomel de leite chocolate em caixinha com canudinho",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "mesa-decorada",
+    "descricao": "mesa de festa decorada completa com toalha, suportes, bandejas e doces em pirâmide",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "velas-tematicas",
+    "descricao": "velas temáticas coloridas em formato de números e personagens",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "baloes-personalizados",
+    "descricao": "buquê de balões metalizados coloridos amarrados com fita",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "pratos-copos",
+    "descricao": "conjunto de pratos e copos descartáveis premium com estampa floral",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "guardanapos",
+    "descricao": "guardanapos de papel dobrados em formato de flor com coração",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "topo-bolo",
+    "descricao": "topo de bolo personalizado com acrílico e mensagem parabéns",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "porta-doces",
+    "descricao": "sachês e saquinhos porta doces transparentes com fita de cetim",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "palito-dental",
+    "descricao": "palitos para doces com bandeirinhas de papel coloridas",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "caixa-bombons",
+    "descricao": "caixa preta elegante com 12 bombons sortidos e papel manteiga",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "painel-fundo",
+    "descricao": "painel de fundo para festas em papelão com impressão temática",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "boneco-palito",
+    "descricao": "mini personagem em palito para decorar docinhos",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "complementos",
+    "nome": "tag-doces",
+    "descricao": "etiquetas de papelão para pendurar em saquinhos de doces",
+    "pagina": "produtos"
+  },
+  {
+    "categoria": "pascoa",
+    "nome": "ovo-gourmet-leite",
+    "descricao": "ovo de páscoa gourmet 350g ao leite com recheio de brigadeiro cremoso",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "pascoa",
+    "nome": "ovo-kinder",
+    "descricao": "ovo de páscoa kinder ao leite com surpresa interna",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "pascoa",
+    "nome": "mini-ovos-sortidos",
+    "descricao": "caixa de mini ovos de páscoa sortidos em sabores artesanais",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "pascoa",
+    "nome": "ovo-ninho-nutella",
+    "descricao": "ovo de páscoa meio amargo com recheio ninho e nutella cremoso",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "pascoa",
+    "nome": "coelho-trio",
+    "descricao": "trio de coelhinhos de chocolate artesanal decorados",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "pascoa",
+    "nome": "coelho-gigante",
+    "descricao": "coelho de páscoa gigante 500g chocolate artesanal com amêndoas",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "pascoa",
+    "nome": "cesta-pascoa-premium",
+    "descricao": "cesta seleção páscoa com ovos, chocolates e trufas variadas",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "pascoa",
+    "nome": "ovo-branco-morango",
+    "descricao": "ovo de páscoa chocolate branco com recheio e morangos frescos",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "pascoa",
+    "nome": "caixa-bombons-pascoa",
+    "descricao": "caixa bombons 24 unidades sortidas em formatos de páscoa",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "pascoa",
+    "nome": "biscoitos-pascoa",
+    "descricao": "biscoitos decorados de páscoa em forma de ovo e coelho coloridos",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "natal",
+    "nome": "panetone-trufado",
+    "descricao": "panetone recheado trufado 1kg com chocolate belga e gotas",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "natal",
+    "nome": "chocotone-gourmet",
+    "descricao": "chocotone gourmet com gotas chocolate meio amargo e recheio cremoso",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "natal",
+    "nome": "kit-ceia-natalina",
+    "descricao": "kit ceia natalina com panetone, doces e sobremesas especiais variadas",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "natal",
+    "nome": "biscoitos-natalinos",
+    "descricao": "biscoitos decorados natalinos com glacê colorido em formatos festivos",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "natal",
+    "nome": "guirlanda-brownie",
+    "descricao": "guirlanda de brownie circular chocolate decorado com glacê verde e vermelho",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "natal",
+    "nome": "tronco-natal",
+    "descricao": "tronco de natal rolo bolo chocolate castanhas decoração rústica",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "natal",
+    "nome": "bolo-natal-frutas",
+    "descricao": "bolo de natal com frutas cristalizadas e nozes decoração tradicional",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "natal",
+    "nome": "kit-presente-natal",
+    "descricao": "kit presente natal seleção doces finos embalagem luxo vermelha e dourada",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "natal",
+    "nome": "trufa-natalina",
+    "descricao": "trufa de natal chocolate com frutas cristalizadas e especiarias",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "natal",
+    "nome": "cesta-premium-natal",
+    "descricao": "cesta natal premium panetone, trufas, biscoitos e espumante elegante",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-pais",
+    "nome": "bolo-whisky",
+    "descricao": "bolo de chocolate whisky licor com ganache escura e decoração masculina",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-pais",
+    "nome": "trufa-cafe",
+    "descricao": "trufa de café com chocolate meio amargo e pó de café decorando",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-pais",
+    "nome": "cesta-papai",
+    "descricao": "cesta do papai com cervejas artesanais e doces harmonizados rústico",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-pais",
+    "nome": "bolo-cenoura-chocolate",
+    "descricao": "clássico bolo cenoura com cobertura generosa de chocolate brigadeiro",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-pais",
+    "nome": "trufas-mini",
+    "descricao": "bandeja com 6 trufas sortidas em sabores clássicos masculinos",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-pais",
+    "nome": "brownie-nozes",
+    "descricao": "brownie artesanal quente com nozes caramelizadas derretidas",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-pais",
+    "nome": "kit-cafe-manha",
+    "descricao": "kit café da manhã com xícara fumegante, pães e trufas elegantes",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-pais",
+    "nome": "pao-mel",
+    "descricao": "pão de mel macio com cobertura de chocolate derretendo e mel",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-pais",
+    "nome": "bolo-nevado",
+    "descricao": "bolo nevado branco coberto com coco ralado generosamente",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-pais",
+    "nome": "kit-churrasco",
+    "descricao": "kit churrasco harmonização com cervejas, carne e doces artesanais",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-maes",
+    "nome": "bolo-morango-premium",
+    "descricao": "bolo morango premium com camadas de morangos frescos e chantilly",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-maes",
+    "nome": "torta-limao",
+    "descricao": "torta de limão merengue suíço com rústica e creme cítrico",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-maes",
+    "nome": "cesta-sweet-mae",
+    "descricao": "cesta sweet mãe com flores brancas, doces delicados e caixa rosa",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-maes",
+    "nome": "bolo-redvelvet-maes",
+    "descricao": "bolo red velvet cream cheese com cor vermelha intensa e coração",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-maes",
+    "nome": "brigadeiro-branco-caixa",
+    "descricao": "caixa brigadeiro branco com 12 unidades decoração floral delicada",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-maes",
+    "nome": "torta-holandesa",
+    "descricao": "torta holandesa cream cheese com camada de chocolate crocante",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-maes",
+    "nome": "flor-marshmallow",
+    "descricao": "flor comestível feita de marshmallow colorido em degradê rosa",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-maes",
+    "nome": "cafe-doces-maes",
+    "descricao": "café gourmet especial com trufas e pralinés harmonizados elegante",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-maes",
+    "nome": "bolo-cookies-maes",
+    "descricao": "bolo massa cookie chocolate chip macio com pedaços crocantes",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-maes",
+    "nome": "mini-doces-maes",
+    "descricao": "mini doces sortidos delicados em bandeja vintage com pétalas",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-namorados",
+    "nome": "bolo-amor",
+    "descricao": "bolo coração vermelho morango com calda e brigadeiro escuro",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-namorados",
+    "nome": "trufa-coracao",
+    "descricao": "trufa chocolate formato coração perfeito com pó de cacau",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-namorados",
+    "nome": "caixa-beijinhos",
+    "descricao": "caixa brigadeiro branco 12 unidades formato coração romântico",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-namorados",
+    "nome": "bolo-chocolate-coracao",
+    "descricao": "bolo chocolate meio amargo formato coração com morangos frescos",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-namorados",
+    "nome": "sorvete-morango",
+    "descricao": "sorvete artesanal morango cremoso em taça com calda vermelha",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-namorados",
+    "nome": "mini-tortas",
+    "descricao": "6 mini tortas individuais sortidas decoração coração vermelho",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-namorados",
+    "nome": "cesta-romantica",
+    "descricao": "cesta romântica vinho espumante chocolates morangos e pétalas",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-namorados",
+    "nome": "macarons",
+    "descricao": "macarons 12 unidades coloridos pasta amêndoa em formato coração",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-namorados",
+    "nome": "bolo-nutella-morango",
+    "descricao": "bolo morango nutella recheio duplo com morangos inteiros frescos",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-namorados",
+    "nome": "kit-cafe-romantico",
+    "descricao": "kit café romântico vinho tinto brigadeiros e morangos harmonizados",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-professor",
+    "nome": "bolo-cenoura-professor",
+    "descricao": "fatia bolo cenoura chocolate clássico com cobertura escura",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-professor",
+    "nome": "cesta-docente",
+    "descricao": "cesta café da manhã docente com café cestas biscoitos e trufas",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-professor",
+    "nome": "bolo-florestanegra",
+    "descricao": "clássico bolo floresta negra cerejas e chocolate meio amargo",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-professor",
+    "nome": "trufa-nozes",
+    "descricao": "trufa chocolate nozes inteiras decorando com cacau em pó",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-professor",
+    "nome": "biscoitos-decorados",
+    "descricao": "biscoitos decorados maçã e a canela temática professor",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-professor",
+    "nome": "bolo-ninho-professor",
+    "descricao": "bolo ninho mousse chocolate branco decoração clean elegante",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-professor",
+    "nome": "cafe-gourmet",
+    "descricao": "café gourmet especial brigadeiros harmonização presente ideal",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-professor",
+    "nome": "pao-mel-professor",
+    "descricao": "pão de mel chocolate clássico doce tradicional de presente",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-professor",
+    "nome": "bolo-prestigio-professor",
+    "descricao": "bolo prestígio coco chocolate decoração sofisticada",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-professor",
+    "nome": "kit-doces-professor",
+    "descricao": "kit doces variados brigadeiros trufas elegante embalagem kraft",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-mulheres",
+    "nome": "bolo-feminista",
+    "descricao": "bolo feminista rosa chocolate decoração flores delicadas empoderamento",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-mulheres",
+    "nome": "taça-morango",
+    "descricao": "taça vidro morango chocolate branco creme e morangos frescos inteiros",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-mulheres",
+    "nome": "cesta-divas",
+    "descricao": "cesta divas espumante chocolates doces finos arranjo floral elegante",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-mulheres",
+    "nome": "torta-morango",
+    "descricao": "torta morango creme chantilly camadas biscoito morangos frescos",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-mulheres",
+    "nome": "brigadeiro-rosa",
+    "descricao": "brigadeiro rosa pink 12 unidades caixa rosa gold delicadas",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-mulheres",
+    "nome": "bolo-redvelvet-pink",
+    "descricao": "bolo red velvet cream cheese pink decoração pétalas rosas",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-mulheres",
+    "nome": "doces-light",
+    "descricao": "doces light sem açúcar stevia variados saudáveis elegância",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-mulheres",
+    "nome": "bala-coraçao",
+    "descricao": "balas coração coloridas em formato de coração vermelho brilhante",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-mulheres",
+    "nome": "bolo-morchant",
+    "descricao": "bolo morango chantilly camadas vermelhas brancas decoração floral",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "dia-mulheres",
+    "nome": "cesta-cafe",
+    "descricao": "cesta café manhã xícara café e doces elegantes arranjo rústico",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "junina",
+    "nome": "pe-moleque",
+    "descricao": "pé de moleque tradicional amendoim caramelizado crocante",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "junina",
+    "nome": "canjica",
+    "descricao": "canjica com coco cremosa tradicional junina",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "junina",
+    "nome": "paçoca",
+    "descricao": "paçoca tradicional amendoim torrado em formato de cone",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "junina",
+    "nome": "bolo-milho",
+    "descricao": "bolo de milho verde caseiro fofinho tradição junina",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "junina",
+    "nome": "quentao",
+    "descricao": "pipoca doce colorida tradicional festa junina",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "junina",
+    "nome": "curau",
+    "descricao": "curau cremoso milho verde canela prato típico",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "junina",
+    "nome": "kit-festa-junina",
+    "descricao": "kit completo salgados doces típicos festa junina",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "junina",
+    "nome": "brigadeiro-amendoim",
+    "descricao": "brigadeiro sabor amendoim tradição caipira",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "junina",
+    "nome": "arroz-doce",
+    "descricao": "arroz doce cremoso canela festa junina",
+    "pagina": "sazonal"
+  },
+  {
+    "categoria": "junina",
+    "nome": "maca-amor",
+    "descricao": "maçã do amor caramelizada colorida tradicional",
+    "pagina": "sazonal"
+  }
+]
