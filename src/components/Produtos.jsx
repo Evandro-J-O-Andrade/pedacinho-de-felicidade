@@ -5,7 +5,7 @@ import Lightbox from "./Lightbox";
 import Carrossel3D from "./Carrossel3D";
 import Image from "./Image";
 import { getImagemProduto } from "../utils/imagemUtils";
-import { getProdutosVitrine } from "../utils/buscaUtils";
+import { getProdutosVitrine } from "../utils/vitrineUtils";
 
 export default function Produtos() {
   const { adicionar } = useCarrinho();
@@ -16,7 +16,9 @@ export default function Produtos() {
   const produtosFiltrados = produtos.filter(c => categoriasFixas.includes(c.categoria));
   const todos = produtosFiltrados.flatMap((c) => c.itens);
   const Destaques = todos.filter((p) => p.destaque);
-  const vitrine = getProdutosVitrine(produtos);
+  const kits = getProdutosVitrine(produtos, "kits");
+  const maisVendidos = getProdutosVitrine(produtos, "mais_vendidos");
+  const queridinhos = getProdutosVitrine(produtos, "queridinhos");
 
   useEffect(() => {
     function handleBuscaGlobal(e) {
@@ -124,14 +126,22 @@ export default function Produtos() {
         )}
 
         {/* Vitrine */}
-        {vitrine.length > 0 && (
-          <>
-            <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "24px", textAlign: "center", color: "#ec4899" }}>
-              Selecionados para você 🎉
-            </h2>
-            <Carrossel3D items={vitrine.slice(0, 8)} renderItem={renderItem} autoPlay={true} interval={4000} />
-          </>
-        )}
+        <>
+          <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "24px", textAlign: "center", color: "#ec4899" }}>
+            Kits para sua festa 🎉
+          </h2>
+          <Carrossel3D items={kits.slice(0, 4)} renderItem={renderItem} autoPlay={true} interval={4000} />
+          
+          <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "24px", textAlign: "center", color: "#ec4899", marginTop: "40px" }}>
+            Mais vendidos 🔥
+          </h2>
+          <Carrossel3D items={maisVendidos.slice(0, 4)} renderItem={renderItem} autoPlay={true} interval={4000} />
+          
+          <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "24px", textAlign: "center", color: "#ec4899", marginTop: "40px" }}>
+            Queridinhos 💖
+          </h2>
+          <Carrossel3D items={queridinhos.slice(0, 4)} renderItem={renderItem} autoPlay={true} interval={4000} />
+        </>
 
         <div style={{ textAlign: "center", marginTop: "40px" }}>
             <a href="/produtos" style={{ color: "#ec4899", fontWeight: "600", fontSize: "16px" }}>

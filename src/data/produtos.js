@@ -2,11 +2,11 @@ export const produtos = [
   {
     categoria: "Bolos",
     itens: [
-      { id: 1, nome: "Bolo de Chocolate", descricao: "Massa fofinha com ganache 70%", preco: 85, tipo: "kg", imagem: "/img/produtos/bolo.png", destaque: true, vitrine: true },
+      { id: 1, nome: "Bolo de Chocolate", descricao: "Massa fofinha com ganache 70%", preco: 85, tipo: "kg", imagem: "/img/produtos/bolo.png", destaque: true, vitrine: true, vitrineCategoria: "mais_vendidos" },
       
-      { id: 2, nome: "Bolo Red Velvet", descricao: "Cream cheese clássico", preco: 95, tipo: "kg", imagem: "/img/produtos/bolo3.png", vitrine: true },
+      { id: 2, nome: "Bolo Red Velvet", descricao: "Cream cheese clássico", preco: 95, tipo: "kg", imagem: "/img/produtos/bolo3.png", vitrine: true, vitrineCategoria: "mais_vendidos" },
       
-      { id: 4, nome: "Bolo de Morango", descricao: "Creme chantilly e morangos frescos", preco: 100, tipo: "kg", imagem: "/img/produtos/bolo.png", vitrine: true },
+      { id: 4, nome: "Bolo de Morango", descricao: "Creme chantilly e morangos frescos", preco: 100, tipo: "kg", imagem: "/img/produtos/bolo.png", vitrine: true, vitrineCategoria: "mais_vendidos" },
 
       { id: 5, nome: "Bolo Ninho", descricao: "Recheio de mousse de ninho", preco: 110, tipo: "kg", imagem: "/img/produtos/bolo3.png" },
 
@@ -26,8 +26,8 @@ export const produtos = [
   {
     categoria: "Doces",
     itens: [
-      { id: 21, nome: "Brigadeiro Gourmet", descricao: "Chocolate belga", preco: 170, tipo: "cento", imagem: "/img/produtos/doces.png", destaque: true, vitrine: true },
-      { id: 22, nome: "Beijinho Tradicional", descricao: "Coco fresco e cravo", preco: 165, tipo: "cento", imagem: "/img/produtos/doces.png", vitrine: true },
+      { id: 21, nome: "Brigadeiro Gourmet", descricao: "Chocolate belga", preco: 170, tipo: "cento", imagem: "/img/produtos/doces.png", destaque: true, vitrine: true, vitrineCategoria: "queridinhos" },
+      { id: 22, nome: "Beijinho Tradicional", descricao: "Coco fresco e cravo", preco: 165, tipo: "cento", imagem: "/img/produtos/doces.png", vitrine: true, vitrineCategoria: "queridinhos" },
       { id: 23, nome: "Camafeu de Nozes", descricao: "Cobertura fondant", preco: 190, tipo: "cento", imagem: "/img/produtos/doces.png" },
       { id: 24, nome: "Brigadeiro Branco", descricao: "Chocolate branco e coco", preco: 175, tipo: "cento", imagem: "/img/produtos/doces.png" },
       { id: 25, nome: "Olho de Sogra", descricao: "Ameixa com leite", preco: 160, tipo: "cento", imagem: "/img/produtos/doces.png" },
@@ -77,10 +77,9 @@ export const produtos = [
   {
     categoria: "Complementos",
     itens: [
-      { id: 81, nome: "Mesa Decorada", descricao: "Toalha, suportes e bandejas", preco: 220, tipo: "kit", imagem: "/img/produtos/bolo4.jpeg", destaque: true },
-      { id: 82, nome: "Velas Temáticas", descricao: "Números e personagens", preco: 25, tipo: "un", imagem: "/img/produtos/bolo.png" },
-      { id: 83, nome: "Balões Personalizados", descricao: "Diversas cores e formatos", preco: 80, tipo: "kit", imagem: "/img/produtos/bolo3.png" },
-      { id: 84, nome: "Pratos e Copos", descricao: "Descartáveis premium", preco: 60, tipo: "kit", imagem: "/img/produtos/bolo4.jpeg" },
+      { id: 81, nome: "Mesa Decorada", descricao: "Toalha, suportes e bandejas", preco: 220, tipo: "kit", imagem: "/img/produtos/bolo4.jpeg", destaque: true, vitrine: true, vitrineCategoria: "kits" },
+      { id: 82, nome: "Balões Personalizados", descricao: "Diversas cores e formatos", preco: 80, tipo: "kit", imagem: "/img/produtos/bolo3.png", vitrine: true, vitrineCategoria: "kits" },
+      { id: 84, nome: "Pratos e Copos", descricao: "Descartáveis premium", preco: 60, tipo: "kit", imagem: "/img/produtos/bolo4.jpeg", vitrine: true, vitrineCategoria: "kits" },
       { id: 85, nome: "Guardanapos", descricao: "Coração ou tema", preco: 30, tipo: "kit", imagem: "/img/produtos/bolo.png" },
       { id: 86, nome: "Topo de Bolo", descricao: "Personalizado", preco: 45, tipo: "un", imagem: "/img/produtos/bolo3.png" },
       { id: 87, nome: "Porta Doces", descricao: "Sachê ou saquinho", preco: 40, tipo: "kit", imagem: "/img/produtos/bolo4.jpeg" },
