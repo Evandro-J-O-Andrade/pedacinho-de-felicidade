@@ -2,13 +2,11 @@ export const produtos = [
   {
     categoria: "Bolos",
     itens: [
-      { id: 1, nome: "Bolo de Chocolate", descricao: "Massa fofinha com ganache 70%", preco: 85, tipo: "kg", imagem: "/img/produtos/bolo.png", destaque: true },
-
-      { id: 2, nome: "Bolo Red Velvet", descricao: "Cream cheese clássico", preco: 95, tipo: "kg", imagem: "/img/produtos/bolo3.png" },
-
-      { id: 3, nome: "Bolo Prestígio", descricao: "Coco e chocolate meio amargo", preco: 90, tipo: "kg", imagem: "/img/produtos/bolo4.jpeg" },
-
-      { id: 4, nome: "Bolo de Morango", descricao: "Creme chantilly e morangos frescos", preco: 100, tipo: "kg", imagem: "/img/produtos/bolo.png" },
+      { id: 1, nome: "Bolo de Chocolate", descricao: "Massa fofinha com ganache 70%", preco: 85, tipo: "kg", imagem: "/img/produtos/bolo.png", destaque: true, vitrine: true },
+      
+      { id: 2, nome: "Bolo Red Velvet", descricao: "Cream cheese clássico", preco: 95, tipo: "kg", imagem: "/img/produtos/bolo3.png", vitrine: true },
+      
+      { id: 4, nome: "Bolo de Morango", descricao: "Creme chantilly e morangos frescos", preco: 100, tipo: "kg", imagem: "/img/produtos/bolo.png", vitrine: true },
 
       { id: 5, nome: "Bolo Ninho", descricao: "Recheio de mousse de ninho", preco: 110, tipo: "kg", imagem: "/img/produtos/bolo3.png" },
 
@@ -28,8 +26,8 @@ export const produtos = [
   {
     categoria: "Doces",
     itens: [
-      { id: 21, nome: "Brigadeiro Gourmet", descricao: "Chocolate belga", preco: 170, tipo: "cento", imagem: "/img/produtos/doces.png", destaque: true },
-      { id: 22, nome: "Beijinho Tradicional", descricao: "Coco fresco e cravo", preco: 165, tipo: "cento", imagem: "/img/produtos/doces.png" },
+      { id: 21, nome: "Brigadeiro Gourmet", descricao: "Chocolate belga", preco: 170, tipo: "cento", imagem: "/img/produtos/doces.png", destaque: true, vitrine: true },
+      { id: 22, nome: "Beijinho Tradicional", descricao: "Coco fresco e cravo", preco: 165, tipo: "cento", imagem: "/img/produtos/doces.png", vitrine: true },
       { id: 23, nome: "Camafeu de Nozes", descricao: "Cobertura fondant", preco: 190, tipo: "cento", imagem: "/img/produtos/doces.png" },
       { id: 24, nome: "Brigadeiro Branco", descricao: "Chocolate branco e coco", preco: 175, tipo: "cento", imagem: "/img/produtos/doces.png" },
       { id: 25, nome: "Olho de Sogra", descricao: "Ameixa com leite", preco: 160, tipo: "cento", imagem: "/img/produtos/doces.png" },

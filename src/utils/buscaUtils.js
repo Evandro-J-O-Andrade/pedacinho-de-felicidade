@@ -22,6 +22,12 @@ function isProdutoDisponivel(produto) {
   return hoje >= inicio && hoje <= fim;
 }
 
+export function getProdutosVitrine(produtos) {
+  return produtos.flatMap(categoria =>
+    categoria.itens.filter(item => item.vitrine && isProdutoDisponivel(item))
+  );
+}
+
 export function buscarProdutos(produtos, termo) {
   if (!termo) return [];
 
