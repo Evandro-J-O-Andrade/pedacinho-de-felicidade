@@ -350,32 +350,32 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* MENU */}
-        <div ref={menuRef} className={`nav-links ${menuAberto ? "open" : ""}`} style={{ gap: "18px", fontSize: "16px", fontWeight: "600", marginTop: menuAberto ? "8px" : "0" }}>
-          <a href="/" className={paginaAtiva === "/" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/"); }}>Home</a>
-          <a href="/#cardapio" className={paginaAtiva.includes("cardapio") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#cardapio"); }}>Cardápio</a>
-          <a href="/#kit-festa" className={paginaAtiva.includes("kit-festa") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#kit-festa"); }}>Kit-Pronto</a>
-          <a href="/produtos" className={paginaAtiva === "/produtos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/produtos"); }}>Produtos</a>
-          <a href="/monte-seu-kit" className={paginaAtiva === "/monte-seu-kit" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/monte-seu-kit"); }}>Personalize Seu Kit</a>
-          <div className={`nav-more ${maisAberto ? "open" : ""}`}>
-            <button
-              type="button"
-              className="nav-more-button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setMaisAberto(!maisAberto);
-              }}
-            >
-              Mais ▾
-            </button>
-            <div className="nav-more-menu">
-              <a href="/sobre-nos" className={paginaAtiva === "/sobre-nos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/sobre-nos"); }}>Sobre Nós</a>
-              <a href="/sazonal" className={paginaAtiva === "/sazonal" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/sazonal"); }}>Temporada</a>
-              <a href="/#eventos" className={paginaAtiva.includes("eventos") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#eventos"); }}>Eventos</a>
-              <a href="/#contato" className={paginaAtiva.includes("contato") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#contato"); }}>Contato</a>
-            </div>
+      {/* MENU */}
+      <div ref={menuRef} className={`nav-links ${menuAberto ? "open" : ""}`} style={{ gap: "18px", fontSize: "16px", fontWeight: "600", marginTop: menuAberto ? "8px" : "0" }}>
+        <a href="/" className={paginaAtiva === "/" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/"); }}>Home</a>
+        <a href="/#cardapio" className={paginaAtiva.includes("cardapio") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#cardapio"); }}>Catálogo</a>
+        <a href="/#kit-festa" className={paginaAtiva.includes("kit-festa") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#kit-festa"); }}>Kit-Pronto</a>
+        <a href="/produtos" className={paginaAtiva === "/produtos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/produtos"); }}>Produtos</a>
+        <a href="/monte-seu-kit" className={paginaAtiva === "/monte-seu-kit" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/monte-seu-kit"); }}>Personalize Seu Kit</a>
+        <div className={`nav-more ${maisAberto ? "open" : ""}`}>
+          <button
+            type="button"
+            className="nav-more-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setMaisAberto(!maisAberto);
+            }}
+          >
+            Mais ▾
+          </button>
+          <div className="nav-more-menu">
+            <a href="/sobre-nos" className={paginaAtiva === "/sobre-nos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/sobre-nos"); }}>Sobre Nós</a>
+            <a href="/sazonal" className={paginaAtiva === "/sazonal" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/sazonal"); }}>Temporada</a>
+            <a href="/#eventos" className={paginaAtiva.includes("eventos") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#eventos"); }}>Eventos</a>
+            <a href="/#contato" className={paginaAtiva.includes("contato") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#contato"); }}>Contato</a>
           </div>
         </div>
+      </div>
       </div>
     </nav>
   );
