@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { produtos } from "../data/produtos";
 import { getEventoAtivo } from "../utils/sazonalUtils";
 import ProdutoCard from "./ProdutoCard";
 import Lightbox from "./Lightbox";
 import { buscarProdutos } from "../utils/buscaUtils";
+import { eventosSazonais } from "../data/sazonais";
 
 export default function Cardapio() {
   const evento = getEventoAtivo();
@@ -24,12 +25,13 @@ export default function Cardapio() {
   
   const categorias = ["todos", "Bolos", ...produtosFiltrados.map((c) => c.categoria).filter(c => c !== "Bolos")];
   
-const [categoria, setCategoria] = useState("Bolos");
-  const [busca, setBusca] = useState("");
-  const [imagemAmpliada, setImagemAmpliada] = useState(null);
-  const [itemSelecionado, setItemSelecionado] = useState(null);
+   const [categoria, setCategoria] = useState("Bolos");
+   const [busca, setBusca] = useState("");
+   const [imagemAmpliada, setImagemAmpliada] = useState(null);
+   const [itemSelecionado, setItemSelecionado] = useState(null);
 
-function filtrarPorBusca(itens) {
+  // Função para filtrar por busca
+  function filtrarPorBusca(itens) {
     if (!busca) return itens;
     const termoNormalizado = busca.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     return itens.filter((item) => {
@@ -38,15 +40,72 @@ function filtrarPorBusca(itens) {
     });
   }
 
-  const categoriasAtivas = categoria === "todos"
-    ? produtosFiltrados
-    : produtosFiltrados.filter((c) => c.categoria === categoria);
+   // Função para obter top 5 produtos mais vendidos para uma lista de categorias
+   function getTopVendidosPorCategorias(categorias) {
+     try {
+       const carrinhoStorage = JSON.parse(localStorage.getItem("carrinho") || "[]");
+       
+       // Contar vendas por produto
+       const contagem = {};
+       
+       carrinhoStorage.forEach(item => {
+         contagem[item.id] = (contagem[item.id] || 0) + (item.quantidade || 1);
+       });
+       
+       // Para cada categoria, obter os top 5 produtos
+       const resultado = {};
+       
+       categorias.forEach(categoria => {
+         const categoriaObj = produtosFiltrados.find(c => c.categoria === categoria);
+         if (!categoriaObj) {
+           resultado[categoria] = [];
+           return;
+         }
+         
+         // Filtrar apenas produtos disponíveis (considerando sazonais)
+         const produtosDisponiveis = categoriaObj.itens.filter(item => {
+           // Verifica se produto sazonal está ativo
+           if (item.sazonal) {
+             const hoje = new Date();
+             const evento = eventosSazonais.find(e => e.id === item.sazonal);
+             if (!evento || !evento.ativo) return false;
+             const inicio = new Date(evento.inicio);
+             const fim = new Date(evento.fim);
+             return hoje >= inicio && hoje <= fim;
+           }
+           return true;
+         });
+         
+         // Ordenar por vendas e pegar top 5
+         const top5 = produtosDisponiveis
+           .map(item => ({
+             ...item,
+             vendas: contagem[item.id] || 0
+           }))
+           .sort((a, b) => b.vendas - a.vendas)
+           .slice(0, 5);
+         
+         resultado[categoria] = top5;
+       });
+       
+       return resultado;
+     } catch (error) {
+       console.error("Erro ao calcular top vendidos por categorias:", error);
+       // Fallback: retorna os primeiros 5 produtos de cada categoria
+       const fallback = {};
+       categorias.forEach(categoria => {
+         const categoriaObj = produtosFiltrados.find(c => c.categoria === categoria);
+         if (categoriaObj) {
+           fallback[categoria] = categoriaObj.itens.slice(0, 5);
+         } else {
+           fallback[categoria] = [];
+         }
+       });
+       return fallback;
+     }
+   }
 
-  const categoriasComItensVisiveis = categoriasAtivas
-    .map((c) => ({ ...c, itensVisiveis: filtrarPorBusca(c.itens) }))
-    .filter((c) => c.itensVisiveis.length > 0);
-  
-// Escutar evento global de busca
+  // Escutar evento global de busca
   useEffect(() => {
     function handleBuscaGlobal(e) {
       const termo = e.detail.termo;
@@ -81,10 +140,27 @@ function filtrarPorBusca(itens) {
       // Não encontrou no cardápio, vai para Monte Seu Kit
       window.location.href = "/monte-seu-kit";
     }
-
+    
     window.addEventListener("busca-global", handleBuscaGlobal);
     return () => window.removeEventListener("busca-global", handleBuscaGlobal);
   }, [produtosFiltrados]);
+
+  // Auto-scroll para o carrossel
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const interval = setInterval(() => {
+      el.scrollLeft += 2;
+      if (el.scrollLeft >= el.scrollWidth - el.clientWidth) {
+        el.scrollLeft = 0;
+      }
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, []);
+
+   const topVendidosPorCategoria = getTopVendidosPorCategorias(categoriasFixas);
 
   return (
     <>
@@ -98,7 +174,7 @@ function filtrarPorBusca(itens) {
         <h2 style={{ fontSize: "32px", fontWeight: "bold", textAlign: "center", marginBottom: "32px", color: "#ec4899" }}>
           Cardápio
         </h2>
-
+        
         <div style={{ display: "flex", gap: "24px", flexDirection: "column", alignItems: "stretch", maxWidth: "1400px", margin: "0 auto" }}>
           {/* CATEGORIAS */}
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center", paddingBottom: "8px" }}>
@@ -124,8 +200,8 @@ function filtrarPorBusca(itens) {
               </button>
             ))}
           </div>
-
-          {/* PRODUTOS */}
+          
+          {/* PRODUTOS - Top 5 por categoria com scroll horizontal */}
           <div style={{ maxWidth: "1400px", margin: "0 auto", width: "100%" }}>
             <style>{`
               .cardapio-grid {
@@ -150,40 +226,67 @@ function filtrarPorBusca(itens) {
               @media (max-width: 480px) {
                 .cardapio-grid { grid-template-columns: 1fr !important; }
               }
+              .scroll-container {
+                display: flex;
+                gap: 20px;
+                overflow-x: auto;
+                padding: 10px 10px 20px;
+                scroll-behavior: smooth;
+              }
+              .scroll-container::-webkit-scrollbar {
+                height: 8px;
+              }
+              .scroll-container::-webkit-scrollbar-thumb {
+                background: #ec4899;
+                border-radius: 10px;
+              }
+              .scroll-item {
+                flex: 0 0 auto;
+                width: 280px;
+              }
+              @media (max-width: 768px) {
+                .scroll-item {
+                  width: 220px;
+                }
+              }
             `}</style>
-
-{categoriasComItensVisiveis.map((cat) => (
-              <div key={cat.categoria} style={{ marginBottom: categoria === "todos" ? "32px" : 0 }}>
-                {categoria !== "todos" && (
-                  <h3 className="sessao-titulo">
-                    {cat.categoria}
-                  </h3>
-                )}
-                {categoria === "todos" && (
-                  <h3 className="sessao-titulo">
-                    {cat.categoria}
-                  </h3>
-                )}
-
-                <div className="cardapio-grid">
-                  {cat.itensVisiveis.map((item) => (
-                    <ProdutoCard
-                      key={item.id}
-                      item={item}
-                      onImageClick={(img) => { setImagemAmpliada(img); setItemSelecionado(item); }}
-                    />
-                  ))}
+            
+            {categoriasFixas.map((categoria) => {
+              const top5 = topVendidosPorCategoria[categoria] || [];
+              
+              if (top5.length === 0) return null;
+              
+              return (
+                <div key={categoria} style={{ marginBottom: categoria === "todos" ? "32px" : 0 }}>
+                  {categoria !== "todos" && (
+                    <h3 className="sessao-titulo">
+                      {categoria}
+                    </h3>
+                  )}
+                  {categoria === "todos" && (
+                    <h3 className="sessao-titulo">
+                      {categoria}
+                    </h3>
+                  )}
+                  
+                   <div className="scroll-container" ref={scrollRef}>
+                     {top5.map((item) => (
+                       <div className="scroll-item" key={item.id}>
+                         <ProdutoCard
+                           key={item.id}
+                           item={item}
+                           onImageClick={(img) => {
+                             setImagemAmpliada(img);
+                             setItemSelecionado(item);
+                           }}
+                         />
+                       </div>
+                      ))}
+                   </div>
                 </div>
-              </div>
-            ))}
-
-            {categoriasComItensVisiveis.length === 0 && (
-              <p style={{ textAlign: "center", color: "#6b7280", fontSize: "16px", margin: "12px 0 0" }}>
-                Nenhum produto encontrado.
-              </p>
-            )}
+              );})}
           </div>
-
+          
           {/* VER MAIS */}
           <div style={{ textAlign: "center", marginTop: "24px" }}>
             <a
@@ -204,7 +307,7 @@ function filtrarPorBusca(itens) {
           </div>
         </div>
       </section>
-
+      
       {imagemAmpliada && (
         <Lightbox src={imagemAmpliada} item={itemSelecionado} onClose={() => { setImagemAmpliada(null); setItemSelecionado(null); }} />
       )}
