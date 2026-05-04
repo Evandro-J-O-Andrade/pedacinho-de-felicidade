@@ -23,12 +23,13 @@ export default function Cardapio() {
   
   const produtosFiltrados = produtos.filter(c => categoriasPermitidas.includes(c.categoria));
   
-  const categorias = ["todos", "Bolos", ...produtosFiltrados.map((c) => c.categoria).filter(c => c !== "Bolos")];
-  
+   const categorias = ["todos", "Bolos", ...produtosFiltrados.map((c) => c.categoria).filter(c => c !== "Bolos")];
+   
    const [categoria, setCategoria] = useState("Bolos");
    const [busca, setBusca] = useState("");
    const [imagemAmpliada, setImagemAmpliada] = useState(null);
    const [itemSelecionado, setItemSelecionado] = useState(null);
+   const scrollRef = useRef(null);
 
   // Função para filtrar por busca
   function filtrarPorBusca(itens) {
@@ -176,30 +177,31 @@ export default function Cardapio() {
         </h2>
         
         <div style={{ display: "flex", gap: "24px", flexDirection: "column", alignItems: "stretch", maxWidth: "1400px", margin: "0 auto" }}>
-          {/* CATEGORIAS */}
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center", paddingBottom: "8px" }}>
-            {categorias.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => {
-                  setCategoria(cat);
-                  setBusca("");
-                }}
-                style={{
-                  padding: "10px 16px",
-                  borderRadius: "9999px",
-                  border: "1px solid #e5e7eb",
-                  backgroundColor: categoria === cat ? "#ec4899" : "#f4f4f5",
-                  color: categoria === cat ? "#fff" : "#333",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                  fontWeight: 600
-                }}
-              >
-                {cat === "todos" ? "Todos" : cat}
-              </button>
-            ))}
-          </div>
+           {/* CATEGORIAS */}
+           <div className="category-scroll-container" style={{ display: "flex", gap: "12px", overflowX: "auto", paddingBottom: "8px", scrollBehavior: "smooth", WebkitOverflowScrolling: "touch" }}>
+             {categorias.map((cat) => (
+               <button
+                 key={cat}
+                 onClick={() => {
+                   setCategoria(cat);
+                   setBusca("");
+                 }}
+                 style={{
+                   padding: "10px 16px",
+                   borderRadius: "9999px",
+                   border: "1px solid #e5e7eb",
+                   backgroundColor: categoria === cat ? "#ec4899" : "#f4f4f5",
+                   color: categoria === cat ? "#fff" : "#333",
+                   cursor: "pointer",
+                   whiteSpace: "nowrap",
+                   fontWeight: 600,
+                   flexShrink: 0
+                 }}
+               >
+                 {cat === "todos" ? "Todos" : cat}
+               </button>
+             ))}
+           </div>
           
           {/* PRODUTOS - Top 5 por categoria com scroll horizontal */}
           <div style={{ maxWidth: "1400px", margin: "0 auto", width: "100%" }}>
