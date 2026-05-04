@@ -5,6 +5,7 @@ import Lightbox from "./Lightbox";
 import Carrossel3D from "./Carrossel3D";
 import Image from "./Image";
 import { getImagemProduto } from "../utils/imagemUtils";
+import { getProdutosVitrine } from "../utils/vitrineUtils";
 
 export default function Produtos() {
   const { adicionar } = useCarrinho();
@@ -15,6 +16,9 @@ export default function Produtos() {
   const produtosFiltrados = produtos.filter(c => categoriasFixas.includes(c.categoria));
   const todos = produtosFiltrados.flatMap((c) => c.itens);
   const Destaques = todos.filter((p) => p.destaque);
+  const kits = getProdutosVitrine(produtos, "kits");
+  const maisVendidos = getProdutosVitrine(produtos, "mais_vendidos");
+  const queridinhos = getProdutosVitrine(produtos, "queridinhos");
 
   useEffect(() => {
     function handleBuscaGlobal(e) {
@@ -108,7 +112,7 @@ export default function Produtos() {
     </div>
   );
 
-return (
+  return (
     <>
       <section id="produtos" style={{ padding: "60px 20px", backgroundColor: "#fff7f9" }}>
         <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "32px", textAlign: "center", color: "#ec4899" }}>
@@ -121,8 +125,36 @@ return (
           <p style={{ textAlign: "center", color: "#666" }}>Nenhum produto em destaque</p>
         )}
 
+        {/* Vitrine - Grid sem carrossel */}
+        {(kits.length > 0 || maisVendidos.length > 0 || queridinhos.length > 0) && (
+          <>
+            <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "16px", textAlign: "center", color: "#ec4899" }}>
+              💖 Escolhidos para você
+            </h2>
+            <p style={{ textAlign: "center", color: "#666", marginBottom: "30px" }}>
+              Os favoritos dos nossos clientes para festas incríveis 🎉
+            </p>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "20px",
+              maxWidth: "1100px",
+              margin: "0 auto",
+              padding: "0 20px"
+            }}>
+              {[...kits.slice(0, 4), ...maisVendidos.slice(0, 4), ...queridinhos.slice(0, 4)]
+                .slice(0, 8)
+                .map(item => (
+                  <div key={item.id}>
+                    {renderItem(item)}
+                  </div>
+                ))}
+            </div>
+          </>
+        )}
+
         <div style={{ textAlign: "center", marginTop: "40px" }}>
-            <a href="#cardapio" style={{ color: "#ec4899", fontWeight: "600", fontSize: "16px" }}>
+            <a href="/produtos" style={{ color: "#ec4899", fontWeight: "600", fontSize: "16px" }}>
               Ver todos os produtos →
             </a>
           </div>
