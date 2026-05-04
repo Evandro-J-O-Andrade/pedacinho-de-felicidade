@@ -125,23 +125,33 @@ export default function Produtos() {
           <p style={{ textAlign: "center", color: "#666" }}>Nenhum produto em destaque</p>
         )}
 
-        {/* Vitrine */}
-        <>
-          <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "24px", textAlign: "center", color: "#ec4899" }}>
-            Kits para sua festa 🎉
-          </h2>
-          <Carrossel3D items={kits.slice(0, 4)} renderItem={renderItem} autoPlay={true} interval={4000} />
-          
-          <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "24px", textAlign: "center", color: "#ec4899", marginTop: "40px" }}>
-            Mais vendidos 🔥
-          </h2>
-          <Carrossel3D items={maisVendidos.slice(0, 4)} renderItem={renderItem} autoPlay={true} interval={4000} />
-          
-          <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "24px", textAlign: "center", color: "#ec4899", marginTop: "40px" }}>
-            Queridinhos 💖
-          </h2>
-          <Carrossel3D items={queridinhos.slice(0, 4)} renderItem={renderItem} autoPlay={true} interval={4000} />
-        </>
+        {/* Vitrine - Grid sem carrossel */}
+        {(kits.length > 0 || maisVendidos.length > 0 || queridinhos.length > 0) && (
+          <>
+            <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "16px", textAlign: "center", color: "#ec4899" }}>
+              💖 Escolhidos para você
+            </h2>
+            <p style={{ textAlign: "center", color: "#666", marginBottom: "30px" }}>
+              Os favoritos dos nossos clientes para festas incríveis 🎉
+            </p>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "20px",
+              maxWidth: "1100px",
+              margin: "0 auto",
+              padding: "0 20px"
+            }}>
+              {[...kits.slice(0, 4), ...maisVendidos.slice(0, 4), ...queridinhos.slice(0, 4)]
+                .slice(0, 8)
+                .map(item => (
+                  <div key={item.id}>
+                    {renderItem(item)}
+                  </div>
+                ))}
+            </div>
+          </>
+        )}
 
         <div style={{ textAlign: "center", marginTop: "40px" }}>
             <a href="/produtos" style={{ color: "#ec4899", fontWeight: "600", fontSize: "16px" }}>
