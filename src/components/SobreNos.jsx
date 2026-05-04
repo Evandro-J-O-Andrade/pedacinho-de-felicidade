@@ -417,6 +417,39 @@ export default function SobreNos() {
           </div>
         </section>
 
+        <section aria-labelledby="missao-visao-valores">
+          <h2 id="missao-visao-valores" className="sobre-section-title">
+            O que guia o nosso trabalho
+          </h2>
+
+          <div className="sobre-grid">
+            <article className="sobre-card">
+              <div className="sobre-card-icon">🎯</div>
+              <h3>Missão</h3>
+              <p>
+                Transformar momentos especiais em experiências inesquecíveis através de 
+                <strong> doces personalizados e bolos sob encomenda em Poá SP</strong>, com qualidade, cuidado artesanal e atendimento próximo.
+              </p>
+            </article>
+
+            <article className="sobre-card">
+              <div className="sobre-card-icon">🚀</div>
+              <h3>Visão</h3>
+              <p>
+                Ser referência em <strong>confeitaria artesanal em Poá e região leste de São Paulo</strong>, reconhecida pela qualidade dos produtos e confiança no atendimento.
+              </p>
+            </article>
+
+            <article className="sobre-card">
+              <div className="sobre-card-icon">💛</div>
+              <h3>Valores</h3>
+              <p>
+                Cuidado em cada detalhe, atendimento de verdade, compromisso com o cliente e qualidade em tudo que fazemos.
+              </p>
+            </article>
+          </div>
+        </section>
+
         <section className="sobre-final">
           <h2 className="sobre-section-title">Mais do que doces, criamos experiências</h2>
           <p>
