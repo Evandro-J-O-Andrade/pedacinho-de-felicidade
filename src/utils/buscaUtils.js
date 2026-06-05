@@ -33,25 +33,36 @@ export function buscarProdutos(produtos, termo) {
 
   const t = normalizar(termo);
 
-  const todos = produtos.flatMap(c => c.itens);
+  const todos = produtos.flatMap(categoria =>
+    categoria.itens.map(item => ({
+      ...item,
+      categoria: categoria.categoria,
+      subcategoria: item.subcategoria || item.tipo || ""
+    }))
+  );
 
   return todos
     .filter(p => isProdutoDisponivel(p))
     .map(p => {
-      const nome = normalizar(p.nome);
+      const nome = normalizar(p.nome || "");
       const descricao = normalizar(p.descricao || "");
+      const categoria = normalizar(p.categoria || "");
+      const subcategoria = normalizar(p.subcategoria || "");
+      const tags = normalizar([p.tipo || "", p.sazonal || ""].join(" "));
 
       let score = 0;
 
-      if (nome.startsWith(t)) score += 10;
-      if (nome.includes(t)) score += 6;
-      if (descricao.includes(t)) score += 3;
-
+      if (nome.startsWith(t)) score += 18;
+      if (nome.includes(t)) score += 10;
+      if (descricao.includes(t)) score += 6;
+      if (categoria.includes(t)) score += 8;
+      if (subcategoria.includes(t)) score += 5;
+      if (tags.includes(t)) score += 3;
       if (p.destaque) score += 2;
 
       return { ...p, score };
     })
     .filter(p => p.score > 0)
     .sort((a, b) => b.score - a.score)
-    .slice(0, 10);
+    .slice(0, 12);
 }

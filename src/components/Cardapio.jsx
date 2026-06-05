@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { produtos } from "../data/produtos";
 import { getEventoAtivo } from "../utils/sazonalUtils";
 import ProdutoCard from "./ProdutoCard";
@@ -29,9 +29,7 @@ export default function Cardapio() {
    const [busca, setBusca] = useState("");
    const [imagemAmpliada, setImagemAmpliada] = useState(null);
    const [itemSelecionado, setItemSelecionado] = useState(null);
-   const scrollRef = useRef(null);
 
-  // Função para filtrar por busca
   function filtrarPorBusca(itens) {
     if (!busca) return itens;
     const termoNormalizado = busca.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -146,21 +144,6 @@ export default function Cardapio() {
     return () => window.removeEventListener("busca-global", handleBuscaGlobal);
   }, [produtosFiltrados]);
 
-  // Auto-scroll para o carrossel
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    const interval = setInterval(() => {
-      el.scrollLeft += 2;
-      if (el.scrollLeft >= el.scrollWidth - el.clientWidth) {
-        el.scrollLeft = 0;
-      }
-    }, 50);
-
-    return () => clearInterval(interval);
-  }, []);
-
    const topVendidosPorCategoria = getTopVendidosPorCategorias(categoriasFixas);
 
   return (
@@ -228,23 +211,55 @@ export default function Cardapio() {
               @media (max-width: 480px) {
                 .cardapio-grid { grid-template-columns: 1fr !important; }
               }
-              .scroll-container {
+              .marquee-rail {
+                overflow: hidden;
+                position: relative;
+                width: 100vw;
+                margin-left: calc(50% - 50vw);
+                padding: 8px 24px 18px;
+                box-sizing: border-box;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+              }
+              .marquee-rail::-webkit-scrollbar {
+                display: none;
+              }
+              .marquee-rail::before,
+              .marquee-rail::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 56px;
+                z-index: 1;
+                pointer-events: none;
+              }
+              .marquee-rail::before {
+                left: 0;
+                background: linear-gradient(90deg, rgba(255,255,255,0.98), rgba(255,255,255,0));
+              }
+              .marquee-rail::after {
+                right: 0;
+                background: linear-gradient(270deg, rgba(255,255,255,0.98), rgba(255,255,255,0));
+              }
+              .marquee-track {
                 display: flex;
                 gap: 20px;
-                overflow-x: auto;
-                padding: 10px 10px 20px;
-                scroll-behavior: smooth;
+                width: max-content;
+                padding-right: 28px;
+                animation: cardapio-marquee 28s linear infinite;
               }
-              .scroll-container::-webkit-scrollbar {
-                height: 8px;
-              }
-              .scroll-container::-webkit-scrollbar-thumb {
-                background: #ec4899;
-                border-radius: 10px;
+              .marquee-track:hover {
+                animation-play-state: paused;
               }
               .scroll-item {
                 flex: 0 0 auto;
                 width: 280px;
+                min-width: 280px;
+              }
+              @keyframes cardapio-marquee {
+                from { transform: translateX(0); }
+                to { transform: translateX(-50%); }
               }
               @media (max-width: 768px) {
                 .scroll-item {
@@ -271,19 +286,20 @@ export default function Cardapio() {
                     </h3>
                   )}
                   
-                   <div className="scroll-container" ref={scrollRef}>
-                     {top5.map((item) => (
-                       <div className="scroll-item" key={item.id}>
-                         <ProdutoCard
-                           key={item.id}
-                           item={item}
-                           onImageClick={(img) => {
-                             setImagemAmpliada(img);
-                             setItemSelecionado(item);
-                           }}
-                         />
-                       </div>
-                      ))}
+                   <div className="marquee-rail">
+                     <div className="marquee-track">
+                       {[...top5, ...top5].map((item, index) => (
+                         <div className="scroll-item" key={`${item.id}-${index}`}>
+                           <ProdutoCard
+                             item={item}
+                             onImageClick={(img) => {
+                               setImagemAmpliada(img);
+                               setItemSelecionado(item);
+                             }}
+                           />
+                         </div>
+                       ))}
+                     </div>
                    </div>
                 </div>
               );})}

@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { produtos } from "../data/produtos";
 import Image from "./Image";
 import { buscarProdutos } from "../utils/buscaUtils";
@@ -8,15 +9,11 @@ export default function Navbar() {
   const [resultados, setResultados] = useState([]);
   const [menuAberto, setMenuAberto] = useState(false);
   const [maisAberto, setMaisAberto] = useState(false);
-  const [paginaAtiva, setPaginaAtiva] = useState("/");
   const menuRef = useRef();
   const toggleRef = useRef();
-  const todos = useMemo(() => produtos.flatMap((c) => c.itens), []);
-  const timeoutRef = useRef(null);
-
-  useEffect(() => {
-    setPaginaAtiva(window.location.pathname + window.location.hash);
-  }, []);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const paginaAtiva = location.pathname + location.hash;
 
   useEffect(() => {
     function handleClickFora(e) {
@@ -28,9 +25,6 @@ export default function Navbar() {
     document.addEventListener("mousedown", handleClickFora);
     return () => {
       document.removeEventListener("mousedown", handleClickFora);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
     };
   }, []);
 
@@ -52,23 +46,45 @@ export default function Navbar() {
     }));
   }
 
+  function acharCategoria(itemId) {
+    const categoria = produtos.find((grupo) => grupo.itens.some((item) => item.id === itemId));
+    return categoria?.categoria || "todos";
+  }
+
+  function navegarParaBusca(termo) {
+    const texto = termo.trim();
+    if (!texto) return;
+
+    const resultados = buscarProdutos(produtos, texto);
+    const categoriasEncontradas = [...new Set(resultados.map((item) => acharCategoria(item.id)))];
+    const categoriaAlvo = categoriasEncontradas.length === 1 ? categoriasEncontradas[0] : "todos";
+
+    const palavrasKit = ["kit", "festa", "básico", "basico", "médio", "medio", "premium", "20", "50", "100", "pessoas"];
+    const temPalavraKit = palavrasKit.some((palavra) => texto.toLowerCase().includes(palavra));
+
+    if (resultados.length > 0) {
+      navigate(`/produtos?busca=${encodeURIComponent(texto)}&categoria=${encodeURIComponent(categoriaAlvo)}`);
+    } else if (temPalavraKit) {
+      navigate("/monte-seu-kit");
+    } else {
+      navigate(`/produtos?busca=${encodeURIComponent(texto)}&categoria=todos`);
+    }
+
+    setBusca("");
+    setResultados([]);
+  }
+
   function handleBuscaKeyDown(e) {
     if (e.key === "Enter" && busca.length > 0) {
-      // Sempre dispara o evento global primeiro
-      // Cada página verifica se tem o produto e filtra localmente
+      navegarParaBusca(busca);
       disparaBuscaGlobal(busca);
-      setBusca("");
-      setResultados([]);
     }
   }
 
   function handleResultadoClick(e, item) {
     e.preventDefault();
-    // Sempre dispara o evento global primeiro
-    // A página atual verifica se tem o produto
+    navegarParaBusca(item.nome);
     disparaBuscaGlobal(item.nome);
-    setBusca("");
-    setResultados([]);
   }
 
   function handleInputBlur() {
@@ -352,11 +368,11 @@ export default function Navbar() {
 
       {/* MENU */}
       <div ref={menuRef} className={`nav-links ${menuAberto ? "open" : ""}`} style={{ gap: "18px", fontSize: "16px", fontWeight: "600", marginTop: menuAberto ? "8px" : "0" }}>
-        <a href="/" className={paginaAtiva === "/" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/"); }}>Home</a>
-        <a href="/#cardapio" className={paginaAtiva.includes("cardapio") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#cardapio"); }}>Catálogo</a>
-        <a href="/#kit-festa" className={paginaAtiva.includes("kit-festa") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#kit-festa"); }}>Kit-Pronto</a>
-        <a href="/produtos" className={paginaAtiva === "/produtos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/produtos"); }}>Produtos</a>
-        <a href="/monte-seu-kit" className={paginaAtiva === "/monte-seu-kit" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/monte-seu-kit"); }}>Personalize Seu Kit</a>
+        <a href="/" className={paginaAtiva === "/" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); }}>Home</a>
+        <a href="/#cardapio" className={paginaAtiva.includes("cardapio") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); }}>Catálogo</a>
+        <a href="/#kit-festa" className={paginaAtiva.includes("kit-festa") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); }}>Kit-Pronto</a>
+        <a href="/produtos" className={paginaAtiva === "/produtos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); }}>Produtos</a>
+        <a href="/monte-seu-kit" className={paginaAtiva === "/monte-seu-kit" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); }}>Personalize Seu Kit</a>
         <div className={`nav-more ${maisAberto ? "open" : ""}`}>
           <button
             type="button"
@@ -369,10 +385,10 @@ export default function Navbar() {
             Mais ▾
           </button>
           <div className="nav-more-menu">
-            <a href="/sobre-nos" className={paginaAtiva === "/sobre-nos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/sobre-nos"); }}>Sobre Nós</a>
-            <a href="/sazonal" className={paginaAtiva === "/sazonal" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/sazonal"); }}>Temporada</a>
-            <a href="/#eventos" className={paginaAtiva.includes("eventos") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#eventos"); }}>Eventos</a>
-            <a href="/#contato" className={paginaAtiva.includes("contato") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); setPaginaAtiva("/#contato"); }}>Contato</a>
+            <a href="/sobre-nos" className={paginaAtiva === "/sobre-nos" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); }}>Sobre Nós</a>
+            <a href="/sazonal" className={paginaAtiva === "/sazonal" ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); }}>Temporada</a>
+            <a href="/#eventos" className={paginaAtiva.includes("eventos") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); }}>Eventos</a>
+            <a href="/#contato" className={paginaAtiva.includes("contato") ? "active" : ""} style={{ color: "inherit" }} onClick={(e) => { e.stopPropagation(); setMenuAberto(false); setMaisAberto(false); }}>Contato</a>
           </div>
         </div>
       </div>
