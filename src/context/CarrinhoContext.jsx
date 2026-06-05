@@ -7,7 +7,70 @@ const CarrinhoContext = createContext();
 function getStorageCarrinho() {
   if (typeof window === "undefined") return [];
   const saved = localStorage.getItem("carrinho");
-  return saved ? JSON.parse(saved) : [];
+  return saved ? JSON.parse(saved).map(normalizarItemCarrinho) : [];
+}
+
+function limparDescricaoGerada(descricao) {
+  return (descricao || "")
+    .split(/\r?\n/)
+    .filter((linha) => !linha.trim().startsWith("Inclui:"))
+    .filter((linha) => !linha.trim().startsWith("Inclui por pedido:"))
+    .filter((linha) => !linha.trim().startsWith("Quantidade no carrinho:"))
+    .filter((linha) => !linha.trim().startsWith("Total no carrinho:"))
+    .filter((linha) => !linha.trim().startsWith("Total deste item no carrinho:"))
+    .join("\n")
+    .trim();
+}
+
+function multiplicarTextoItem(texto, quantidade) {
+  if (quantidade <= 1) return texto;
+
+  const numeroRegex = /(\d+(?:[.,]\d+)?)/;
+  const match = texto.match(numeroRegex);
+
+  if (!match) return `${quantidade}x ${texto}`;
+
+  const valorOriginal = match[1];
+  const valorMultiplicado = Number(valorOriginal.replace(",", ".")) * quantidade;
+  const valorFormatado = Number.isInteger(valorMultiplicado)
+    ? String(valorMultiplicado)
+    : String(valorMultiplicado).replace(".", ",");
+
+  return texto.replace(valorOriginal, valorFormatado);
+}
+
+function montarDescricaoCarrinho(produto, quantidade = produto.quantidade || 1) {
+  const descricaoBase = produto.descricaoBase || limparDescricaoGerada(produto.descricao || "");
+  const itens = Array.isArray(produto.itens) ? produto.itens : [];
+
+  if (!itens.length) {
+    return [
+      descricaoBase,
+      quantidade > 1 ? `Quantidade no carrinho: ${quantidade} pedidos iguais deste produto` : ""
+    ].filter(Boolean).join("\n").trim();
+  }
+
+  const itensPorPedido = itens.join(", ");
+  const itensTotais = itens.map((item) => multiplicarTextoItem(item, quantidade)).join(", ");
+  const totalTexto = quantidade > 1
+    ? `Total no carrinho: ${quantidade} pedidos iguais, somando ${itensTotais}`
+    : `Total deste item no carrinho: ${itensTotais}`;
+
+  return [
+    descricaoBase,
+    `Inclui por pedido: ${itensPorPedido}`,
+    totalTexto
+  ].filter(Boolean).join("\n").trim();
+}
+
+function normalizarItemCarrinho(item) {
+  const descricaoBase = item.descricaoBase || limparDescricaoGerada(item.descricao || "");
+
+  return {
+    ...item,
+    descricaoBase,
+    descricao: montarDescricaoCarrinho({ ...item, descricaoBase }, item.quantidade || 1)
+  };
 }
 
 export function CarrinhoProvider({ children }) {
@@ -104,9 +167,6 @@ export function CarrinhoProvider({ children }) {
     const timestamp = Date.now();
     setTimestampAdicao(timestamp);
     setUltimoItemAdicionado(produto.nome);
-    const descricaoCompleta = produto.itens?.length
-      ? `${produto.descricao || ""}${produto.descricao ? "\n" : ""}Inclui: ${produto.itens.join(", ")}`
-      : produto.descricao || "";
 
     setCarrinho((prev) => {
       const existe = prev.find((item) => item.id === produto.id);
@@ -114,27 +174,28 @@ export function CarrinhoProvider({ children }) {
       if (existe) {
         return prev.map((item) =>
           item.id === produto.id
-            ? {
+            ? normalizarItemCarrinho({
                 ...item,
                 quantidade: item.quantidade + 1,
-                descricao: descricaoCompleta || item.descricao,
                 itens: produto.itens || item.itens || []
-              }
+              })
             : item
         );
       }
 
+      const novoItem = {
+        id: produto.id,
+        nome: produto.nome,
+        preco: produto.preco,
+        imagem: getImagemProduto(produto) || IMAGEM_FALLBACK,
+        descricaoBase: limparDescricaoGerada(produto.descricao || ""),
+        itens: produto.itens || [],
+        quantidade: 1
+      };
+
       return [
         ...prev,
-        {
-          id: produto.id,
-          nome: produto.nome,
-          preco: produto.preco,
-          imagem: getImagemProduto(produto) || IMAGEM_FALLBACK,
-          descricao: descricaoCompleta,
-          itens: produto.itens || [],
-          quantidade: 1
-        }
+        normalizarItemCarrinho(novoItem)
       ];
     });
   }
@@ -144,7 +205,7 @@ export function CarrinhoProvider({ children }) {
       prev
         .map((item) =>
           item.id === id
-            ? { ...item, quantidade: item.quantidade - 1 }
+            ? normalizarItemCarrinho({ ...item, quantidade: item.quantidade - 1 })
             : item
         )
         .filter((item) => item.quantidade > 0)
