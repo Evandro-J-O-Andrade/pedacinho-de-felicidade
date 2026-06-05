@@ -4,6 +4,7 @@ import { getTodosEventos, getNomeSazonal, getProximoEvento, getDiasAteEvento } f
 import { getProdutosSazonais } from "../utils/produtoUtils";
 import { produtos } from "../data/produtos";
 import ProdutoCard from "./ProdutoCard";
+import { buscarProdutos } from "../utils/buscaUtils";
 import Lightbox from "./Lightbox";
 import Image from "./Image";
 
@@ -38,10 +39,12 @@ export default function SazonalPage() {
     } else {
       lista = getProdutosSazonais(produtos, eventoId);
     }
-    if (busca) {
-      lista = lista.filter(item => 
-        item.nome.toLowerCase().includes(busca.toLowerCase())
+    if (busca && busca.trim()) {
+      const idsEncontrados = new Set(
+        buscarProdutos(produtos, busca)
+          .map((item) => item.id)
       );
+      lista = lista.filter((item) => idsEncontrados.has(item.id));
     }
     return lista;
   };

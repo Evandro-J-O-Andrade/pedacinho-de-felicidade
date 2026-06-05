@@ -24,19 +24,21 @@ export default function Cardapio() {
   const produtosFiltrados = produtos.filter(c => categoriasPermitidas.includes(c.categoria));
   
    const categorias = ["todos", "Bolos", ...produtosFiltrados.map((c) => c.categoria).filter(c => c !== "Bolos")];
-   
-   const [categoria, setCategoria] = useState("Bolos");
+
+   const [categoria, setCategoria] = useState("todos");
    const [busca, setBusca] = useState("");
    const [imagemAmpliada, setImagemAmpliada] = useState(null);
    const [itemSelecionado, setItemSelecionado] = useState(null);
 
   function filtrarPorBusca(itens) {
-    if (!busca) return itens;
-    const termoNormalizado = busca.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    return itens.filter((item) => {
-      const nomeNormalizado = item.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      return nomeNormalizado.includes(termoNormalizado);
-    });
+    if (!busca || !busca.trim()) return itens;
+
+    const idsEncontrados = new Set(
+      buscarProdutos(produtos, busca)
+        .map((item) => item.id)
+    );
+
+    return itens.filter((item) => idsEncontrados.has(item.id));
   }
 
    // Função para obter top 5 produtos mais vendidos para uma lista de categorias
@@ -104,6 +106,25 @@ export default function Cardapio() {
      }
    }
 
+  const categoriasAtivas = categoria === "todos" ? categoriasFixas : [categoria];
+
+  const itensFiltradosPorBusca = (itens) => {
+    if (!busca || !busca.trim()) return itens.slice(0, 5);
+
+    const idsEncontrados = new Set(
+      buscarProdutos(produtos, busca).map((item) => item.id)
+    );
+
+    return itens.filter((item) => idsEncontrados.has(item.id)).slice(0, 5);
+  };
+
+  const secoesExibidas = produtosFiltrados
+    .filter((grupo) => categoriasAtivas.includes(grupo.categoria))
+    .map((grupo) => ({
+      ...grupo,
+      itens: itensFiltradosPorBusca(grupo.itens)
+    }));
+
   // Escutar evento global de busca
   useEffect(() => {
     function handleBuscaGlobal(e) {
@@ -161,7 +182,20 @@ export default function Cardapio() {
         
         <div style={{ display: "flex", gap: "24px", flexDirection: "column", alignItems: "stretch", maxWidth: "1400px", margin: "0 auto" }}>
            {/* CATEGORIAS */}
-           <div className="category-scroll-container" style={{ display: "flex", gap: "12px", overflowX: "auto", paddingBottom: "8px", scrollBehavior: "smooth", WebkitOverflowScrolling: "touch" }}>
+           <div
+             className="category-scroll-container"
+             style={{
+               display: "flex",
+               gap: "12px",
+               justifyContent: "center",
+               alignItems: "center",
+               flexWrap: "wrap",
+               overflowX: "auto",
+               paddingBottom: "8px",
+               scrollBehavior: "smooth",
+               WebkitOverflowScrolling: "touch"
+             }}
+           >
              {categorias.map((cat) => (
                <button
                  key={cat}
@@ -210,6 +244,14 @@ export default function Cardapio() {
               }
               @media (max-width: 480px) {
                 .cardapio-grid { grid-template-columns: 1fr !important; }
+              }
+              .category-scroll-container {
+                width: 100%;
+                max-width: 1100px;
+                margin: 0 auto;
+              }
+              .category-scroll-container::-webkit-scrollbar {
+                display: none;
               }
               .marquee-rail {
                 overflow: hidden;
@@ -268,41 +310,35 @@ export default function Cardapio() {
               }
             `}</style>
             
-            {categoriasFixas.map((categoria) => {
-              const top5 = topVendidosPorCategoria[categoria] || [];
-              
-              if (top5.length === 0) return null;
-              
+            {secoesExibidas.map((grupo) => {
+              const destaque = busca.trim()
+                ? grupo.itens
+                : (topVendidosPorCategoria[grupo.categoria] || []).slice(0, 5);
+
+              if (destaque.length === 0) return null;
+
               return (
-                <div key={categoria} style={{ marginBottom: categoria === "todos" ? "32px" : 0 }}>
-                  {categoria !== "todos" && (
-                    <h3 className="sessao-titulo">
-                      {categoria}
-                    </h3>
-                  )}
-                  {categoria === "todos" && (
-                    <h3 className="sessao-titulo">
-                      {categoria}
-                    </h3>
-                  )}
-                  
-                   <div className="marquee-rail">
-                     <div className="marquee-track">
-                       {[...top5, ...top5].map((item, index) => (
-                         <div className="scroll-item" key={`${item.id}-${index}`}>
-                           <ProdutoCard
-                             item={item}
-                             onImageClick={(img) => {
-                               setImagemAmpliada(img);
-                               setItemSelecionado(item);
-                             }}
-                           />
-                         </div>
-                       ))}
-                     </div>
-                   </div>
+                <div key={grupo.categoria} style={{ marginBottom: 32 }}>
+                  <h3 className="sessao-titulo">{grupo.categoria}</h3>
+
+                  <div className="marquee-rail">
+                    <div className="marquee-track">
+                      {[...destaque, ...destaque].map((item, index) => (
+                        <div className="scroll-item" key={`${item.id}-${index}`}>
+                          <ProdutoCard
+                            item={item}
+                            onImageClick={(img) => {
+                              setImagemAmpliada(img);
+                              setItemSelecionado(item);
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              );})}
+              );
+            })}
           </div>
           
           {/* VER MAIS */}

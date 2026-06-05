@@ -36,14 +36,19 @@ export default function ProdutosPage() {
     [produtosFiltrados]
   );
 
-  // Ler parametro de busca da URL
+  // Ler parâmetros da URL: busca e categoria
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const buscaParam = params.get("busca");
-    if (buscaParam) {
-      setBusca(buscaParam);
+    const buscaParam = params.get("q") || params.get("busca");
+    const categoriaParam = params.get("categoria");
+
+    if (buscaParam) setBusca(buscaParam);
+    if (categoriaParam && categoriasPermitidas.includes(categoriaParam)) {
+      setCategoria(categoriaParam);
+    } else if (!categoriaParam) {
+      setCategoria("todos");
     }
-  }, []);
+  }, [categoriasPermitidas]);
 
   // Escutar evento global de busca
   useEffect(() => {
@@ -82,14 +87,16 @@ export default function ProdutosPage() {
     return () => window.removeEventListener("busca-global", handleBuscaGlobal);
   }, [produtosFiltrados]);
 
-  // Filtra itens por busca
+  // Filtra itens por busca com comparação robusta (maiúsculas/minúsculas e acentos)
   const filtrarPorBusca = (itens) => {
-    if (!busca) return itens;
-    const termoNormalizado = busca.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    return itens.filter(item => {
-      const nomeNormalizado = item.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      return nomeNormalizado.includes(termoNormalizado);
-    });
+    if (!busca || !busca.trim()) return itens;
+
+    const idsEncontrados = new Set(
+      buscarProdutos(produtos, busca)
+        .map((item) => item.id)
+    );
+
+    return itens.filter((item) => idsEncontrados.has(item.id));
   };
 
   // Lista de categorias ativas para renderizar seções
@@ -161,6 +168,62 @@ export default function ProdutosPage() {
             margin: 30px 0 15px;
             padding: 0 20px;
           }
+          .categoria-marquee-rail {
+            overflow: hidden;
+            position: relative;
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            padding: 8px 20px 18px;
+            box-sizing: border-box;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
+          .categoria-marquee-rail::-webkit-scrollbar {
+            display: none;
+          }
+          .categoria-marquee-rail::before,
+          .categoria-marquee-rail::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 56px;
+            z-index: 1;
+            pointer-events: none;
+          }
+          .categoria-marquee-rail::before {
+            left: 0;
+            background: linear-gradient(90deg, rgba(255,247,249,0.98), rgba(255,247,249,0));
+          }
+          .categoria-marquee-rail::after {
+            right: 0;
+            background: linear-gradient(270deg, rgba(255,247,249,0.98), rgba(255,247,249,0));
+          }
+          .categoria-marquee-track {
+            display: flex;
+            gap: 18px;
+            width: max-content;
+            padding-right: 18px;
+            animation: produtos-marquee 28s linear infinite;
+          }
+          .categoria-marquee-track:hover {
+            animation-play-state: paused;
+          }
+          .categoria-scroll-item {
+            flex: 0 0 auto;
+            width: 280px;
+            min-width: 280px;
+          }
+          @keyframes produtos-marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+          }
+          @media (max-width: 768px) {
+            .categoria-scroll-item {
+              width: 240px;
+              min-width: 240px;
+            }
+          }
         `}</style>
 
         {/* HEADER */}
@@ -216,9 +279,22 @@ export default function ProdutosPage() {
         <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 20px" }}>
           <input
             type="text"
-            placeholder="Buscar produto..."
+            placeholder="Buscar produtos, categorias e descrições..."
             value={busca}
-            onChange={(e) => setBusca(e.target.value)}
+            onChange={(e) => {
+              const valor = e.target.value;
+              setBusca(valor);
+
+              const params = new URLSearchParams(window.location.search);
+              if (valor.trim()) {
+                params.set("q", valor.trim());
+              } else {
+                params.delete("q");
+              }
+
+              const novaUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`;
+              window.history.replaceState({}, "", novaUrl);
+            }}
             style={{
               width: "100%",
               padding: "14px 20px",
@@ -235,8 +311,18 @@ export default function ProdutosPage() {
               <button
                 key={cat}
                 onClick={() => {
-                  setCategoria(cat);
-                  setBusca("");
+                  const proximo = cat;
+                  setCategoria(proximo);
+
+                  const params = new URLSearchParams(window.location.search);
+                  if (proximo === "todos") {
+                    params.delete("categoria");
+                  } else {
+                    params.set("categoria", proximo);
+                  }
+
+                  const novaUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`;
+                  window.history.replaceState({}, "", novaUrl);
                 }}
                 style={{
                   padding: "10px 20px",
@@ -257,17 +343,27 @@ export default function ProdutosPage() {
 
         {/* GRID POR CATEGORIA */}
         {categoriasAtivas.map(cat => {
-const itens = filtrarPorBusca(cat.itens);
-          
+          const itens = filtrarPorBusca(cat.itens);
+
           if (itens.length === 0) return null;
 
           return (
             <div key={cat.categoria}>
               <h2 className="sessao-titulo" id="produtos-grid">{cat.categoria}</h2>
-              <div className="produtos-grid">
-                {itens.map(item => (
-                  <ProdutoCard key={item.id} item={item} onImageClick={(img) => { setImagemAmpliada(img); setItemSelecionado(item); }} />
-                ))}
+              <div className="categoria-marquee-rail">
+                <div className="categoria-marquee-track">
+                  {[...itens, ...itens].map((item, index) => (
+                    <div className="categoria-scroll-item" key={`${item.id}-${index}`}>
+                      <ProdutoCard
+                        item={item}
+                        onImageClick={(img) => {
+                          setImagemAmpliada(img);
+                          setItemSelecionado(item);
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           );

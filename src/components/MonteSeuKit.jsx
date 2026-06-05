@@ -59,14 +59,16 @@ export default function MonteSeuKit() {
   
   const categorias = ["todos", "Bolos", ...produtosFiltrados.map((c) => c.categoria).filter(c => c !== "Bolos")];
 
-  // Filtra itens por busca
+  // Filtra itens por busca com normalização robusta
   const filtrarPorBusca = (itens) => {
-    if (!busca) return itens;
-    const termoNormalizado = busca.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    return itens.filter(item => {
-      const nomeNormalizado = item.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      return nomeNormalizado.includes(termoNormalizado);
-    });
+    if (!busca || !busca.trim()) return itens;
+
+    const idsEncontrados = new Set(
+      buscarProdutos(produtos, busca)
+        .map((item) => item.id)
+    );
+
+    return itens.filter((item) => idsEncontrados.has(item.id));
   };
 
   // Lista de categorias ativas para renderizar seções

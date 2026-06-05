@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { produtos } from "../data/produtos";
 import Image from "./Image";
-import { buscarProdutos } from "../utils/buscaUtils";
+import { buscarGlobal } from "../utils/buscaUtils";
 
 export default function Navbar() {
   const [busca, setBusca] = useState("");
@@ -32,8 +32,8 @@ export default function Navbar() {
     const valor = e.target.value;
     setBusca(valor);
     
-    if (valor.length > 1) {
-      const resultado = buscarProdutos(produtos, valor);
+    if (valor.trim().length > 1) {
+      const resultado = buscarGlobal(valor);
       setResultados(resultado);
     } else {
       setResultados([]);
@@ -55,19 +55,20 @@ export default function Navbar() {
     const texto = termo.trim();
     if (!texto) return;
 
-    const resultados = buscarProdutos(produtos, texto);
-    const categoriasEncontradas = [...new Set(resultados.map((item) => acharCategoria(item.id)))];
+    const resultados = buscarGlobal(texto);
+    const produtosEncontrados = resultados.filter((item) => item.tipo === "produto");
+    const categoriasEncontradas = [...new Set(produtosEncontrados.map((item) => item.categoria || acharCategoria(item.id)))];
     const categoriaAlvo = categoriasEncontradas.length === 1 ? categoriasEncontradas[0] : "todos";
 
     const palavrasKit = ["kit", "festa", "básico", "basico", "médio", "medio", "premium", "20", "50", "100", "pessoas"];
     const temPalavraKit = palavrasKit.some((palavra) => texto.toLowerCase().includes(palavra));
 
-    if (resultados.length > 0) {
-      navigate(`/produtos?busca=${encodeURIComponent(texto)}&categoria=${encodeURIComponent(categoriaAlvo)}`);
-    } else if (temPalavraKit) {
+    if (produtosEncontrados.length > 0) {
+      navigate(`/produtos?q=${encodeURIComponent(texto)}&categoria=${encodeURIComponent(categoriaAlvo)}`);
+    } else if (temPalavraKit || resultados.some((item) => item.tipo === "kit")) {
       navigate("/monte-seu-kit");
     } else {
-      navigate(`/produtos?busca=${encodeURIComponent(texto)}&categoria=todos`);
+      navigate(`/produtos?q=${encodeURIComponent(texto)}&categoria=todos`);
     }
 
     setBusca("");
@@ -313,7 +314,7 @@ export default function Navbar() {
         <div className="nav-search" style={{ position: "relative", flex: 1, display: "flex", justifyContent: "center" }}>
           <input
             type="text"
-            placeholder="Buscar..."
+            placeholder="Buscar produtos, kits e categorias..."
             value={busca}
             onChange={handleBusca}
             onKeyDown={handleBuscaKeyDown}

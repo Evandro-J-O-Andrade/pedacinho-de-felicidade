@@ -19,6 +19,7 @@ export default function Produtos() {
   const kits = getProdutosVitrine(produtos, "kits");
   const maisVendidos = getProdutosVitrine(produtos, "mais_vendidos");
   const queridinhos = getProdutosVitrine(produtos, "queridinhos");
+  const produtosEscolhidos = [...kits.slice(0, 4), ...maisVendidos.slice(0, 4), ...queridinhos.slice(0, 4)].slice(0, 8);
 
   useEffect(() => {
     function handleBuscaGlobal(e) {
@@ -134,21 +135,65 @@ export default function Produtos() {
             <p style={{ textAlign: "center", color: "#666", marginBottom: "30px" }}>
               Os favoritos dos nossos clientes para festas incríveis 🎉
             </p>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: "20px",
-              maxWidth: "1100px",
-              margin: "0 auto",
-              padding: "0 20px"
-            }}>
-              {[...kits.slice(0, 4), ...maisVendidos.slice(0, 4), ...queridinhos.slice(0, 4)]
-                .slice(0, 8)
-                .map(item => (
-                  <div key={item.id}>
+            <style>{`
+              .home-marquee-rail {
+                overflow: hidden;
+                position: relative;
+                width: 100vw;
+                margin-left: calc(50% - 50vw);
+                padding: 8px 24px 18px;
+                box-sizing: border-box;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+              }
+              .home-marquee-rail::-webkit-scrollbar { display: none; }
+              .home-marquee-rail::before,
+              .home-marquee-rail::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 56px;
+                z-index: 1;
+                pointer-events: none;
+              }
+              .home-marquee-rail::before {
+                left: 0;
+                background: linear-gradient(90deg, rgba(255,247,249,0.98), rgba(255,247,249,0));
+              }
+              .home-marquee-rail::after {
+                right: 0;
+                background: linear-gradient(270deg, rgba(255,247,249,0.98), rgba(255,247,249,0));
+              }
+              .home-marquee-track {
+                display: flex;
+                gap: 20px;
+                width: max-content;
+                padding-right: 28px;
+                animation: home-marquee 28s linear infinite;
+              }
+              .home-marquee-track:hover { animation-play-state: paused; }
+              .home-scroll-item {
+                flex: 0 0 auto;
+                width: 280px;
+                min-width: 280px;
+              }
+              @keyframes home-marquee {
+                from { transform: translateX(0); }
+                to { transform: translateX(-50%); }
+              }
+              @media (max-width: 768px) {
+                .home-scroll-item { width: 220px; min-width: 220px; }
+              }
+            `}</style>
+            <div className="home-marquee-rail">
+              <div className="home-marquee-track">
+                {[...produtosEscolhidos, ...produtosEscolhidos].map((item, index) => (
+                  <div className="home-scroll-item" key={`${item.id}-${index}`}>
                     {renderItem(item)}
                   </div>
                 ))}
+              </div>
             </div>
           </>
         )}
